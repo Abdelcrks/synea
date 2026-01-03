@@ -5,6 +5,25 @@ import { pgEnum, pgTable, text, timestamp,serial, integer, uniqueIndex} from "dr
 
 
 export const roleEnum = pgEnum("role", ["hero","peer_hero", "admin"])
+export const cancerTypeEnum = pgEnum("cancer_type", [
+    "bone",
+    "breast",
+    "lung",
+    "skin",
+    "brain",
+    "digestive",
+    "gynecologic",
+    "urologic",
+    "head_neck",
+    "leukemia",
+    "lymphoma",
+    "myeloma",
+    "sarcoma",
+    "other",
+])
+export const CANCER_TYPES = cancerTypeEnum.enumValues;
+export type CancerType = (typeof CANCER_TYPES)[number];
+
 
 
 export const profiles = pgTable("profiles", {
@@ -21,7 +40,7 @@ export const profiles = pgTable("profiles", {
     
     namePublic: text("name_public").notNull(),
 
-    cancerType: text("cancer_type"), // slug "blood ou skin ou breast ou null car optionnel et non obligatoire si l'utilisateur choisit aucun cancer = null"
+    cancerType: cancerTypeEnum("cancer_type"), 
     
     acceptedTermsAt: timestamp("accepted_terms_at", {withTimezone:true}),
 

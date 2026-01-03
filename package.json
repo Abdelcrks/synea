@@ -28,5 +28,12 @@
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"
+  },
+  "pnpm": {
+  "overrides": {
+    "drizzle-orm": "0.45.1",
+    "@neondatabase/serverless": "1.0.2",
+    "kysely": "0.28.9"
+  }
   }
 }

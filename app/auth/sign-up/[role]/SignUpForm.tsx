@@ -7,7 +7,7 @@ import { SubmitButton } from "./SubmitButton"
 
 type Role = "hero" | "peer_hero"
 
-export const SignUpForm = ({role}: {role: Role}) => {
+export const SignUpForm = ({role, cancerTypes,}: {role: Role, cancerTypes:readonly string[]}) => {
     const [namePublic, setNamePublic] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -21,6 +21,25 @@ export const SignUpForm = ({role}: {role: Role}) => {
     email.includes("@") &&
     password.length >= 8 &&
     acceptedTerms;
+
+
+    const CANCER_LABELS: Record<string, string> = {
+        bone: "Cancer des os",
+        breast: "Cancer du sein",
+        lung: "Cancer du poumon",
+        skin: "Cancer de la peau",
+        brain: "Cancer du cerveau",
+        digestive: "Cancer digestif",
+        gynecologic: "Cancer gynécologique",
+        urologic: "Cancer urologique",
+        head_neck: "Cancer ORL (tête et cou)",
+        leukemia: "Leucémie",
+        lymphoma: "Lymphome",
+        myeloma: "Myélome",
+        sarcoma: "Sarcome",
+        other: "Autre",
+      };
+      
     return (
         <div>
             <p className="text-xl font-bold">FORM VISIBLE TEST ✅</p>
@@ -58,12 +77,13 @@ export const SignUpForm = ({role}: {role: Role}) => {
 
                 <label htmlFor="cancerType">Selectionne le type de cancer (optionnel)</label>
                 <select name="cancerType" id="cancerType" value={cancerType} onChange={(e) => setCancerType(e.target.value)} className="rounded-md border px-3 py-2">
+
                     <option value="">Je ne souhaite pas répondre</option>
-                    <option value="blood">Cancer du sang</option>
-                    <option value="bone">Cancer des os</option>
-                    <option value="breast">Cancer du sein</option>
-                    <option value="lung">Cancer du poumon</option>
-                    <option value="other">Autre</option>
+                    {cancerTypes.map((type) => (
+                        <option value={type} key={type}>
+                            {CANCER_LABELS[type]}
+                        </option>
+                    ))}
                 </select>
                 
                 <label className="flex items-center justify-center gap-2">
