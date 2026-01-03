@@ -1,5 +1,6 @@
 
 import { redirect } from "next/navigation";
+import { SignUpForm } from "./SignUpForm";
 
 
 
@@ -16,6 +17,7 @@ export default async function SignUpPage({params} : {params: Promise<{ role:stri
         <main>
             <h1>inscription</h1>
             <h2>Rôle choisis : {role}</h2>
+            <SignUpForm role={role}></SignUpForm>
         </main>
     )
 }
