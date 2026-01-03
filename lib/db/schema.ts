@@ -1,5 +1,8 @@
+
+
+import { users } from "./auth-schema"
 import { pgEnum, pgTable, text, timestamp,serial, integer, uniqueIndex} from "drizzle-orm/pg-core"
-import { authUsers } from "./auth-schema"
+
 
 export const roleEnum = pgEnum("role", ["hero","peer_hero", "admin"])
 
@@ -10,7 +13,7 @@ export const profiles = pgTable("profiles", {
     userId: text("user_id")
     .notNull()
     .unique()
-    .references(() => authUsers.id, {onDelete: "cascade"}),
+    .references(() => users.id, {onDelete: "cascade"}),
 
     role: roleEnum("role")
     .notNull()
@@ -39,7 +42,7 @@ export const conversations = pgTable("conversations", {
 
     createdByUserId: text("created_by_user_id")
     .notNull()
-    .references(() => authUsers.id, {onDelete: "cascade"}),
+    .references(() => users.id, {onDelete: "cascade"}),
 
     createdByRole: roleEnum("created_by_role").notNull(),
 
@@ -58,7 +61,7 @@ export const conversationParticipants = pgTable("conversation_participants" , {
 
     userId: text("user_id")
     .notNull()
-    .references(() => authUsers.id, {onDelete: "cascade"}),
+    .references(() => users.id, {onDelete: "cascade"}),
 
     createdAt: timestamp("created_at", {withTimezone: true})
     .defaultNow()
@@ -83,7 +86,7 @@ export const messages = pgTable("messages", {
 
     senderId: text("sender_id")
     .notNull()
-    .references(() => authUsers.id, {onDelete: "cascade"}),
+    .references(() => users.id, {onDelete: "cascade"}),
 
     content: text("content").notNull(),
 
@@ -92,4 +95,3 @@ export const messages = pgTable("messages", {
     .defaultNow(),
 })
 
-export * from "./auth-schema"
