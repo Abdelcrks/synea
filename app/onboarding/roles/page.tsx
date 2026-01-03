@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export default function Roles () {
+export default function Role () {
     const [role, setRole] = useState<string | null> (null)
 
     const router = useRouter()
@@ -13,7 +13,12 @@ export default function Roles () {
     
     return (
         <div>
-            <form action="" className="m-10 flex flex-col gap-10 text-center">
+            <form onSubmit={(e) => {
+                e.preventDefault()
+                if (!role) return
+                router.push(`/auth/sign-up/${role}`)
+            }}
+             className="m-10 flex flex-col gap-10 text-center">
             
             <input type="radio" required id="btn-heros" name="role" value={"hero"} onChange={(e) => {setRole(e.target.value)}}/>
             <label htmlFor="btn-heros">Je suis un héros</label>
@@ -23,12 +28,7 @@ export default function Roles () {
 
             <p>Role choisi : {role}</p>
 
-            <button type="submit" className={`py-3 rounded-full text-white ${isChoiceValid ? "bg-black" : "cursor-not-allowed"}`} disabled={!isChoiceValid}
-            onClick={() => {
-                if (!role) return
-                router.push(`/auth/sign-up/${role}`
-
-                )}}>
+            <button type="submit" className={`py-3 rounded-full text-white ${isChoiceValid ? "bg-black" : "cursor-not-allowed"}`} disabled={!isChoiceValid}>
                 Suivant
             </button>
             </form>
