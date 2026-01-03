@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-export default function roles () {
+export default function Roles () {
     const [role, setRole] = useState<string | null> (null)
 
     const router = useRouter()
@@ -23,7 +23,7 @@ export default function roles () {
 
             <p>Role choisi : {role}</p>
 
-            <button type="button" className={`py-3 rounded-full text-white ${isChoiceValid ? "bg-black" : "cursor-not-allowed"}`} disabled={!isChoiceValid}
+            <button type="submit" className={`py-3 rounded-full text-white ${isChoiceValid ? "bg-black" : "cursor-not-allowed"}`} disabled={!isChoiceValid}
             onClick={() => {
                 if (!role) return
                 router.push(`/auth/sign-up/${role}`
