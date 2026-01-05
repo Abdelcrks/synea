@@ -65,8 +65,8 @@ export default function Onboarding () {
       router.push("/onboarding/roles")
     }
     return(
-        <main className="h-screen w-screen relative">
-          <button className="absolute right-4 top-4 px-3 py-1 rounded-full z-30 sm:text-xs md:text-xs lg:text-xl text-white hover:bg-black/30"
+        <main className="h-screen w-screen relative bg-linear-to-b from-neutral-950 via-neutral-900 to-neutral-950">
+          <button className="absolute right-4 top-4 px-3 py-1 rounded-full z-30 sm:text-xs md:text-xs lg:text-xl text-white hover:bg-black/30 cursor-pointer"
           onClick={goToChoicesRoles}
           >
             Passer
@@ -74,19 +74,45 @@ export default function Onboarding () {
           <div ref={scrollerRef} className="flex h-full w-full overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar">
               {slides.map((slide, i) => (
                 <section key={slide.id} className="h-screen w-screen shrink-0 snap-center relative overflow-hidden">
-                  <Image src={slide.imageSrc} alt="image-onboarding" fill className="object-cover"></Image>
-                  <div className="absolute inset-0 bg-black/45">
-                  <div className="absolute inset-0 px-6 pt-16 text-white/85">
-                      <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur">{slide.badge}</span>
-                      <h1 className="max-w-md mt-4 text-2xl font-semibold leading-tight">{slide.title}</h1>
-                      <p className="max-w-md mt-4 text-sm leading-relaxed text-white/85">{slide.description}</p>
+                  <div className="relative h-full w-full lg:grid lg:grid-cols-2">
+                    <div className="relative h-full w-full">
+                      <Image src={slide.imageSrc} alt="image-onboarding" fill className="object-cover"></Image>
+                      <div className="absolute inset-0 bg-black/45 lg:hidden"></div>
+                      <div className="absolute inset-0 hidden lg:block bg-black/35" />
+                      </div>
 
-                      { i === slides.length -1 &&(
-                        <button className="mt-6 px-6 py-3 bg-white text-sm font-semibold text-slate-900 rounded-full hover:bg-white/80"
-                        onClick={goToChoicesRoles}>
-                          Choisir mon rôle
-                        </button>
-                      )}
+                    <div className="absolute inset-0 px-6 pt-16 text-white/85 lg:hidden">
+                        <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur">{slide.badge}</span>
+                        <h1 className="max-w-md mt-4 text-2xl font-semibold leading-tight">{slide.title}</h1>
+                        <p className="max-w-md mt-4 text-sm leading-relaxed text-white/85">{slide.description}</p>
+
+                        { i === slides.length -1 &&(
+                          <button className="mt-6 px-6 py-3 bg-white text-sm font-semibold text-slate-900 rounded-full hover:bg-white/80"
+                          onClick={goToChoicesRoles}>
+                            Choisir mon rôle
+                          </button>
+                        )}
+                    </div>
+                    <div className="relative hidden h-full w-full items-center justify-center px-12 lg:flex">
+                    <div className="w-full max-w-xl rounded-3xl bg-black/40 p-10 backdrop-blur ring-1 ring-white/10">
+                    <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur">
+                            {slide.badge}
+                          </span>
+                          <h1 className="mt-4 whitespace-pre-line text-4xl font-semibold leading-tight text-white">
+                            {slide.title}
+                          </h1>
+                          <p className="mt-4 text-base leading-relaxed text-white/85">
+                            {slide.description}
+                          </p>
+
+                          {i === slides.length - 1 && (
+                            <button
+                              onClick={goToChoicesRoles}
+                              className="mt-8 w-fit rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 cursor-pointer">
+                              Choisir mon rôle
+                            </button>
+                          )}
+                        </div>
                     </div>
                   </div>
                 </section>
