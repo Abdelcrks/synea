@@ -4,6 +4,7 @@
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useState, useRef, useMemo } from "react"
+import ParticlesBackground from "../components/ParticlesBackground"
 
 
 
@@ -66,6 +67,9 @@ export default function Onboarding () {
     }
     return(
         <main className="h-screen w-screen relative bg-linear-to-b from-neutral-950 via-neutral-900 to-neutral-950">
+          <div className="absolute inset-0 z-0 hidden lg:block ">
+              <ParticlesBackground/>
+          </div>
           <button className="absolute right-4 top-4 px-3 py-1 rounded-full z-30 sm:text-xs md:text-xs lg:text-xl text-white hover:bg-black/30 cursor-pointer"
           onClick={goToChoicesRoles}
           >
@@ -74,6 +78,7 @@ export default function Onboarding () {
           <div ref={scrollerRef} className="flex h-full w-full overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar">
               {slides.map((slide, i) => (
                 <section key={slide.id} className="h-screen w-screen shrink-0 snap-center relative overflow-hidden">
+
                   <div className="relative h-full w-full lg:grid lg:grid-cols-2">
                     <div className="relative h-full w-full">
                       <Image src={slide.imageSrc} alt="image-onboarding" fill className="object-cover"></Image>
