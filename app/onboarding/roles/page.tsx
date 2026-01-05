@@ -32,8 +32,6 @@ export default function Role () {
                 Suivant
             </button>
             </form>
-
-
         </div>
     )
 }
