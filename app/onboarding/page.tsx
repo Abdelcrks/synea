@@ -3,8 +3,7 @@
 
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { useEffect, useState, useRef, useMemo } from "react"
-import ParticlesBackground from "../components/ParticlesBackground"
+import {useState, useRef} from "react"
 
 
 
@@ -19,45 +18,40 @@ export default function Onboarding () {
       badge: "Bienvenue sur SYNEA",
       title: "Parfois, le chemin est difficile. Mais personne ne devrait avancer seul.",
       description: "SYNEA est un espace d'entraide entre personnes qui ont traversé l'épreuve et celles qui peuvent vraiment comprendre",
-      imageSrc: "/onboarding/onboarding-hero-1.svg",
+      imageSrc: "/onboarding/onboarding-v-1.png",
     },
     {
       id: 2, 
       badge: "Une communauté humaine",
       title: "Tu n'es plus seul, des héros comme toi, comprennent vraiment",
       description: "Échange avec des pairs, partage ton histoire, trouve un soutien humain et bienveillant.",
-      imageSrc: "/onboarding/onboarding-hero-2.svg",
+      imageSrc: "/onboarding/onboarding-v-2.png",
     },
     {
       id: 3, 
       badge: "Choix du profil",
       title: "Choisis ton rôle sur SYNEA.",
       description: "Héros (je travèrse l'épreuve) ou Pair-Héros (j'ai déjà traversé, j'accompagne). Tu pourras toujours évoluer ensuite.",
-      imageSrc: "/onboarding/onboarding-hero-test.svg",
+      imageSrc: "/onboarding/onboarding-v-3.png",
     },
   ]
 
-  useEffect (() => {
-    const element = scrollerRef.current // div qui scroll 
-    if(!element) return // si la div n'est pas encore montée on stop
-    
-    const onScroll = () => { // fonction appeler automatiquement à chaque scroll
-      const index = Math.round(element.scrollLeft/ element.clientWidth) // calcul numero de slide 
-      //ex : 0/400 = slide 0 400/400 = slide 1 800/400 = slide 2  round arrondit
-      setActiveIndex(index) // celle qui est active mtn = index
-    }
-    element.addEventListener("scroll", onScroll, {passive:true}) // à chaque fois l'user scroll cette div call onScroll et passive true = navigateur sait qu'on ne fera pas preventdefault
+    const handleScroll = () => {
+      const element = scrollerRef.current
+      if(!element) return
 
-    return () => {
-      element.removeEventListener("scroll", onScroll) // qd le component disparait on enleve l'event
+      requestAnimationFrame(() => {
+        const width = element.offsetWidth
+        const index = Math.round(element.scrollLeft/ width)
+        setActiveIndex(index)
+      })
     }
-    }, [])
 
     const goToSlide = (indexSlide:any) => {
       const element = scrollerRef.current
       if(!element) return
 
-      const left = indexSlide * element.clientWidth // 0 * 400 = slide 1 1*400 = slide 2, 2*400 = slide 3 num  de slide === position scroll
+      const left = indexSlide * element.offsetWidth // 0 * 400 = slide 1 1*400 = slide 2, 2*400 = slide 3 num  de slide === position scroll
 
       element.scrollTo({left, behavior: "smooth"}) // scroll horizontal fluide 
     }
@@ -65,300 +59,166 @@ export default function Onboarding () {
     const goToChoicesRoles = () => {
       router.push("/onboarding/roles")
     }
-    return(
-        <main className="h-screen w-screen relative bg-linear-to-b from-neutral-950 via-neutral-900 to-neutral-950">
-          <div className="absolute inset-0 z-0 hidden lg:block ">
-              <ParticlesBackground/>
-          </div>
-          <button className="absolute right-4 top-4 px-3 py-1 rounded-full z-30 sm:text-xs md:text-xs lg:text-xl text-white hover:bg-black/30 cursor-pointer"
+
+    const currentSlide = slides[activeIndex] ?? slides[0]
+
+    return (
+      <main className="h-screen w-screen relative flex flex-col bg-linear-to-b from-white to-[#e2d3e6]"> {/*Cadre de la page */}
+      <header className="w-full px-4 pt-2 flex items-center justify-between lg:hidden">
+        <div className="flex items-center gap-2">
+          <Image
+            src="/onboarding/logo-synea.svg"
+            alt="SYNEA"
+            width={50}
+            height={50}
+            priority
+            className="select-none"
+          />
+        </div>
+
+        <button
+          type="button"
           onClick={goToChoicesRoles}
-          >
-            Passer
-          </button>
-          <div ref={scrollerRef} className="flex h-full w-full overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar">
-              {slides.map((slide, i) => (
-                <section key={slide.id} className="h-screen w-screen shrink-0 snap-center relative overflow-hidden">
+          className="text-sm font-semibold text-black/70 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/20 rounded-full px-3"
+          aria-label="Passer l'onboarding"
+        >
+          Passer
+        </button>
+      </header>
+        {/* wrapper mobile et lg ordi*/}
+        <div className="relative z-10 flex-1 w-full flex flex-col lg:grid lg:grid-cols-2 lg:min-h-0">
+          {/* conteneur image*/}
+          <div className="w-full lg:h-full lg:min-h-0 flex flex-col">
 
-                  <div className="relative h-full w-full lg:grid lg:grid-cols-2">
-                    <div className="relative h-full w-full">
-                      <Image src={slide.imageSrc} alt="image-onboarding" fill className="object-cover"></Image>
-                      <div className="absolute inset-0 bg-black/45 lg:hidden"></div>
-                      <div className="absolute inset-0 hidden lg:block bg-black/35" />
-                      </div>
+            
+            {/* marge + radius mobile seulement */}
+            <div className="w-full px-4 pt-2 lg:px-0 lg:pt-0 flex-1 lg:min-h-0">
 
-                    <div className="absolute inset-0 px-6 pt-16 text-white/85 lg:hidden">
-                        <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur">{slide.badge}</span>
-                        <h1 className="max-w-md mt-4 text-2xl font-semibold leading-tight">{slide.title}</h1>
-                        <p className="max-w-md mt-4 text-sm leading-relaxed text-white/85">{slide.description}</p>
-
-                        { i === slides.length -1 &&(
-                          <button className="mt-6 px-6 py-3 bg-white text-sm font-semibold text-slate-900 rounded-full hover:bg-white/80"
-                          onClick={goToChoicesRoles}>
-                            Choisir mon rôle
-                          </button>
-                        )}
-                    </div>
-                    <div className="relative hidden h-full w-full items-center justify-center px-12 lg:flex">
-                    <div className="w-full max-w-xl rounded-3xl bg-black/40 p-10 backdrop-blur ring-1 ring-white/10">
-                    <span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur">
-                            {slide.badge}
-                          </span>
-                          <h1 className="mt-4 whitespace-pre-line text-4xl font-semibold leading-tight text-white">
-                            {slide.title}
-                          </h1>
-                          <p className="mt-4 text-base leading-relaxed text-white/85">
-                            {slide.description}
-                          </p>
-
-                          {i === slides.length - 1 && (
-                            <button
-                              onClick={goToChoicesRoles}
-                              className="mt-8 w-fit rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 cursor-pointer">
-                              Choisir mon rôle
-                            </button>
-                          )}
-                        </div>
-                    </div>
+              <div
+                ref={scrollerRef}
+                onScroll={handleScroll}
+                className="flex w-full overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar
+                        h-[55vh] lg:h-full lg:min-h-0 rounded-2xl lg:rounded-none"
+              >
+                {slides.map((slide, index) => (
+                  <div
+                    key={slide.id}
+                    className="relative w-full h-full shrink-0 snap-center"
+                  >
+                    <Image
+                      src={slide.imageSrc}
+                      alt="image-onboarding"
+                      fill
+                      priority={index === 0}
+                      className="object-cover rounded-2xl lg:rounded-none"
+                    />
+                    <div className="absolute inset-0 bg-black/0 lg:bg-black/10" />
                   </div>
-                </section>
+                ))}
+              </div>
+            </div>
+            {/* dots version mobilee */}
+            <div className="lg:hidden flex justify-center gap-2 pt-4">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goToSlide(i)}
+                  aria-label={`Aller au slide ${i + 1}`}
+                  className={`h-2.5 w-2.5 rounded-full ${
+                    i === activeIndex ? "bg-black/80" : "bg-black/20"
+                  }`}
+                />
               ))}
+            </div>
           </div>
-          <div className="absolute bottom-10  -translate-x-1/2 z-20 flex gap-2 left-1/2">
-          {slides.map((rien, i) => (
+          {/* ===== texte fixe / cta fixe*/}
+          <div className="flex-1 px-6 pb-8 lg:px-12 lg:relative">
+
+          {/* ===== HEADER DESKTOP (à droite de l’image) ===== */}
+          <div className="hidden lg:flex items-center justify-between pt-6">
+            <Image
+              src="/onboarding/logo-synea.svg"
+              alt="SYNEA"
+              width={44}
+              height={44}
+              priority
+              className="select-none"
+            />
             <button
-            key={i}
-            onClick={() => {goToSlide(i)}}
-            className={`h-2.5 w-2.5 rounded-full 
-              ${i === activeIndex ? "bg-white" : "bg-white/30 "}
-              `}
+              type="button"
+              onClick={goToChoicesRoles}
+              className="text-sm font-semibold text-white/80 hover:text-white
+                        focus:outline-none focus:ring-2 focus:ring-white/30
+                        rounded-full px-3 py-2"
+              aria-label="Passer l'onboarding"
+            >
+              Passer
+            </button>
+          </div>
+
+          {/* ===== CONTENU DESKTOP (carte centrée) ===== */}
+          <div className="hidden lg:flex h-full items-center justify-center">
+            <div className="w-full max-w-xl rounded-3xl bg-black/40 p-10 backdrop-blur ring-1 ring-white/10">
+              <h1 className="mt-4 whitespace-pre-line text-4xl font-semibold leading-tight text-white">
+                {currentSlide.title}
+              </h1>
+
+              <p className="mt-4 text-base leading-relaxed text-white/85">
+                {currentSlide.description}
+              </p>
+
+              <button
+                onClick={
+                  activeIndex === slides.length - 1
+                    ? goToChoicesRoles
+                    : () => goToSlide(activeIndex + 1)
+                }
+                className="mt-8 w-full rounded-full bg-white px-6 py-3
+                          text-sm font-semibold text-slate-900 cursor-pointer"
+              >
+                {activeIndex === slides.length - 1 ? "Choisir mon rôle" : "Continuer"}
+              </button>
+            </div>
+          </div>
+
+        {/* ===== CONTENU MOBILE (inchangé) ===== */}
+        <div key={currentSlide.id} className="lg:hidden transition-all duration-300 ease-out">
+          <h1 className="mt-2 text-2xl font-semibold text-center leading-tight text-black">
+            {currentSlide.title}
+          </h1>
+
+          <p className="mt-3 text-sm leading-relaxed text-center text-black/80">
+            {currentSlide.description}
+          </p>
+
+          <div className="mt-3">
+            <button
+              className="w-full rounded-full bg-white px-6 py-4 text-sm font-semibold text-black hover:bg-white/90"
+              onClick={
+                activeIndex === slides.length - 1
+                  ? goToChoicesRoles
+                  : () => goToSlide(activeIndex + 1)
+              }
+            >
+              {activeIndex === slides.length - 1 ? "Choisir mon rôle" : "Continuer"}
+            </button>
+          </div>
+        </div>
+        </div>
+        </div>
+        {/* dots version ordi */}
+        <div className="hidden lg:flex absolute bottom-10 left-1/2 -translate-x-1/2 z-20 gap-2">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goToSlide(i)}
+              className={`h-2.5 w-2.5 rounded-full ${
+                i === activeIndex ? "bg-white" : "bg-white/30"
+              }`}
+              aria-label={`Aller au slide ${i + 1}`}
             />
           ))}
-          </div>
-        </main>
+        </div>
+      </main>
     )
 }
-
-
-
-
-
-
-
-
-
-
-// "use client";
-
-// import Image from "next/image";
-// import { useEffect, useMemo, useRef, useState } from "react";
-// import { useRouter } from "next/navigation";
-
-// type Slide = {
-//   id: number;
-//   badge: string;
-//   title: string;
-//   description: string;
-//   imageSrc: string;
-// };
-
-// export default function Onboarding() {
-//   const router = useRouter();
-//   const scrollerRef = useRef<HTMLDivElement | null>(null); // scroller ref contiendra plus tard une div pour l'instant vide = null
-//   const [activeIndex, setActiveIndex] = useState(0);
-
-//   const slides: Slide[] = useMemo(
-//     () => [
-//       {
-//         id: 1,
-//         badge: "Bienvenue sur SYNEA",
-//         title:
-//           "Parfois, le chemin est difficile.\nMais personne ne devrait avancer seul.",
-//         description:
-//           "SYNEA est un espace d’entraide entre personnes qui ont traversé l’épreuve et celles qui peuvent comprendre.",
-//         imageSrc: "/onboarding/onboarding-hero-1.svg",
-//       },
-//       {
-//         id: 2,
-//         badge: "Une communauté humaine",
-//         title: "Tu n’es plus seul.\nDes personnes comprennent vraiment.",
-//         description:
-//           "Échange avec des pairs, partage ton histoire, trouve un soutien humain et bienveillant.",
-//         imageSrc: "/onboarding/onboarding-hero-2.svg",
-//       },
-//       {
-//         id: 3,
-//         badge: "Choix du profil",
-//         title: "Choisis ton rôle sur SYNEA.",
-//         description:
-//           "Héros (je traverse l’épreuve) ou Pair-héros (j’accompagne). Tu pourras toujours évoluer ensuite.",
-//         imageSrc: "/onboarding/onboarding-hero-test.svg",
-//       },
-//     ],
-//     []
-//   );
-
-//   /* =========================
-//      Scroll → activeIndex
-//   ========================== */
-//   useEffect(() => {
-//     const el = scrollerRef.current;
-//     if (!el) return;
-
-//     const onScroll = () => {
-//       const index = Math.round(el.scrollLeft / el.clientWidth);
-//       setActiveIndex(index);
-//     };
-
-//     el.addEventListener("scroll", onScroll, { passive: true });
-//     return () => el.removeEventListener("scroll", onScroll);
-//   }, []);
-
-//   const goTo = (index: number) => {
-//     const el = scrollerRef.current;
-//     if (!el) return;
-//     el.scrollTo({
-//       left: index * el.clientWidth,
-//       behavior: "smooth",
-//     });
-//   };
-
-//   const goNext = () => {
-//     if (activeIndex < slides.length - 1) {
-//       goTo(activeIndex + 1);
-//     }
-//   };
-
-//   const finish = () => {
-//     router.push("/onboarding/step-3");
-//   };
-
-//   return (
-//     <main className="relative h-screen w-screen overflow-hidden bg-black">
-//       {/* ======= TOP BAR ======= */}
-//       <div className="absolute top-4 left-4 right-4 z-30 flex justify-between">
-//         <span className="rounded-full bg-white/15 px-3 py-1 text-xs text-white backdrop-blur">
-//           {activeIndex + 1} / {slides.length}
-//         </span>
-
-//         <button
-//           onClick={finish}
-//           className="rounded-full bg-black/30 px-3 py-1 text-xs text-white backdrop-blur"
-//         >
-//           Passer
-//         </button>
-//       </div>
-
-//       {/* ======= SLIDES ======= */}
-//       <div
-//         ref={scrollerRef}
-//         className="no-scrollbar flex h-full w-full snap-x snap-mandatory overflow-x-auto scroll-smooth"
-//       >
-//         {slides.map((slide, idx) => (
-//           <section
-//             key={slide.id}
-//             className="relative h-screen w-screen shrink-0 snap-center"
-//           >
-//             {/* ================= MOBILE + DESKTOP WRAPPER ================= */}
-//             <div className="relative h-full w-full lg:grid lg:grid-cols-2">
-//               {/* ========= IMAGE ========= */}
-//               <div className="relative h-full w-full">
-//                 <Image
-//                   src={slide.imageSrc}
-//                   alt={`Onboarding SYNEA ${slide.id}`}
-//                   fill
-//                   priority={idx === 0}
-//                   className="object-cover"
-//                 />
-
-//                 {/* Overlay mobile */}
-//                 <div className="absolute inset-0 bg-linear-to-b from-black/70 via-black/30 to-black/30 lg:hidden" />
-
-//                 {/* Overlay desktop */}
-//                 <div className="absolute inset-0 hidden lg:block bg-linear-to-r from-black/10 via-transparent to-black/25" />
-//               </div>
-
-//               {/* ========= MOBILE TEXT (OVERLAY) ========= */}
-//               <div className="absolute inset-0 z-10 flex flex-col px-6 pt-16 lg:hidden">
-//                 <span className="w-fit rounded-full bg-white/15 px-3 py-1 text-xs text-white backdrop-blur">
-//                   {slide.badge}
-//                 </span>
-
-//                 <h1 className="mt-4 max-w-md whitespace-pre-line text-3xl font-semibold leading-tight text-white">
-//                   {slide.title}
-//                 </h1>
-
-//                 <p className="mt-4 max-w-md text-sm leading-relaxed text-white/85">
-//                   {slide.description}
-//                 </p>
-
-//                 {idx === slides.length - 1 && (
-//                   <button
-//                     onClick={finish}
-//                     className="mt-6 w-fit rounded-full bg-white px-6 py-3 font-semibold text-slate-900"
-//                   >
-//                     Choisir mon rôle
-//                   </button>
-//                 )}
-//               </div>
-
-//               {/* ========= DESKTOP TEXT ========= */}
-//               <div className="relative z-10 hidden h-full items-center justify-center px-12 lg:flex">
-//                 <div className="rounded-3xl bg-white/5 p-10 backdrop-blur ring-1 ring-white/10">
-//                   <span className="rounded-full bg-white/15 px-3 py-1 text-xs text-white backdrop-blur">
-//                     {slide.badge}
-//                   </span>
-
-//                   <h1 className="mt-4 max-w-xl whitespace-pre-line text-4xl font-semibold text-white">
-//                     {slide.title}
-//                   </h1>
-
-//                   <p className="mt-4 max-w-xl text-base text-white/85">
-//                     {slide.description}
-//                   </p>
-
-//                   <div className="mt-8 flex gap-3">
-//                     {idx < slides.length - 1 ? (
-//                       <button
-//                         onClick={goNext}
-//                         className="rounded-full bg-white px-6 py-3 font-semibold text-slate-900"
-//                       >
-//                         Continuer
-//                       </button>
-//                     ) : (
-//                       <button
-//                         onClick={finish}
-//                         className="rounded-full bg-white px-6 py-3 font-semibold text-slate-900"
-//                       >
-//                         Choisir mon rôle
-//                       </button>
-//                     )}
-
-//                     <button
-//                       onClick={finish}
-//                       className="rounded-full bg-white/10 px-5 py-3 text-white ring-1 ring-white/20"
-//                     >
-//                       Passer
-//                     </button>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-//           </section>
-//         ))}
-//       </div>
-
-//       {/* ======= DOTS ======= */}
-//       <div className="absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 gap-2">
-//         {slides.map((_, i) => (
-//           <button
-//             key={i}
-//             onClick={() => goTo(i)}
-//             className={`h-2.5 w-2.5 rounded-full ${
-//               i === activeIndex ? "bg-white" : "bg-white/40"
-//             }`}
-//           />
-//         ))}
-//       </div>
-//     </main>
-//   );
-// }
