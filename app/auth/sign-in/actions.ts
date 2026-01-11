@@ -26,7 +26,7 @@ export const signInAction = async (_prev:SignInState | null, formData: FormData)
             body: {email, password}
         })
 
-        redirect("/app")
+        redirect("/profile")
     } catch (error: any) {
         if(isRedirectError(error)) throw error
 
