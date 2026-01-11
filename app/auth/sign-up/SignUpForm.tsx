@@ -1,26 +1,29 @@
 "use client"
 
-import { useActionState, useState } from "react"
+import { useActionState, useEffect, useState } from "react"
 import { createAccountAction, type CreateAccountState } from "./actions" // import du type
 import { SubmitButton } from "./SubmitButton"
 
 
 type Role = "hero" | "peer_hero"
+type RoleOrEmpty = Role | ""
 
-export const SignUpForm = ({role, cancerTypes,}: {role: Role, cancerTypes:readonly string[]}) => {
+export const SignUpForm = ({defaultRole, cancerTypes,}: {defaultRole: RoleOrEmpty, cancerTypes:readonly string[]}) => {
     const [namePublic, setNamePublic] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [cancerType, setCancerType] = useState<string>("")  // si vide = non renseigné (rgpd) falcutatif
     const [acceptedTerms, setAcceptedTerms] = useState(false)
     const [state, formAction] = useActionState<CreateAccountState | null , FormData>(createAccountAction, null) // type importé cf l4
+    const [role, setRole] = useState<RoleOrEmpty>(defaultRole)
 
 
     const canSubmit = 
+    role !== "" &&
     namePublic.trim().length >= 2 &&
     email.includes("@") &&
     password.length >= 8 &&
-    acceptedTerms;
+    acceptedTerms
 
 
     const CANCER_LABELS: Record<string, string> = {
@@ -40,9 +43,13 @@ export const SignUpForm = ({role, cancerTypes,}: {role: Role, cancerTypes:readon
         other: "Autre",
       };
       
+      useEffect(() => {
+        setRole(defaultRole)
+      },[defaultRole]) 
+
     return (
         <div>
-            <p className="text-xl font-bold">FORM VISIBLE TEST ✅</p>
+            {/* <p className="text-xl font-bold">FORM VISIBLE TEST ✅</p> */}
             <form className="p-10 text-center flex flex-col gap-3" action={formAction}
             //  onSubmit={(e) => {
             //     e.preventDefault()
@@ -54,7 +61,20 @@ export const SignUpForm = ({role, cancerTypes,}: {role: Role, cancerTypes:readon
                 {state?.ok === false && !state.field  && (
                     <p className="text-red-600 text-sm">{state.message}</p>
                 )}
-                <input type="hidden" name="role" value={role} />
+
+                <label htmlFor="role">Tu es ...</label>
+                <select name="role" id="role" required value={role}
+                onChange={(event) => setRole(event.target.value as RoleOrEmpty)}
+                className="rounded-md border px-3 py-2"
+                >
+                    <option value="">Choisir</option>
+                    <option value="hero">Héros (je traverse l'épreuve)</option>
+                    <option value="peer_hero">Pair-heros (j'ai déjà traversé l'épreuve)</option>
+                </select>
+                {state?.ok === false && state.field === "role" && (
+                    <p className="text-red-600 text-sm">{state.message}</p>
+                )}
+
 
                 <label htmlFor="namePublic">Prénom /pseudo</label>
                 <input type="text" required name="namePublic" id="namePublic" className="bg-gray-300 rounded-md border px-3 py-2" placeholder="toto" value={namePublic} onChange={(e) => setNamePublic(e.target.value)}/>

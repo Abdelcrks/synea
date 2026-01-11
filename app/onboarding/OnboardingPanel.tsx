@@ -8,7 +8,9 @@ type Slide = {
     id: number;
     title: string;
     description: string;
-};
+}
+
+type Role = "hero" | "peer_hero"
 
 export default function OnboardingPanel({
     currentSlide,
@@ -16,12 +18,14 @@ export default function OnboardingPanel({
     activeIndex,
     onNext,
     onSkip,
+    onChooseRole,
 }: {
     currentSlide: Slide;
     slidesLength: number;
     activeIndex: number;
     onNext: () => void;
-    onSkip: () => void;
+    onSkip: () => void,
+    onChooseRole: (role: Role) => void,
 }) {
     const router = useRouter()
     const [role, setRole] = useState<"hero" | "peer_hero" | null>(null)
@@ -32,7 +36,7 @@ export default function OnboardingPanel({
         event.preventDefault()
         if (!role)
             return
-        router.push(`/auth/sign-up/${role}`)
+        onChooseRole(role)
     }
 
     return (

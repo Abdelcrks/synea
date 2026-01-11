@@ -12,12 +12,15 @@ import { CANCER_TYPES, type CancerType } from "@/lib/db/schema";
 
 export type CreateAccountState =
     | {ok :true} 
-    | {ok:false; field?: "email" | "password" | "namePublic" | "acceptedTerms" ; message:string}
+    | {ok:false; field?: "email" | "password" | "namePublic" | "acceptedTerms" | "role" ; message:string}
 
 export const createAccountAction = async (_prevState: CreateAccountState | null , formData:FormData):Promise<CreateAccountState> => {
 
     const rawRole = formData.get("role")?.toString()
-    const roleSafe = rawRole === "peer_hero" ? "peer_hero" : "hero" // securité pr eviter que qq entre admin ou autre force heros au cas ou qq modifie 
+    if(rawRole !== "hero" && rawRole !== "peer_hero"){
+        return {ok:false, field:"role", message:"Choisis un rôle pour continuer"}
+    }
+    const roleSafe = rawRole  
     const namePublic= (formData.get("namePublic")?.toString() ?? "").trim()
     const email = (formData.get("email")?.toString() ?? "").trim().toLowerCase()
     const password = formData.get("password")?.toString() ?? ""
@@ -29,12 +32,10 @@ export const createAccountAction = async (_prevState: CreateAccountState | null 
         cancerType = rawCancerType as CancerType // assigne après avoir filtré
     }    
 
-
-
     if(!namePublic || namePublic.length < 2) {
         return {ok: false, field : "namePublic", message : "Le pseudo doit faire au moins 2 caractères"}
     }
-    if (!email.includes("@")) {
+    if ( !email || !email.includes("@") || !email.includes(".")) {
         return { ok: false, field: "email", message: "Email invalide." }
     }
     if(password.length<8){
@@ -46,7 +47,6 @@ export const createAccountAction = async (_prevState: CreateAccountState | null 
 
 
     console.log("FORM DATA RECU RECU")
-    console.log(Object.fromEntries(formData.entries()))
 
     // return {ok: true}
 

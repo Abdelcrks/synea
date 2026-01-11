@@ -51,9 +51,17 @@ export default function Onboarding() {
   const currentSlide = slides[activeIndex] ?? slides[0]
   const isLastSlide = activeIndex === slides.length - 1
 
-  const goToLastSlide = () => {
-    requestGoToSlide(slides.length -1)
-  };
+  // const goToLastSlide = () => {
+  //   requestGoToSlide(slides.length -1)
+  // }
+
+  const goToSignUp = () => {
+    router.push("/auth/sign-up")
+  }
+  
+  const goToSignUpWithRole = (role:"hero"| "peer_hero") => {
+    router.push(`/auth/sign-up?role=${role}`)
+  }
 
   //  le parent demande au carousel de scroller
   const requestGoToSlide = (index: number) => {
@@ -78,7 +86,7 @@ export default function Onboarding() {
         />
         <button
           type="button"
-          onClick={goToLastSlide}
+          onClick={goToSignUp}
           className="text-sm font-semibold text-black/70 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/20 rounded-full px-3"
           aria-label="Passer l'onboarding"
         >
@@ -100,7 +108,8 @@ export default function Onboarding() {
           slidesLength={slides.length}
           activeIndex={activeIndex}
           onNext={handleNext}
-          onSkip={goToLastSlide}
+          onSkip={goToSignUp}
+          onChooseRole={goToSignUpWithRole}
         />
       </div>
 
