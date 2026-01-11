@@ -1,7 +1,7 @@
 
 
 import { users } from "./auth-schema"
-import { pgEnum, pgTable, text, timestamp,serial, integer, uniqueIndex} from "drizzle-orm/pg-core"
+import { pgEnum, pgTable, text, timestamp,serial, integer, uniqueIndex, boolean} from "drizzle-orm/pg-core"
 
 
 export const roleEnum = pgEnum("role", ["hero","peer_hero", "admin"])
@@ -40,8 +40,18 @@ export const profiles = pgTable("profiles", {
     
     namePublic: text("name_public").notNull(),
 
-    cancerType: cancerTypeEnum("cancer_type"), 
-    
+    cancerType: cancerTypeEnum("cancer_type"),
+
+    bio: text("bio"),
+
+    avatarUrl: text("avatar_url"),
+
+    locationRegion: text("location_region"),
+
+    showRegionPublic: boolean("show_region_public").notNull().default(false),
+
+    profileCompletedAt: timestamp("profile_completed_at", {withTimezone:true}),
+
     acceptedTermsAt: timestamp("accepted_terms_at", {withTimezone:true}),
 
     createdAt: timestamp("created_at" , {withTimezone:true})
@@ -49,8 +59,6 @@ export const profiles = pgTable("profiles", {
     .notNull(),
 
     updatedAt: timestamp("updated_at", {withTimezone:true}),
-
-    bio: text("bio"),
 
 
 })
