@@ -26,7 +26,7 @@ export default function Onboarding() {
         title: "Parfois, le chemin est difficile. Mais personne ne devrait avancer seul.",
         description:
           "SYNEA est un espace d'entraide entre personnes qui ont traversé l'épreuve et celles qui peuvent vraiment comprendre",
-        imageSrc: "/onboarding/onboarding-v-1.png",
+        imageSrc: "/onboarding/onboarding-1.png",
       },
       {
         id: 2,
@@ -34,7 +34,7 @@ export default function Onboarding() {
         title: "Tu n'es plus seul, des héros comme toi, comprennent vraiment",
         description:
           "Échange avec des pairs, partage ton histoire, trouve un soutien humain et bienveillant.",
-        imageSrc: "/onboarding/onboarding-v-2.png",
+        imageSrc: "/onboarding/onboarding-2.png",
       },
       {
         id: 3,
@@ -42,7 +42,7 @@ export default function Onboarding() {
         title: "Choisis ton rôle sur SYNEA.",
         description:
           "Héros (je travèrse l'épreuve) ou Pair-Héros (j'ai déjà traversé, j'accompagne). Tu pourras toujours évoluer ensuite.",
-        imageSrc: "/onboarding/onboarding-v-3.png",
+        imageSrc: "/onboarding/onboarding-3.png",
       },
     ],
     []
@@ -87,7 +87,7 @@ export default function Onboarding() {
         <button
           type="button"
           onClick={goToSignUp}
-          className="text-sm font-semibold text-black/70 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/20 rounded-full px-3"
+          className="text-sm font-sans text-black/70 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/20 rounded-full px-3"
           aria-label="Passer l'onboarding"
         >
           Passer

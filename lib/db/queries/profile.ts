@@ -12,3 +12,6 @@ export const getMyProfile = async (userId:string) : Promise<Profile | null >=> {
 
     return profileDb[0] ?? null // si undifend (tableau vide )= null  sinon [profile]
 }
+
+
+

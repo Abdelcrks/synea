@@ -7,6 +7,15 @@ type ProfileViewProps = {
     email: string 
 }
 
+export const ROLE_LABELS = {
+        hero:"Héros",
+        peer_hero: "Pair-héros",
+        admin: "Administrateur",
+} as const 
+
+export type Role = keyof typeof ROLE_LABELS
+
+
 export const ProfileView = ({profile,email}: ProfileViewProps) => {
 
     const createInitiale = (name:string ) => {
@@ -18,62 +27,66 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                 return words[0].slice(0,2).toUpperCase()
         }
     }
-    console.log(createInitiale("Abdel berkat"))
-    console.log(createInitiale("ab"))
-    console.log(createInitiale("a"))
-    console.log(createInitiale("       abdel  "))
+    // console.log(createInitiale("Abdel berkat"))
+    // console.log(createInitiale("ab"))
+    // console.log(createInitiale("a"))
+    // console.log(createInitiale("       abdel  "))
 
     if (!profile) {
         return <p>Profil introuvable</p>
       }
 
+ 
     const memberSince = new Date(profile.createdAt).toLocaleDateString("fr-FR")
     return(
-        <div>
-            <div>
-                <h1>Mon profil</h1>
-                <p>Complétez votre profil pour mieux échanger avec la communauté</p>
+        <main className="mx-auto max-w-xl p-4 md:p-8 space-y-6 bg-linear-to-b from-white to-[#e2d3e6]">
+        {/* <div className="p-6 shadow-sm"> */}
+            <div className="space-y-1">
+                <h1 className="text-2xl font-semibold text-[#483C5C] ">Mon profil</h1>
+                <p className="text-sm text-muted-foreground text-[#6D647A]">Complétez votre profil pour mieux échanger avec la communauté</p>
             </div>
-            <div>
-                <div className="avatar">
+            <div className="rounded-2xl  bg-white p-4 space-y-3 flex flex-col items-center justify-center shadow-xl">
+                <div className="h-12 w-12 relative object-cover rounded-full flex items-center justify-center overflow-hidden border border-[#9F86C0]">
                     {profile.avatarUrl ? (
-                        <Image alt={`Avatar de ${profile.namePublic}`} width={30} height={30} src={profile.avatarUrl}/>
+                        <Image alt={`Avatar de ${profile.namePublic}`} fill src={profile.avatarUrl}/>
                     ):(
-                        <div className="avatar-fallback">
+                        <div id="avatar-fallback" className="text-[#483C5C]">
                             {createInitiale(profile.namePublic)}
                         </div>
                     )}
                 </div>
-                <h1>{profile.namePublic}</h1>
-                <p>{profile.role}</p>
-                <p>{profile.locationRegion ?? "Région non renseignée"}</p>
+                <h1 className="text-[#483C5C] font-semibold">{profile.namePublic}</h1>
+                <span className="text-sm px-3 py-1 rounded-full bg-[#9F86C0]/30 text-[#6D647A] font-semibold">{ROLE_LABELS[profile.role]}</span>
+                <p className="text-[#6D647A]">{profile.locationRegion ?? "Région non renseignée"}</p>
                 
-                <Link href={`/profile/edit`}>Modifier mon profil</Link>
+                <Link href={`/profile/edit`} className="inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white bg-[#9F86C0]">Modifier mon profil</Link>
             </div>
-            <div>
-                <h2>À propos</h2>
+            <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
+                <h2 className="text-[#483C5C] font-semibold">À propos</h2>
                 <p>{profile.bio ?? "Aucune bio.."}</p>
             </div>
-            <div>
-                <p>Type de cancer (optionnel) {profile.cancerType}</p>
-                <p>Ces informations sont facultatives. Vous choisissez ce que vous partagez.</p>
+            <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
+                <h2 className="text-[#483C5C] font-semibold">Informations (optionnel) </h2>
+                <p className="text-[#6D647A]">Type de cancer (optionnel) {profile.cancerType ?? "Non renseigné"}</p>
+                <p className="text-[#6D647A]">Ces informations sont facultatives. Vous choisissez ce que vous partagez.</p>
             </div>
-            <div>
-                <h2>Compte</h2>
-                <p>Email {email}</p>
-                <p>Membre depuis {memberSince}</p>
-                <div>Vos données sont cryptées et ne sont jamais partagées avec des tiers à des fins commerciales</div>
+            <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
+                <h2 className="text-[#483C5C] font-semibold">Compte</h2>
+                <p className="text-[#6D647A]">Email : {email}</p>
+                <p className="text-[#6D647A]">Membre depuis : {memberSince}</p>
+                <div>Vos informations ne sont jamais partagées à des fins commerciales.</div>
             </div>
-            <div>
-                <h2>Préférences</h2>
-                <p>Permettre aux Pair-héros de me contacter</p>
-                <p>Afficher ma localisation aux autres</p>
+            <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
+                <h2 className="text-[#483C5C] font-semibold">Préférences</h2>
+                <p className="text-[#6D647A]">Permettre aux Pair-héros de me contacter</p>
+                <p className="text-[#6D647A]">Afficher ma localisation aux autres</p>
             </div>
-            <div>
-                <h2>Zone sensible</h2>
-                <p>La suppression de votre compte est définitive. Toutes vos données , messages et relations seront supprimés de façon irreversible.</p>
-                <button>Supprimer mon compte</button>
+            <div className="rounded-2xl shadow-xl flex flex-col   bg-white p-4 space-y-2">
+                <h2 className="text-[#483C5C] font-semibold">Zone sensible</h2>
+                <p className="text-red-900 text-center">La suppression de votre compte est définitive. Toutes vos données , messages et relations seront supprimés de façon irreversible.</p>
+                <button type="button" className="bg-red-600 w-full rounded-full px-6 py-3 text-sm font-semibold text-white">Supprimer mon compte</button>
             </div>
-        </div>
+        {/* </div> */}
+        </main>
     )
 }
