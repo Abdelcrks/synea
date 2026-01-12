@@ -1,19 +1,21 @@
 import { Profile } from "@/lib/db/queries/profile"
 import Image from "next/image"
 import Link from "next/link"
+import { CANCER_LABELS } from "@/lib/constants/cancer"
+import { ROLE_LABELS } from "@/lib/constants/roles"
 
 type ProfileViewProps = {
     profile: Profile | null,
     email: string 
 }
 
-export const ROLE_LABELS = {
-        hero:"Héros",
-        peer_hero: "Pair-héros",
-        admin: "Administrateur",
-} as const 
+// export const ROLE_LABELS = {
+//         hero:"Héros",
+//         peer_hero: "Pair-héros",
+//         admin: "Administrateur",
+// } as const 
 
-export type Role = keyof typeof ROLE_LABELS
+// export type Role = keyof typeof ROLE_LABELS
 
 
 export const ProfileView = ({profile,email}: ProfileViewProps) => {
@@ -67,14 +69,27 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
             </div>
             <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
                 <h2 className="text-[#483C5C] font-semibold">Informations (optionnel) </h2>
-                <p className="text-[#6D647A]">Type de cancer (optionnel) {profile.cancerType ?? "Non renseigné"}</p>
-                <p className="text-[#6D647A]">Ces informations sont facultatives. Vous choisissez ce que vous partagez.</p>
+                <p className="text-[#6D647A]">Type de cancer (optionnel) : {profile.cancerType ? CANCER_LABELS[profile.cancerType] : "Non renseigné"}</p>
+                <p className="text-xs text-[#6D647A] italic">Ces informations sont facultatives. Vous choisissez ce que vous partagez.</p>
             </div>
             <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
                 <h2 className="text-[#483C5C] font-semibold">Compte</h2>
-                <p className="text-[#6D647A]">Email : {email}</p>
+                <div className="flex items-center justify-between">
+                    <p className="text-[#6D647A]">Email : {email}</p>
+                    <Link href={"/settings/security#email"} 
+                    className="text-sm font-medium text-[#9F86C0]">
+                    Gérer
+                    </Link>
+                </div>
+                <div className="flex justify-between items-center">
+                    <p className="text-[#6D647A]">Mot de passe : ••••••••</p>
+                    <Link className="text-sm text-[#9F86C0] font-medium "
+                     href={"/settings/security#password"}>
+                    Gérer
+                    </Link>
+                </div>
                 <p className="text-[#6D647A]">Membre depuis : {memberSince}</p>
-                <div>Vos informations ne sont jamais partagées à des fins commerciales.</div>
+                <div className="text-xs text-[#6D647A] italic">Vos informations ne sont jamais partagées à des fins commerciales.</div>
             </div>
             <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
                 <h2 className="text-[#483C5C] font-semibold">Préférences</h2>

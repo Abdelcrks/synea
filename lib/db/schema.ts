@@ -5,6 +5,9 @@ import { pgEnum, pgTable, text, timestamp,serial, integer, uniqueIndex, boolean}
 
 
 export const roleEnum = pgEnum("role", ["hero","peer_hero", "admin"])
+export const ROLES = roleEnum.enumValues
+export type Role = (typeof ROLES)[number]
+
 export const cancerTypeEnum = pgEnum("cancer_type", [
     "bone",
     "breast",
@@ -59,6 +62,7 @@ export const profiles = pgTable("profiles", {
     .notNull(),
 
     updatedAt: timestamp("updated_at", {withTimezone:true}),
+    
 
 
 })
