@@ -3,10 +3,30 @@
 import { useActionState, useEffect, useState } from "react"
 import { createAccountAction, type CreateAccountState } from "@/app/auth/sign-up/actions" // import du type
 import { SubmitButton } from "./SubmitButton"
+import { CancerType } from "@/lib/db/schema"
+import { CANCER_LABELS } from "@/lib/constants/cancer"
 
 
-type Role = "hero" | "peer_hero"
-type RoleOrEmpty = Role | ""
+export type Role = "hero" | "peer_hero"
+export type RoleOrEmpty = Role | ""
+
+// export const CANCER_LABELS: Record<CancerType, string> = {
+//         bone: "Cancer des os",
+//         breast: "Cancer du sein",
+//         lung: "Cancer du poumon",
+//         skin: "Cancer de la peau",
+//         brain: "Cancer du cerveau",
+//         digestive: "Cancer digestif",
+//         gynecologic: "Cancer gynécologique",
+//         urologic: "Cancer urologique",
+//         head_neck: "Cancer ORL (tête et cou)",
+//         leukemia: "Leucémie",
+//         lymphoma: "Lymphome",
+//         myeloma: "Myélome",
+//         sarcoma: "Sarcome",
+//         other: "Autre",
+//       }
+
 
 export const SignUpForm = ({defaultRole, cancerTypes,}: {defaultRole: RoleOrEmpty, cancerTypes:readonly string[]}) => {
     const [namePublic, setNamePublic] = useState("")
@@ -26,22 +46,9 @@ export const SignUpForm = ({defaultRole, cancerTypes,}: {defaultRole: RoleOrEmpt
     acceptedTerms
 
 
-    const CANCER_LABELS: Record<string, string> = {
-        bone: "Cancer des os",
-        breast: "Cancer du sein",
-        lung: "Cancer du poumon",
-        skin: "Cancer de la peau",
-        brain: "Cancer du cerveau",
-        digestive: "Cancer digestif",
-        gynecologic: "Cancer gynécologique",
-        urologic: "Cancer urologique",
-        head_neck: "Cancer ORL (tête et cou)",
-        leukemia: "Leucémie",
-        lymphoma: "Lymphome",
-        myeloma: "Myélome",
-        sarcoma: "Sarcome",
-        other: "Autre",
-      };
+
+
+
       
       useEffect(() => {
         setRole(defaultRole)
@@ -101,10 +108,11 @@ export const SignUpForm = ({defaultRole, cancerTypes,}: {defaultRole: RoleOrEmpt
                     <option value="">Je ne souhaite pas répondre</option>
                     {cancerTypes.map((type) => (
                         <option value={type} key={type}>
-                            {CANCER_LABELS[type]}
+                            {CANCER_LABELS[type as CancerType]}
                         </option>
                     ))}
                 </select>
+
                 
                 <label className="flex items-center justify-center gap-2">
                 <input

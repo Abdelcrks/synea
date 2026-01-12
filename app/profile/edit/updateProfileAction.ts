@@ -6,12 +6,14 @@ import { eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
+import { CANCER_TYPES, type CancerType } from "@/lib/db/schema"
+import { ROLES, type Role } from "@/lib/db/schema"
 
  
 
 export type UpdateProfileState = 
     | {ok:true}
-    | {ok:false; field?: "namePublic" | "bio" | "locationRegion" ; message:string}
+    | {ok:false; field?: "namePublic" | "bio" | "locationRegion" | "cancerType" | "role" ; message:string}
 
 
 export const updateProfileAction =  async (_prevState:UpdateProfileState| null, formData: FormData):Promise<UpdateProfileState>=> {
@@ -25,6 +27,23 @@ export const updateProfileAction =  async (_prevState:UpdateProfileState| null, 
     const namePublic = formData.get("namePublic")?.toString().trim()
     const bio = formData.get("bio")?.toString() ?? null
     const locationRegion = formData.get("locationRegion")?.toString() ?? null
+    const cancerTypeBrut = formData.get("cancerType")?.toString() || ""
+        let cancerType:CancerType|null = null
+    if(cancerType !== ""){
+        if (!CANCER_TYPES.includes(cancerTypeBrut as CancerType)){
+            return {ok:false, field:"cancerType", message:"Type de cancer invalide"}
+        }
+        cancerType = cancerTypeBrut as CancerType
+    }
+
+    const roleBrut = formData.get("role")?.toString()
+    if(!roleBrut){
+        return {ok:false, field:"role", message:"Veuillez choisir un rrole"}
+    }
+    if(!ROLES.includes(roleBrut as Role) || roleBrut === "admin"){
+        return {ok:false, field:"role" , message : "role invalide"}
+    }
+    const role = roleBrut as Role
 
     if(!namePublic || namePublic.length < 2 ){
         return {ok:false, field:"namePublic", message:"Le nom doit contenir au moins 2 caractères"}
@@ -36,6 +55,9 @@ export const updateProfileAction =  async (_prevState:UpdateProfileState| null, 
         namePublic,
         bio,
         locationRegion,
+        cancerType,
+        role,
+        updatedAt: new Date() 
     })
     .where(eq(profiles.userId, session.user.id))
 
