@@ -1,7 +1,7 @@
 "use client"
 
 import { useActionState, useEffect, useState } from "react"
-import { createAccountAction, type CreateAccountState } from "./actions" // import du type
+import { createAccountAction, type CreateAccountState } from "@/app/auth/sign-up/actions" // import du type
 import { SubmitButton } from "./SubmitButton"
 
 

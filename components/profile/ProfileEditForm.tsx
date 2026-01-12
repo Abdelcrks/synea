@@ -17,8 +17,6 @@ export default function ProfileEditForm  ({profile}:ProfileEditFormProps)  {
     // const [namePublic, setNamePublic] = useState(profile.namePublic)
     // const [bio, setBio] = useState(profile.bio ?? "")
     // const [location, setLocation] = useState(profile.locationRegion ?? "")
-    
-    
 
     return(
         <section>
