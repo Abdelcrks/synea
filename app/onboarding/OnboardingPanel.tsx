@@ -54,7 +54,7 @@ export default function OnboardingPanel({
                 <button
                     type="button"
                     onClick={onSkip}
-                    className="text-sm font-semibold text-black/70 hover:text-black bg-[#9F86C0]
+                    className="text-sm font-sans cursor-pointer text-white hover:text-white/20 bg-[#9F86C0]
                      focus:outline-none focus:ring-2 focus:ring-white/30 rounded-full px-3 py-2"
                     aria-label="Passer l'onboarding"
                 >
@@ -65,11 +65,11 @@ export default function OnboardingPanel({
             {/* Desktop content */}
             <div className="hidden lg:flex h-full items-center justify-center">
                 <div className="w-full max-w-xl rounded-3xl p-10 backdrop-blur ring-1 ring-white/10">
-                    <h1 className="mt-4 whitespace-pre-line text-4xl font-semibold leading-tight text-[#483C5C]">
+                    <h1 className="mt-4 font-serif whitespace-pre-line text-4xl leading-tight text-[#483C5C]">
                         {currentSlide.title}
                     </h1>
 
-                    <p className="mt-4 text-base leading-relaxed text-[#6D647A]">
+                    <p className="mt-4 text-base font-sans leading-relaxed text-[#6D647A]">
                         {currentSlide.description}
                     </p>
 
@@ -83,10 +83,10 @@ export default function OnboardingPanel({
                                     checked={role === "hero"}
                                     onChange={() => setRole("hero")}
                                 />
-                                <span className="font-medium text-[#483C5C]">Je suis un héros</span>
+                                <span className="font-medium font-sans text-[#483C5C]">Je suis un héros</span>
                             </label>
 
-                            <label className="flex items-center gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer">
+                            <label className="flex items-center font-sans gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer">
                                 <input
                                     type="radio"
                                     name="role"
@@ -100,7 +100,7 @@ export default function OnboardingPanel({
                             <button
                                 type="submit"
                                 disabled={!isChoiceValid}
-                                className={`w-full rounded-full px-6 py-3 text-sm font-semibold text-white
+                                className={`w-full font-sans cursor-pointer rounded-full px-6 py-3 text-sm font-semibold text-white hover:text-white/20
         ${isChoiceValid ? "bg-[#9F86C0]" : "bg-black/20 cursor-not-allowed"}`}
                             >
                                 Suivant
@@ -109,7 +109,7 @@ export default function OnboardingPanel({
                     ) : (
                         <button
                             onClick={onNext}
-                            className="mt-8 w-full rounded-full bg-[#9F86C0] px-6 py-3 text-sm font-semibold text-white cursor-pointer"
+                            className="mt-8 w-full   font-sans rounded-full bg-[#9F86C0] px-6 py-3 text-sm font-semibold text-white cursor-pointer"
                         >
                             Continuer
                         </button>
