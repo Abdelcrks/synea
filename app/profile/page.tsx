@@ -17,7 +17,7 @@ export default async function Profile ()  {
             redirect("/auth/sign-in")
         }
     const profile = await getMyProfile(userId)
-
+    
     return(
         <main>
             {/* <h1>Mon profil</h1>
