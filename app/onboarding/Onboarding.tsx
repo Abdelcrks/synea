@@ -25,15 +25,15 @@ export default function Onboarding() {
         badge: "Bienvenue sur SYNEA",
         title: "Parfois, le chemin est difficile. Mais personne ne devrait avancer seul.",
         description:
-          "SYNEA est un espace d'entraide entre personnes qui ont traversé l'épreuve et celles qui peuvent vraiment comprendre",
+          "SYNEA est un espace d'entraide entre personnes qui vivent l'épreuve et celles qui l'ont déjà traversée",
         imageSrc: "/onboarding/onboarding-1.png",
       },
       {
         id: 2,
         badge: "Une communauté humaine",
-        title: "Tu n'es plus seul, des héros comme toi, comprennent vraiment",
+        title: "Tu n'es plus seul. Ici des héros comme toi, comprennent vraiment",
         description:
-          "Échange avec des pairs, partage ton histoire, trouve un soutien humain et bienveillant.",
+          "Échange avec des personnes passées par là. Parle librement, sans te justifier. Trouve un soutien humain et bienveillant.",
         imageSrc: "/onboarding/onboarding-2.png",
       },
       {
@@ -41,7 +41,7 @@ export default function Onboarding() {
         badge: "Choix du profil",
         title: "Choisis ton rôle sur SYNEA.",
         description:
-          "Héros (je travèrse l'épreuve) ou Pair-Héros (j'ai déjà traversé, j'accompagne). Tu pourras toujours évoluer ensuite.",
+          "Héros : tu traverses l'épreuve. Pair-Héros: tu l'as déjà traversée. Tu pourras faire évoluer ton rôle à tout moment.",
         imageSrc: "/onboarding/onboarding-3.png",
       },
     ],
@@ -74,7 +74,8 @@ export default function Onboarding() {
     requestGoToSlide(activeIndex + 1)
   }
   return (
-    <main className="h-screen w-screen relative flex flex-col bg-linear-to-b from-white to-[#e2d3e6]">
+    <main className="min-h-dvh w-full relative flex flex-col bg-linear-to-b from-white to-[#e2d3e6] pb-[env(safe-area-inset-bottom)]">
+
       {/* Header mobile only */}
       <header className="w-full px-4 pt-2 flex items-center justify-between lg:hidden">
         <img
