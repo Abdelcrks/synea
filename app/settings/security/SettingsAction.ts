@@ -29,7 +29,7 @@ export const updateEmailAction = async (_prevState: UpdateSettingsActionState | 
         const changeEmail = await auth.api.changeEmail({headers: await headers(),
             body: {
                  newEmail: email,
-                callbackURL: "/settings/security"
+                callbackURL: "/profile"
             }
          })
 
