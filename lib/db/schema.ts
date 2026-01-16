@@ -28,6 +28,13 @@ export const CANCER_TYPES = cancerTypeEnum.enumValues;
 export type CancerType = (typeof CANCER_TYPES)[number];
 
 
+export const contactRequestStatusEnum = pgEnum("status", [
+    "pending",
+    "accepted",
+    "rejected",
+    "canceled",
+])
+
 
 export const profiles = pgTable("profiles", {
     id:text("id").primaryKey(),
@@ -67,6 +74,26 @@ export const profiles = pgTable("profiles", {
 
 })
 
+export const contactRequests = pgTable("contact_requests", {
+    id: serial("id").primaryKey(),
+
+    fromUserId: text("from_user_id")
+    .notNull()
+    .references(()=> users.id, {onDelete:"cascade"}),
+
+    toUserId: text("to_user_id").notNull()
+    .references(() => users.id, {onDelete:"cascade"}),
+
+    status: contactRequestStatusEnum("status")
+    .notNull().default("pending"),
+
+    createdAt: timestamp("created_at", {withTimezone:true}).defaultNow().notNull(),
+
+
+    respondedAt: timestamp("responded_at", {withTimezone:true}),
+}, (table) => ({
+    uniqFromTo: uniqueIndex("contact_requests_unique").on(table.fromUserId, table.toUserId)
+}))
 
 export const conversations = pgTable("conversations", {
     id: serial("id").primaryKey(),
