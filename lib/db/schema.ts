@@ -62,6 +62,8 @@ export const profiles = pgTable("profiles", {
 
     profileCompletedAt: timestamp("profile_completed_at", {withTimezone:true}),
 
+    isVisible : boolean("is_visible").notNull().default(true),
+
     acceptedTermsAt: timestamp("accepted_terms_at", {withTimezone:true}),
 
     createdAt: timestamp("created_at" , {withTimezone:true})
