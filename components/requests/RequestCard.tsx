@@ -1,6 +1,7 @@
 "use client"
 
 import { cancelContactRequest } from "@/lib/actions/contact-requests/cancelContactRequest"
+import { rejectContactRequest } from "@/lib/actions/contact-requests/rejectContactRequest"
 import type { Profile } from "@/lib/db/queries/profile"
 import { useState } from "react"
 
@@ -15,6 +16,7 @@ type RequestCardProps = {
 export const RequestCard = ({profile, type, requestId}: RequestCardProps) => {
     const [loading, setLoading] = useState(false)
     const [feedback, setFeedback] = useState<string | null>(null)
+    const [loadingReject, setLoadingReject] = useState(false)
 
     const onCancel = async () => {
         setLoading(true)
@@ -22,6 +24,17 @@ export const RequestCard = ({profile, type, requestId}: RequestCardProps) => {
         const response = await cancelContactRequest(requestId)
         if(!response.ok){
             setFeedback(response.message)
+            setLoading(false)
+        }
+    }
+
+
+    const onReject = async () => {
+        setLoadingReject(true)
+        setFeedback(null)
+        const res = await rejectContactRequest(requestId)
+        if(!res.ok){
+            setFeedback(res.message)
             setLoading(false)
         }
     }
@@ -37,11 +50,23 @@ export const RequestCard = ({profile, type, requestId}: RequestCardProps) => {
 
             {type === "sent" && (
                 <div>
-                    <button className="bg-red-500 cursor-pointer text-white px-4 py-2 rounded-full" 
+                    <button className="bg-red-600 cursor-pointer text-white px-4 py-2 rounded-full hover:bg-red-800" 
                     onClick={onCancel}>{loading? "Annulation.." : "Annuler"}
                     </button>
                     {feedback && (
                         <p className="text-red-600 text-sm">{feedback}</p>
+                    )}
+                </div>
+            )}
+
+            {type === "received" && (
+                <div>
+                    <button className="bg-red-600 cursor-pointer text-white px-4 py-2 rounded-full hover:bg-red-800" 
+                    onClick={onReject}>
+                        {loadingReject? "Refuser.." : "Refuser"}
+                    </button>
+                    {feedback && (
+                        <p className="text-red-600"> {feedback}</p>
                     )}
                 </div>
             )}
