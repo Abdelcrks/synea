@@ -1,5 +1,6 @@
 "use client"
 
+import { acceptContactRequest } from "@/lib/actions/contact-requests/acceptContactRequest"
 import { cancelContactRequest } from "@/lib/actions/contact-requests/cancelContactRequest"
 import { rejectContactRequest } from "@/lib/actions/contact-requests/rejectContactRequest"
 import type { Profile } from "@/lib/db/queries/profile"
@@ -17,6 +18,7 @@ export const RequestCard = ({profile, type, requestId}: RequestCardProps) => {
     const [loading, setLoading] = useState(false)
     const [feedback, setFeedback] = useState<string | null>(null)
     const [loadingReject, setLoadingReject] = useState(false)
+    const [loadingAccept, setLoadingAccept] = useState(false)
 
     const onCancel = async () => {
         setLoading(true)
@@ -35,7 +37,17 @@ export const RequestCard = ({profile, type, requestId}: RequestCardProps) => {
         const res = await rejectContactRequest(requestId)
         if(!res.ok){
             setFeedback(res.message)
-            setLoading(false)
+            setLoadingReject(false)
+        }
+    }
+
+    const onAccept = async () => {
+        setLoadingAccept(true)
+        setFeedback(null)
+        const response = await acceptContactRequest(requestId)
+        if(!response.ok){
+            setFeedback(response.message)
+            setLoadingAccept(false)
         }
     }
    
@@ -60,13 +72,21 @@ export const RequestCard = ({profile, type, requestId}: RequestCardProps) => {
             )}
 
             {type === "received" && (
-                <div>
-                    <button className="bg-red-600 cursor-pointer text-white px-4 py-2 rounded-full hover:bg-red-800" 
-                    onClick={onReject}>
-                        {loadingReject? "Refuser.." : "Refuser"}
-                    </button>
+                <div className="flex flex-col items-center gap-3">
+                    <div className="flex gap-3">
+                        <button className="bg-red-600 cursor-pointer text-white px-4 py-2 rounded-full hover:bg-red-800 disabled:opacity-50" 
+                        onClick={onReject} disabled={loadingReject || loadingAccept}>
+                            {loadingReject? "Refuser.." : "Refuser"}
+                        </button>
+
+                        <button className="rounded-full bg-green-600 cursor-pointer text-white py-2 px-4 hover:bg-green-800 disabled:opacity-50"
+                        onClick={onAccept}
+                        disabled={loadingAccept || loadingReject}>
+                            {loadingAccept ? "Accep..." : "Accepter"}
+                        </button>
+                    </div>
                     {feedback && (
-                        <p className="text-red-600"> {feedback}</p>
+                        <p className="text-red-600 text-sm">{feedback}</p>
                     )}
                 </div>
             )}
