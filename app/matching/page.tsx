@@ -45,6 +45,7 @@ export default async function MatchingPage ()  {
     ))
     return(
         <main>
+            <h1 className="text-2xl text-center p-5 ">Découvrir</h1>
             {profileToShow.map((profile) => (
                 <ProfileCard key={profile.userId} profile={profile} />
             ))}
