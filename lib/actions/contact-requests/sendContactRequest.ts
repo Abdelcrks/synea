@@ -3,9 +3,10 @@
 import { auth } from "@/lib/auth"
 import { users } from "@/lib/db/auth-schema"
 import { db } from "@/lib/db/drizzle"
-import { and, eq, or } from "drizzle-orm"
+import { and, desc, eq, or } from "drizzle-orm"
 import { headers } from "next/headers"
 import { contactRequests, profiles } from "@/lib/db/schema"
+import { revalidatePath } from "next/cache"
 
 
 export type SendContactRequestResult = 
@@ -53,22 +54,81 @@ export  async function sendContactRequest (toUserId:string): Promise<SendContact
     if(myProfile.role === targetProfile.role) {
         return {ok:false, field:"forbidden", message:"Vous ne pouvez contacter que des profils du rôle opposé"}
     }
-
+/*
     const [verifyRequest] = await db.select().from(contactRequests).where   //verifie dans les deux sens si une demande existe dans n'importe quel sens puis je bloque 
     (or(
         and(eq(contactRequests.fromUserId, session.user.id), eq(contactRequests.toUserId, toUserId)), // moi, lui     
         and(eq(contactRequests.fromUserId, toUserId), eq(contactRequests.toUserId, session.user.id)) // lui, moi   
-    )).limit(1)  
+    )).orderBy(desc(contactRequests.createdAt)).limit(1)
 
-    if (verifyRequest){
-        return {ok:false, field:"already_exists", message:"une demande existe déjà entre vous"}
+    if(verifyRequest){
+        if(verifyRequest.status === "pending"){
+            return {ok:false, field:"already_exists", message:"Une demande est déjà en attente"}
+        }
+        if(verifyRequest.status === "accepted"){
+            return {ok:false, field:"already_exists", message:"Vous êtes déjà acceptés/connectés"}
+        }
+        if(verifyRequest.status === "rejected"){
+            return {ok:false, field:"forbidden" , message:"Cette personne a refuser votre demande"}
+        }
     }
-     
-    const [sendContactDb] = await db.insert(contactRequests).values({
+
+*/
+    const [direct] = await db.select().from(contactRequests).where(
+        and(
+            eq(contactRequests.fromUserId, session.user.id),
+            eq(contactRequests.toUserId, toUserId)
+        )
+    ).limit(1)
+
+    if(direct){
+        if(direct.status === "canceled"){
+            await db.update(contactRequests).set({
+                status: "pending", 
+                respondedAt: null,
+                createdAt : new Date(),
+            }).where((eq(contactRequests.id, direct.id)))
+
+
+            revalidatePath("/matching")
+            revalidatePath("/requests")
+
+            return {ok:true}
+        }
+        return {ok:false, field:"already_exists", message:"une demande exxiste déjà entre vous"}
+    }
+
+
+    const [reverse] = await db.select().from(contactRequests)
+    .where(and(
+        eq(contactRequests.fromUserId, toUserId),
+        eq(contactRequests.toUserId, session.user.id)
+    )).limit(1)
+
+        if(reverse){
+            if(reverse.status === "pending"){
+                return {ok:false, field:"already_exists", message:"une demande est déjà en attente"}
+            }
+            if(reverse.status === "accepted"){
+                return{ok:false, field:"already_exists" , message:"vous êtes déjà connectés /acceptés"}
+
+            }
+            if(reverse.status === "rejected"){
+                return {ok:false, field:"forbidden" , message:"Cette personne a refuser votre demande"}
+            }
+        }
+
+
+
+         await db.insert(contactRequests).values({
         fromUserId: session.user.id,
         toUserId,
-        status: "pending"
-    }).returning({id:contactRequests.id})
+        status: "pending",
+        })
+
+        revalidatePath("/matching")
+        revalidatePath("/requests")
+
 
     return {ok:true} // si tt est ok demande créer
 }
