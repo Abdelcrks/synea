@@ -30,8 +30,7 @@ export async function cancelContactRequest (requestId: number): Promise<CancelCo
         if(updated.length === 0){
             return {ok:false, message:"Impossible d'annuler cette demande"}
 
-        }
-
+        }    
     revalidatePath("/requests")
     return {ok:true}
 }
