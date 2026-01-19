@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from "react"
 import { signInAction, type SignInState } from "./actions"
-import { SubmitButton } from "../../../components/onboarding/SubmitButton"
+import { SubmitButton } from "../../onboarding/components/SubmitButton"
 
 export const SignInForm = () => {
 

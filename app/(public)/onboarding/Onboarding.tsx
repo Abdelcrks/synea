@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import OnboardingCarousel from "./OnboardingCarousel";
-import OnboardingPanel from "./OnboardingPanel";
+import OnboardingCarousel from "./components/OnboardingCarousel";
+import OnboardingPanel from "./components/OnboardingPanel";
 
 type Slide = {
   id: number;

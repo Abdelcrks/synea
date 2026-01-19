@@ -2,7 +2,7 @@
 
 import { useActionState,  } from "react"
 import type { Profile } from "@/lib/db/queries/profile"
-import { updateProfileAction, UpdateProfileState, } from "@/app/profile/edit/updateProfileAction"
+import { updateProfileAction, UpdateProfileState, } from "@/app/(app)/profile/edit/updateProfileAction"
 import { CANCER_LABELS } from "@/lib/constants/cancer"
 import { CANCER_TYPES, ROLES } from "@/lib/db/schema"
 import { ROLE_LABELS } from "@/lib/constants/roles"
