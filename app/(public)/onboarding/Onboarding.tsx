@@ -74,7 +74,7 @@ export default function Onboarding() {
     requestGoToSlide(activeIndex + 1)
   }
   return (
-    <main className="min-h-dvh w-full relative flex flex-col bg-linear-to-b from-white to-[#e2d3e6] pb-[env(safe-area-inset-bottom)]">
+    <main className="min-h-dvh w-full relative flex flex-col pb-[env(safe-area-inset-bottom)]">
 
       {/* Header mobile only */}
       <header className="w-full px-4 pt-2 flex items-center justify-between lg:hidden">

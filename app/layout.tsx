@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body
-        className={`${inter.variable} ${fraunces.variable} min-h-dvh bg-linear-to-b from-white to-[#e2d3e6]`}
+        className={`${inter.variable} ${fraunces.variable} min-h-dvh bg-linear-to-b from-white to-[#e2d3e6] bg-fixed`}
       >
         {children}
       </body>

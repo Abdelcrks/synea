@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { CANCER_LABELS } from "@/lib/constants/cancer"
 import { ROLE_LABELS } from "@/lib/constants/roles"
+import { signOutAction } from "@/lib/actions/auth/signOutAction"
 
 type ProfileViewProps = {
     profile: Profile | null,
@@ -41,7 +42,7 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
  
     const memberSince = new Date(profile.createdAt).toLocaleDateString("fr-FR")
     return(
-        <main className="mx-auto max-w-xl p-4 md:p-8 space-y-6 bg-linear-to-b from-white to-[#e2d3e6]">
+        <section className="mx-auto max-w-xl p-4 md:p-8 space-y-6 ">
         {/* <div className="p-6 shadow-sm"> */}
             <div className="space-y-1">
                 <h1 className="text-2xl font-semibold text-[#483C5C] ">Mon profil</h1>
@@ -90,6 +91,9 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                 </div>
                 <p className="text-[#6D647A]">Membre depuis : {memberSince}</p>
                 <div className="text-xs text-[#6D647A] italic">Vos informations ne sont jamais partagées à des fins commerciales.</div>
+                <form action={signOutAction} className="pt-2">
+                    <button className="w-full cursor-pointer rounded-full border text-white bg-[#9F86C0] px-6 py-3 text-sm font-semibold">Se déconnecter</button>
+                </form>
             </div>
             <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
                 <h2 className="text-[#483C5C] font-semibold">Préférences</h2>
@@ -101,7 +105,8 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                 <p className="text-red-900 text-center">La suppression de votre compte est définitive. Toutes vos données , messages et relations seront supprimés de façon irreversible.</p>
                 <button type="button" className="bg-red-600 w-full rounded-full px-6 py-3 text-sm font-semibold text-white">Supprimer mon compte</button>
             </div>
+
         {/* </div> */}
-        </main>
+        </section>
     )
 }
