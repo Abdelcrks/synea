@@ -1,8 +1,8 @@
 "use client"
 
 import { useActionState, useEffect, useState } from "react"
-import { createAccountAction, type CreateAccountState } from "@/app/auth/sign-up/actions" // import du type
-import { SubmitButton } from "../../../components/onboarding/SubmitButton"
+import { createAccountAction, type CreateAccountState } from "@/app/(public)/auth/sign-up/actions"
+import { SubmitButton } from "../../onboarding/components/SubmitButton"
 import { CancerType } from "@/lib/db/schema"
 import { CANCER_LABELS } from "@/lib/constants/cancer"
 

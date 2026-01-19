@@ -80,7 +80,7 @@ export const updatePasswordAction = async (_prevState: UpdateSettingsActionState
             body: {
                 newPassword: password,
                 currentPassword: currentPassword,
-                revokeOtherSessions: true
+                revokeOtherSessions: false
             }
         })
         

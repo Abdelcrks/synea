@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
 
 type Slide = {
@@ -27,7 +27,6 @@ export default function OnboardingPanel({
     onSkip: () => void,
     onChooseRole: (role: Role) => void,
 }) {
-    const router = useRouter()
     const [role, setRole] = useState<"hero" | "peer_hero" | null>(null)
     const isChoiceValid = role !== null
     const isLastSlide = activeIndex === slidesLength - 1
@@ -40,7 +39,7 @@ export default function OnboardingPanel({
     }
 
     return (
-        <div className="flex-1 px-6 pb-8 lg:relative">
+        <div className="flex-1 px-6 pb-8 lg:relative flex flex-col">
             {/* Header desktop */}
             <div className="hidden lg:flex items-center justify-between">
                 <Image
@@ -114,7 +113,17 @@ export default function OnboardingPanel({
                             Continuer
                         </button>
                     )}
-
+                    <div className="mt-6 text-center">
+                        <p className="text-sm text-[#6D647A]">
+                            Déjà un compte ?{" "}
+                            <Link
+                            href="/auth/sign-in"
+                            className="font-semibold text-[#9F86C0] hover:underline"
+                            >
+                            Se connecter
+                            </Link>
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -171,6 +180,17 @@ export default function OnboardingPanel({
                 </button>
                 </div>
             )}
+            <div className="mt-auto pt-6 text-center">
+                <p className="text-sm text-[#6D647A]">
+                    Déjà un compte ?{" "}
+                    <Link
+                    href="/auth/sign-in"
+                    className="font-semibold text-[#9F86C0] hover:underline"
+                    >
+                    Se connecter
+                    </Link>
+                </p>
+            </div>
             </div>
         </div>
     );
