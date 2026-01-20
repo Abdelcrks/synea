@@ -2,6 +2,8 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { BottomNav } from "@/components/navigation/BottomNav";
+import { DesktopNav } from "@/components/navigation/DesktopNav";
+
 
 export default async function AppLayout({
   children,
@@ -15,8 +17,10 @@ export default async function AppLayout({
     redirect("/onboarding");
   }
 
-  return (
+  return(
     <div className="min-h-screen w-full">
+      <DesktopNav />
+
       <main className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4">
         {children}
       </main>
@@ -25,5 +29,5 @@ export default async function AppLayout({
         <BottomNav />
       </div>
     </div>
-  );
+  )
 }

@@ -2,12 +2,14 @@
 import { Inbox, User, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { NAV_ITEMS } from "./nav-items";
 
 
-const NAV_ITEMS = [ 
-    {href:"/matching", label:"Matching", icon:Users},
-    {href:"/requests", label: "Requests", icon: Inbox},
-    {href:"/profile", label: "Profile", icon:User},]
+
+// const NAV_ITEMS = [ 
+//     {href:"/matching", label:"Matching", icon:Users},
+//     {href:"/requests", label: "Requests", icon: Inbox},
+//     {href:"/profile", label: "Profile", icon:User},]
 
 export function BottomNav() {
   const pathname = usePathname();
