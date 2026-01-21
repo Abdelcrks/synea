@@ -28,7 +28,7 @@ export default async function ProfileEdit () {
             >
                 ← Retour
             </Link>
-            <h1 className="text-2xl mt-4 font-semibold text-[#483C5C]">
+            <h1 className="text-2xl mt-4 font-semibold ">
                 Modifier mon profil
             </h1>
             <ProfileEditForm profile={profile}/>

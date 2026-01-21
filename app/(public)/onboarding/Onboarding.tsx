@@ -121,7 +121,7 @@ export default function Onboarding() {
             key={i}
             onClick={() => requestGoToSlide(i)}
             className={`h-2.5 w-2.5 rounded-full ${
-              i === activeIndex ? "bg-[#9F86C0]" : "bg-white"
+              i === activeIndex ? "btn-primary" : "bg-white"
             }`}
             aria-label={`Aller au slide ${i + 1}`}
           />
