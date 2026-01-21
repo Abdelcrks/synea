@@ -4,6 +4,7 @@ import Link from "next/link"
 import { CANCER_LABELS } from "@/lib/constants/cancer"
 import { ROLE_LABELS } from "@/lib/constants/roles"
 import { signOutAction } from "@/lib/actions/auth/signOutAction"
+import { Avatar } from "./Avatar"
 
 type ProfileViewProps = {
     profile: Profile | null,
@@ -21,15 +22,15 @@ type ProfileViewProps = {
 
 export const ProfileView = ({profile,email}: ProfileViewProps) => {
 
-    const createInitiale = (name:string ) => {
-       if(!name) return ""
-       const words = name.trim().split(" ")
-        if (words.length >= 2){
-            return (words[0][0] + words[1][0]).toUpperCase()
-        } else{
-                return words[0].slice(0,2).toUpperCase()
-        }
-    }
+    // const createInitiale = (name:string ) => {
+    //    if(!name) return ""
+    //    const words = name.trim().split(" ")
+    //     if (words.length >= 2){
+    //         return (words[0][0] + words[1][0]).toUpperCase()
+    //     } else{
+    //             return words[0].slice(0,2).toUpperCase()
+    //     }
+    // }
     // console.log(createInitiale("Abdel berkat"))
     // console.log(createInitiale("ab"))
     // console.log(createInitiale("a"))
@@ -53,9 +54,10 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                     {profile.avatarUrl ? (
                         <Image alt={`Avatar de ${profile.namePublic}`} fill src={profile.avatarUrl}/>
                     ):(
-                        <div id="avatar-fallback" className="">
-                            {createInitiale(profile.namePublic)}
-                        </div>
+                        // <div id="avatar-fallback" className="">
+                        //     {createInitiale(profile.namePublic)}
+                        // </div>
+                        <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl}></Avatar>
                     )}
                 </div>
                 <h1 className="font-semibold">{profile.namePublic}</h1>
