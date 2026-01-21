@@ -19,7 +19,6 @@ export default async function SignUpPage({searchParams} : {searchParams: Promise
         <main className="text-center">
             {/* <h1>inscription</h1>
             <h2>Rôle choisis : {defaultRole || "non choisi"}</h2> */}
-            <Link href={"/auth/sign-in"} className="mt-10 p-2 rounded-full inline-flex cursor-pointer text-[#6D647A] hover:text-[#483C5C] transition">Déjà inscris ? par ici</Link>
             <SignUpForm defaultRole={defaultRole} cancerTypes={cancerTypes}></SignUpForm>
         </main>
     )

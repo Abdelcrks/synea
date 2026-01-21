@@ -1,16 +1,21 @@
 import { useFormStatus } from "react-dom"
 
 
+type SubmitButtonProps = {
+    disabled?: boolean
+    label: string
+    pendingLabel?: string
+}
 
-export const SubmitButton = ({disabled}: {disabled:boolean}) => {
+export const SubmitButton = ({disabled = false, label, pendingLabel = "chargement.."}: SubmitButtonProps) => {
     const {pending} = useFormStatus()
 
     return (
         <button type="submit" disabled={disabled || pending}
-        className={`rounded-full py-3 text-white ${
-            disabled || pending ? "bg-black/40 cursor-not-allowed" : "bg-black"
+        className={`rounded-full py-3 px-4 text-white ${
+            disabled || pending ? "bg-black/40 cursor-not-allowed" : "btn-primary cursor-pointer "
         }`}>
-            {pending ? "Création..." : "Créer mon compte"}
+            {pending ? pendingLabel : label}
         </button>
     )
 }

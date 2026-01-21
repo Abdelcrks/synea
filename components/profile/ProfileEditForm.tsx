@@ -48,7 +48,7 @@ export default function ProfileEditForm  ({profile}:ProfileEditFormProps)  {
                     )}
                 </div>
                 <div>
-                    <label htmlFor="locationRegion" className="block text-sm font-medium text-[#483C5C]">
+                    <label htmlFor="locationRegion" className="block text-sm font-medium ">
                         Région
                     </label>
                     <input type="text" name="locationRegion" defaultValue={profile.locationRegion ?? ""}
@@ -65,7 +65,7 @@ export default function ProfileEditForm  ({profile}:ProfileEditFormProps)  {
                         ))}
                         
                     </select>
-                    <p className="mt-2 text-xs text-[#6D647A] italic">
+                    <p className="mt-2 text-xs  italic">
                         Vous pouvez changer votre rôle à tout moment. Le matching utilise ce choix.
                     </p>
                 </div>
@@ -79,7 +79,7 @@ export default function ProfileEditForm  ({profile}:ProfileEditFormProps)  {
                     </select>
                 </div>
                 <div>
-                    <button type="submit" className="inline-flex w-full items-center justify-center cursor-pointer rounded-full border  px-6 py-3 text-sm font-semibold text-white bg-[#9F86C0]"
+                    <button  type="submit" className="btn-primary inline-flex w-full items-center justify-center cursor-pointer rounded-full border  px-6 py-3 text-sm font-semibold text-white"
                     >
                     Enregistrer
                     </button>

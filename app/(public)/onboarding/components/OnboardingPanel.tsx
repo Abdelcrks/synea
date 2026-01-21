@@ -53,7 +53,7 @@ export default function OnboardingPanel({
                 <button
                     type="button"
                     onClick={onSkip}
-                    className="text-sm font-sans cursor-pointer text-white hover:text-white/20 bg-[#9F86C0]
+                    className="text-sm font-sans cursor-pointer text-white hover:text-white/20 btn-primary
                      focus:outline-none focus:ring-2 focus:ring-white/30 rounded-full px-3 py-2"
                     aria-label="Passer l'onboarding"
                 >
@@ -64,11 +64,11 @@ export default function OnboardingPanel({
             {/* Desktop content */}
             <div className="hidden lg:flex h-full items-center justify-center">
                 <div className="w-full max-w-xl rounded-3xl p-10 backdrop-blur ring-1 ring-white/10">
-                    <h1 className="mt-4 font-serif whitespace-pre-line text-4xl leading-tight text-[#483C5C]">
+                    <h1 className="mt-4 font-serif whitespace-pre-line text-4xl leading-tight ">
                         {currentSlide.title}
                     </h1>
 
-                    <p className="mt-4 text-base font-sans leading-relaxed text-[#6D647A]">
+                    <p className="mt-4 text-base font-sans leading-relaxed ">
                         {currentSlide.description}
                     </p>
 
@@ -82,7 +82,7 @@ export default function OnboardingPanel({
                                     checked={role === "hero"}
                                     onChange={() => setRole("hero")}
                                 />
-                                <span className="font-medium font-sans text-[#483C5C]">Je suis un héros</span>
+                                <span className="font-medium font-sans ">Je suis un héros</span>
                             </label>
 
                             <label className="flex items-center font-sans gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer">
@@ -93,14 +93,14 @@ export default function OnboardingPanel({
                                     checked={role === "peer_hero"}
                                     onChange={() => setRole("peer_hero")}
                                 />
-                                <span className="font-medium text-[#483C5C]">Je suis un pair-héros</span>
+                                <span className="font-medium">Je suis un pair-héros</span>
                             </label>
 
                             <button
                                 type="submit"
                                 disabled={!isChoiceValid}
-                                className={`w-full font-sans cursor-pointer rounded-full px-6 py-3 text-sm font-semibold text-white hover:text-white/20
-        ${isChoiceValid ? "bg-[#9F86C0]" : "bg-black/20 cursor-not-allowed"}`}
+                                className={`w-full font-sans cursor-pointer rounded-full px-6 py-3 text-sm font-semibold  hover:text-white/20
+        ${isChoiceValid ? "btn-primary" : "bg-black/20 cursor-not-allowed"}`}
                             >
                                 Suivant
                             </button>
@@ -108,13 +108,13 @@ export default function OnboardingPanel({
                     ) : (
                         <button
                             onClick={onNext}
-                            className="mt-8 w-full   font-sans rounded-full bg-[#9F86C0] px-6 py-3 text-sm font-semibold text-white cursor-pointer"
+                            className="mt-8 w-full   font-sans rounded-full btn-primary px-6 py-3 text-sm font-semibold text-white cursor-pointer"
                         >
                             Continuer
                         </button>
                     )}
                     <div className="mt-6 text-center">
-                        <p className="text-sm text-[#6D647A]">
+                        <p className="text-sm ">
                             Déjà un compte ?{" "}
                             <Link
                             href="/auth/sign-in"
@@ -129,11 +129,11 @@ export default function OnboardingPanel({
 
             {/* Mobile content */}
             <div key={currentSlide.id} className="lg:hidden transition-all duration-300 ease-out">
-            <h1 className="mt-2 text-2xl font-semibold text-center leading-tight text-[#483C5C]">
+            <h1 className="mt-2 text-2xl font-semibold text-center leading-tight ">
                 {currentSlide.title}
             </h1>
 
-            <p className="mt-3 text-sm leading-relaxed text-center text-[#6D647A]">
+            <p className="mt-3 text-sm leading-relaxed text-center ">
                 {currentSlide.description}
             </p>
 
@@ -165,7 +165,7 @@ export default function OnboardingPanel({
                     type="submit"
                     disabled={!isChoiceValid}
                     className={`w-full rounded-full px-6 py-4 text-sm font-semibold text-white
-                    ${isChoiceValid ? "bg-[#9F86C0]" : "bg-black/20 cursor-not-allowed"}`}
+                    ${isChoiceValid ? "btn-primary" : "bg-black/20 cursor-not-allowed"}`}
                 >
                     Suivant
                 </button>
@@ -173,7 +173,7 @@ export default function OnboardingPanel({
             ) : (
                 <div className="mt-4">
                 <button
-                    className="w-full rounded-full bg-[#9F86C0] px-6 py-4 text-sm font-semibold text-white hover:opacity-95"
+                    className="w-full rounded-full btn-primary px-6 py-4 text-sm font-semibold text-white hover:opacity-95"
                     onClick={onNext}
                 >
                     Continuer
@@ -181,7 +181,7 @@ export default function OnboardingPanel({
                 </div>
             )}
             <div className="mt-auto pt-6 text-center">
-                <p className="text-sm text-[#6D647A]">
+                <p className="text-sm ">
                     Déjà un compte ?{" "}
                     <Link
                     href="/auth/sign-in"
