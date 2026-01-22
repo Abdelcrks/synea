@@ -57,7 +57,7 @@ export const ContactsContent = ({ profilesAccepted }: ContactsContentProps) => {
                     </div>
 
                     <Link
-                        href={`/messages/new?userId=${profile.userId}`}
+                        href={`/messages`}
                         className="focus:outline-none focus:ring-2 focus:ring-(--primary)/50 shrink-0 rounded-xl border-(--primary) bg-white/70 px-4 py-3 text-sm font-medium text-(--text-main) transition-colors hover:bg-(--primary-soft) hover:text-white"
                     >
                         Message
