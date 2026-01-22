@@ -5,11 +5,11 @@
 
 :root{
   /* fond d'écran  */
-  --bg-main: #F6F3FB;
+  --bg-main: #F6F3FB;   
   --bg-card: #FFFFFF;
 
   /* texte */
-  --text-main: #1F2937;
+  --text-main: #1f2937;
   --text-muted: #6B7280;
   --text-subtle: #9CA3AF;
 

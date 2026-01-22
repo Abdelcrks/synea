@@ -96,3 +96,4 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
     </div>
   )
 }
+

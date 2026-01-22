@@ -97,6 +97,12 @@ export const contactRequests = pgTable("contact_requests", {
     uniqFromTo: uniqueIndex("contact_requests_unique").on(table.fromUserId, table.toUserId)
 }))
 
+
+
+
+
+
+
 export const conversations = pgTable("conversations", {
     id: serial("id").primaryKey(),
 
