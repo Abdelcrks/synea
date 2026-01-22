@@ -85,7 +85,7 @@ export const RequestCard = ({ profile, type, requestId }: RequestCardProps) => {
                     {type === "sent" && (
                         <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
                             <button
-                                className="rounded-full border border-red-500 px-5 py-2 text-sm font-medium text-red-600
+                                className="rounded-full border border-red-500 px-5 py-2 text-sm font-medium text-red-600 cursor-pointer
                        hover:bg-red-50 disabled:opacity-50 disabled:cursor-not-allowed"
                                 onClick={onCancel}
                                 disabled={loading}
@@ -103,7 +103,7 @@ export const RequestCard = ({ profile, type, requestId }: RequestCardProps) => {
                         <div className="flex flex-col gap-3">
                             <div className="flex flex-col gap-2 sm:flex-row">
                                 <button
-                                    className="rounded-full border border-red-500 px-5 py-2 text-sm font-medium text-red-600
+                                    className="rounded-full border border-red-500 px-5 py-2 text-sm font-medium text-red-600 cursor-pointer
                          hover:bg-red-50 disabled:opacity-50"
                                     onClick={onReject}
                                     disabled={loadingReject || loadingAccept}
@@ -112,7 +112,7 @@ export const RequestCard = ({ profile, type, requestId }: RequestCardProps) => {
                                 </button>
 
                                 <button
-                                    className="rounded-full bg-(--primary)] px-5 py-2 text-sm font-medium text-white
+                                    className="rounded-full border border-green-600  px-5 py-2 text-sm font-medium text-green-600 cursor-pointer hover:bg-green-50
                          hover:opacity-95 disabled:opacity-50"
                                     onClick={onAccept}
                                     disabled={loadingAccept || loadingReject}
