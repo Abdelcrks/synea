@@ -40,6 +40,7 @@ export default async function ContactsPage() {
             namePublic: profiles.namePublic,
             avatarUrl: profiles.avatarUrl,
             role: profiles.role,
+            id: profiles.id
           })
           .from(profiles)
           .where(inArray(profiles.userId, otherUserIds)) // recupere tt les profils que j'ai en contact

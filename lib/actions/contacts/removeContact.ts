@@ -35,5 +35,7 @@ export async function removeContact(formData: FormData):Promise<RemoveContactRes
     ))
     
     revalidatePath("/contacts")
+    revalidatePath("/matching")
+    revalidatePath("/requests")
     return {ok:true}
 }
