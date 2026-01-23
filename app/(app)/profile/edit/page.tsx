@@ -20,7 +20,7 @@ export default async function ProfileEdit () {
     }
     return(
         
-        <main className="relative min-h-screen px-4 py-10 sm:px-10">
+        <main className="relative min-h-screen px-4 py-10 sm:px-10 ">
 
             <Link
                 href={"/profile"}

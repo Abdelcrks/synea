@@ -24,8 +24,8 @@ export default function ProfileEditForm  ({profile}:ProfileEditFormProps)  {
     const roleWithoutAdmin = ROLES.filter((role) => role !== "admin")
 
     return(
-        <section>
-            <form action={formAction} className="space-y-6">
+        <section className="rounded-2xl border border-none  bg-white/60 p-6 text-center shadow-lg">
+            <form action={formAction} className="space-y-6 ">
                 {state?.ok === false && !state.field && (
                     <p className="text-sm text-red-600">{state.message}</p>
                 )}

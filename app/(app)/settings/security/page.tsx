@@ -75,7 +75,7 @@ export default function EditSettingsForm() {
                         <button
                             disabled={emailPending}
                             type="submit"
-                            className="inline-flex w-full cursor-pointer items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold text-white  disabled:opacity-60"
+                            className="inline-flex w-full cursor-pointer items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold text-white bg-(--primary)  disabled:opacity-60"
                         >
                             Enregistrer
                         </button>
@@ -133,7 +133,7 @@ export default function EditSettingsForm() {
                         <button
                             disabled={passwordPending}
                             type="submit"
-                            className="inline-flex cursor-pointer  w-full items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold text-white  disabled:opacity-60"
+                            className="inline-flex cursor-pointer  w-full items-center justify-center rounded-full border px-6 py-3 text-sm font-semibold text-white bg-(--primary)  disabled:opacity-60"
                         >
                             Enregistrer
                         </button>
