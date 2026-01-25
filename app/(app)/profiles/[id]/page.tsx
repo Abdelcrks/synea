@@ -41,7 +41,7 @@ export default async function PublicProfilPage ({params}: PageProps) {
     }
 
 
-    const [request] = await db.select({
+    const [request] = await db.select({   // cherche demande de contact moi vers lui ou lui vers moi
         id: contactRequests.id,
         fromUserId: contactRequests.fromUserId,
         toUserId: contactRequests.toUserId,

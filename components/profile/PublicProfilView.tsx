@@ -10,7 +10,7 @@ import { acceptContactRequestForm } from "@/lib/actions/contact-requests/forms/a
 import { rejectContactRequestForm } from "@/lib/actions/contact-requests/forms/rejectFromProfile"
 import type { RelationStatus } from "@/app/(app)/profiles/[id]/page";
 import { removeContactFormAction } from "@/lib/actions/contacts/removeContactFormAction";
-
+import { openOrCreateConversationFromProfile } from "@/lib/actions/contact-requests/forms/openOrCreateConversationForm";
 
 
 type PublicProfileViewProps = {
@@ -40,20 +40,24 @@ export function PublicProfileView({ profile, relationStatus, requestId }: Public
         )}
         if(relationStatus === "connected"){
             return ( 
-                <div className="w-full flex gap-3 pt-2">
-                    <Link
+                <div className="w-full pt-2 grid grid-cols1 gap-3 sm:grid-cols:2">
+                    {/* <Link
                         href="/messages"
                         className="inline-flex w-full cursor-pointer items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white btn-primary"
                     >
                         Envoyer un message
-                    </Link>
+                    </Link> */}
+                    <form action={openOrCreateConversationFromProfile} className="w-full">
+                      <input type="hidden" name="toUserId" value={profile.userId} />
+                      <button type="submit" className="inline-flex cursor-pointer w-full px-6 py-3 rounded-full text-sm justify-center font-semibold text-white btn-primary">Envoyer un message</button>
+                    </form>
                     {requestId ? (
                         <form action={removeContactFormAction} className="w-full">
                             <input type="hidden" name="requestId" value={requestId} />
                             <input type = "hidden" name="profileId" value={profile.id}></input>
                             <button
                                 type="submit"
-                                className="inline-flex w-full items-center justify-center cursor-pointer rounded-full hover:bg-red-800  px-6 py-3 text-sm font-semibold bg-red-600 text-white"
+                                className="inline-flex w-full items-center justify-center cursor-pointer rounded-full hover:bg-red-800 px-6 py-3 text-sm font-semibold bg-red-600 text-white"
                                  >Supprimer le contact
                             </button>
                         </form>

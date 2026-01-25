@@ -1,0 +1,1 @@
+ALTER TABLE "conversations" DROP COLUMN "created_by_role";
