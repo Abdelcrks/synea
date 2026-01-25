@@ -105,12 +105,12 @@ export const contactRequests = pgTable("contact_requests", {
 
 export const conversations = pgTable("conversations", {
     id: serial("id").primaryKey(),
+    
+    participantDuoId : text("participant_duo_id").notNull().unique(),
 
     createdByUserId: text("created_by_user_id")
     .notNull()
     .references(() => users.id, {onDelete: "cascade"}),
-
-    createdByRole: roleEnum("created_by_role").notNull(),
 
     createdAt: timestamp("created_at", {withTimezone:true})
     .defaultNow()
