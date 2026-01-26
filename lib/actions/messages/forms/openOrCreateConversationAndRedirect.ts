@@ -5,10 +5,10 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import {openOrCreateConversation} from "../../messages/openOrCreateConversation";
+import {openOrCreateConversation} from "../openOrCreateConversation";
 
 
-export async function openOrCreateConversationFromProfile (formData: FormData) {
+export async function openOrCreateConversationAndRedirect (formData: FormData) {
     const session = await auth.api.getSession({headers: await headers()})
     if (!session){
         redirect("/auth/sign-in")

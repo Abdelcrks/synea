@@ -1,6 +1,6 @@
 import { and, asc, eq } from "drizzle-orm";
 import { db } from "../drizzle";
-import { conversationParticipants, messages } from "../schema";
+import { conversationParticipants, messages, profiles } from "../schema";
 
 export async function isUserConversationParticipant(conversationId: number, userId:string){
 
@@ -21,5 +21,12 @@ export async function getMessagesByConversationId(conversationId: number){
         content:messages.content,
         senderId:messages.senderId,
         createdAt: messages.createdAt,
-    }).from(messages).where(eq(messages.conversationId, conversationId)).orderBy(asc(messages.createdAt))
+
+        senderNamePublic : profiles.namePublic,
+        senderAvatarUrl : profiles.avatarUrl,
+        senderProfileId: profiles.id,
+    }).from(messages)
+    .leftJoin(profiles,eq(messages.senderId, profiles.userId))
+    .where(eq(messages.conversationId, conversationId))
+    .orderBy(asc(messages.createdAt))
 }

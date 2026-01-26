@@ -2,6 +2,7 @@ import { ROLE_LABELS } from "@/lib/constants/roles";
 import Link from "next/link";
 import { Avatar } from "../profile/Avatar";
 import { removeContactFormAction } from "@/lib/actions/contacts/removeContactFormAction";
+import { openOrCreateConversationAndRedirect } from "@/lib/actions/messages/forms/openOrCreateConversationAndRedirect";
 
 
 
@@ -68,13 +69,19 @@ export const ContactsContent = ({ contacts }: ContactsContentProps) => {
       
               {/* ACTIONS (PAS CLIQUABLES POUR LE PROFIL) */}
               <div className="flex items-center gap-2 shrink-0">
-                <Link
+                {/* <Link
                   href={`/messages/new?userId=${profile.userId}`}
                   className="focus:outline-none focus:ring-2 focus:ring-(--primary)/50 shrink-0 rounded-xl border-(--primary) bg-white/70 px-4 py-3 text-sm font-medium text-(--text-main) transition-colors hover:bg-(--primary-soft) hover:text-white"
                 >
                   Message
-                </Link>
-      
+                </Link> */}
+                <form action={openOrCreateConversationAndRedirect} className="shrink-0">
+                  <input type="hidden" name="toUserId" value={profile.userId} />
+                  <button type="submit" className="inline-flex cursor-pointer w-full px-6 py-3 rounded-full text-sm justify-center font-semibold text-white btn-primary">
+                    Message
+                  </button>
+                </form>
+
                 <details className="relative group">
                   <summary
                     className="list-none cursor-pointer rounded-xl border-(--border) bg-white/60 px-3 py-3
@@ -102,5 +109,4 @@ export const ContactsContent = ({ contacts }: ContactsContentProps) => {
           ))}
         </ul>
       )
-      
 }
