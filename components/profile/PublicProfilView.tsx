@@ -10,7 +10,7 @@ import { acceptContactRequestForm } from "@/lib/actions/contact-requests/forms/a
 import { rejectContactRequestForm } from "@/lib/actions/contact-requests/forms/rejectFromProfile"
 import type { RelationStatus } from "@/app/(app)/profiles/[id]/page";
 import { removeContactFormAction } from "@/lib/actions/contacts/removeContactFormAction";
-import { openOrCreateConversationFromProfile } from "@/lib/actions/contact-requests/forms/openOrCreateConversationForm";
+import { openOrCreateConversationAndRedirect } from "@/lib/actions/messages/forms/openOrCreateConversationAndRedirect";
 
 
 type PublicProfileViewProps = {
@@ -47,7 +47,7 @@ export function PublicProfileView({ profile, relationStatus, requestId }: Public
                     >
                         Envoyer un message
                     </Link> */}
-                    <form action={openOrCreateConversationFromProfile} className="w-full">
+                    <form action={openOrCreateConversationAndRedirect} className="w-full">
                       <input type="hidden" name="toUserId" value={profile.userId} />
                       <button type="submit" className="inline-flex cursor-pointer w-full px-6 py-3 rounded-full text-sm justify-center font-semibold text-white btn-primary">Envoyer un message</button>
                     </form>
