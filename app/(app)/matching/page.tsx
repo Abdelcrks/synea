@@ -5,7 +5,7 @@ import { auth } from "@/lib/auth"
 import { db } from "@/lib/db/drizzle"
 import { getMyProfile } from "@/lib/db/queries/profile"
 import { contactRequests, profiles } from "@/lib/db/schema"
-import { and, eq, ne, or } from "drizzle-orm"
+import { and, desc, eq, ne, or } from "drizzle-orm"
 import { headers } from "next/headers"
 import Link from "next/link"
 
@@ -57,7 +57,7 @@ export default async function MatchingPage ()  {
                     eq(contactRequests.toUserId, userId)
                 )
             )
-        ).limit(1)
+        ).orderBy(desc(contactRequests.createdAt)).limit(1)
 
         return {
             profile: p,

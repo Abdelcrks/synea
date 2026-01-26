@@ -54,7 +54,7 @@ export  async function sendContactRequest (toUserId:string): Promise<SendContact
     if(myProfile.role === targetProfile.role) {
         return {ok:false, field:"forbidden", message:"Vous ne pouvez contacter que des profils du rôle opposé"}
     }
-/*
+
     const [verifyRequest] = await db.select().from(contactRequests).where   //verifie dans les deux sens si une demande existe dans n'importe quel sens puis je bloque 
     (or(
         and(eq(contactRequests.fromUserId, session.user.id), eq(contactRequests.toUserId, toUserId)), // moi, lui     
@@ -73,7 +73,7 @@ export  async function sendContactRequest (toUserId:string): Promise<SendContact
         }
     }
 
-*/
+
     const [direct] = await db.select().from(contactRequests).where(
         and(
             eq(contactRequests.fromUserId, session.user.id),

@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth"
 import { db } from "@/lib/db/drizzle"
 import { getPublicProfileById } from "@/lib/db/queries/profile"
 import { contactRequests } from "@/lib/db/schema"
-import { and, eq, or } from "drizzle-orm"
+import { and, desc, eq, or } from "drizzle-orm"
 import { headers } from "next/headers"
 import { notFound, redirect } from "next/navigation"
 
@@ -58,7 +58,7 @@ export default async function PublicProfilPage ({params}: PageProps) {
 
             )
         )
-    ).limit(1)
+    ).orderBy(desc(contactRequests.createdAt)).limit(1)
 
 
     let relationStatus: RelationStatus = "none"
