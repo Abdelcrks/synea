@@ -68,16 +68,27 @@ export default async function RequestPage() {
                 <pre>{JSON.stringify(requestSent, null, 2)}</pre>
             </div> */}
             <section>
-                <h1>Demande reçues</h1>
+            <div className="space-y-1">
+                <div className="flex items-center justify-between gap-3 mb-10">
+                    <h1 className="text-2xl font-semibold">Mes demandes</h1>
+                    <Link
+                    href="/contacts"
+                    className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white"
+                    >
+                    Mes contacts
+                    </Link>
+                </div>
+            </div>
+                <h1 className="font-semibold text-lg mb-5">Demande reçues</h1>
                 {receivedClean.length === 0 ? (
-                    <p>Aucune demande</p>
+                    <p className="text-sm">Aucune demande pour le moment </p>
                 ): (
                     receivedClean.map(({request, profile}) => (
                         <RequestCard key={request.id} profile={profile} requestId={request.id} type="received"/>
                     ))
                 )}
             </section>
-            <section>
+            <section className="mt-10">
                 <h1>Demande envoyées</h1>
                 {sentClean.length === 0 ? (
                     <p>aucune demande envoyée</p>

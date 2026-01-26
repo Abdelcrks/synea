@@ -15,13 +15,43 @@ export default async function MessagesPage() {
   if(inbox.length === 0){
     return (
       <main className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4">
-        <h1 className="text-xl font-semibold">Messages</h1>
+    
+        <div className="space-y-1">
+                <div className="flex items-center justify-between gap-3">
+                    <h1 className="text-2xl font-semibold">Messages</h1>
+
+                    <Link
+                    href="/contacts"
+                    className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white"
+                    >
+                    Mes contacts
+                    </Link>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                    aucun message pour le moment
+                </p>
+            </div>
       </main>
     )
   }
   return (
     <main className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4">
-      <h1 className="text-xl font-semibold">Messages</h1>
+      <div className="space-y-1">
+          <div className="flex items-center justify-between gap-3">
+              <h1 className="text-2xl font-semibold">Messages</h1>
+
+              <Link
+              href="/contacts"
+              className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white"
+              >
+              Mes demandes
+              </Link>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Vos dernières conversations :
+          </p>
+        </div>
+      {/* <h1 className="text-xl font-semibold">Messages</h1> */}
 
       <ul className="mt-6 space-y-3">
         {inbox.map((conv) => (
