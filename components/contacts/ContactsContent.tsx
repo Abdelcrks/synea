@@ -44,6 +44,21 @@ export const ContactsContent = ({ contacts }: ContactsContentProps) => {
 
     return (
         <ul className="space-y-5">
+          <div className="space-y-1">
+            <div className="flex items-center justify-between gap-3">
+                <h1 className="text-2xl font-semibold">Mon profil</h1>
+
+                <Link
+                href="/requests"
+                className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white"
+                >
+                Mes demandes
+                </Link>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Vos contacts :
+            </p>
+          </div>
           {contacts.map(({ requestId, profile }) => (
             <li
               key={requestId}

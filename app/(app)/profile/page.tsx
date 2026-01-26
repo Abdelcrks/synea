@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 
 
+
 export default async function Profile ()  {
     const session = await auth.api.getSession({headers : await headers()})
         if(!session){

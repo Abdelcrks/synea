@@ -46,8 +46,19 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
         <section className="mx-auto max-w-xl p-4 md:p-8 space-y-6 ">
         {/* <div className="p-6 shadow-sm"> */}
             <div className="space-y-1">
-                <h1 className="text-2xl font-semibold  ">Mon profil</h1>
-                <p className="text-sm text-muted-foreground ">Complétez votre profil pour mieux échanger avec la communauté</p>
+                <div className="flex items-center justify-between gap-3">
+                    <h1 className="text-2xl font-semibold">Mon profil</h1>
+
+                    <Link
+                    href="/contacts"
+                    className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white"
+                    >
+                    Mes contacts
+                    </Link>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                    Complétez votre profil pour mieux échanger avec la communauté
+                </p>
             </div>
             <div className="rounded-2xl  bg-white p-4 space-y-3 flex flex-col items-center justify-center shadow-xl">
                 <div className="h-12 w-12 relative object-cover rounded-full flex items-center justify-center overflow-hidden border border-[#9F86C0]">
