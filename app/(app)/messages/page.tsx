@@ -44,7 +44,7 @@ export default async function MessagesPage() {
               href="/contacts"
               className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white"
               >
-              Mes demandes
+              Mes contacts
               </Link>
           </div>
           <p className="text-sm text-muted-foreground">
