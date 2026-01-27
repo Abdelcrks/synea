@@ -53,8 +53,8 @@ export default function OnboardingPanel({
                 <button
                     type="button"
                     onClick={onSkip}
-                    className="text-sm font-sans cursor-pointer text-white hover:text-white/20 btn-primary
-                     focus:outline-none focus:ring-2 focus:ring-white/30 rounded-full px-3 py-2"
+                    className="text-sm font-sans cursor-pointer text-white  bg-(--primary) hover:bg-(--primary-hover)
+                    rounded-full px-3 py-2"
                     aria-label="Passer l'onboarding"
                 >
                     Passer
@@ -108,7 +108,7 @@ export default function OnboardingPanel({
                     ) : (
                         <button
                             onClick={onNext}
-                            className="mt-8 w-full   font-sans rounded-full btn-primary px-6 py-3 text-sm font-semibold text-white cursor-pointer"
+                            className="mt-8 w-full   font-sans rounded-full bg-(--primary) hover:bg-(--primary-hover) px-6 py-3 text-sm font-semibold text-white cursor-pointer"
                         >
                             Continuer
                         </button>

@@ -15,11 +15,15 @@ export const SendMessageForm = ({conversationId}:SendMessageFormsProps ) => {
         const response = await sendMessage(formData)
         if(!response.ok){
             setError(response.message ?? "une erreur est survenue")
+            return
         }
             setError(null)
             const inputReset = document.querySelector<HTMLInputElement>(`input[name="content"]`)
-            inputReset?.focus()
-            inputReset && (inputReset.value == "")
+            if(inputReset){ 
+                inputReset && (inputReset.value == "")
+                inputReset?.focus()
+            }
+
         
     }
 
