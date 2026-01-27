@@ -62,7 +62,7 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
 
   return (
     <div className="mx-auto max-w-xl px-4 py-4 md:py-6">
-      <div className="rounded-2xl border border-(--primary)]/40 bg-white/60 backdrop-blur p-5 shadow-sm transition hover:bg-white/75">
+      <div className="rounded-2xl  bg-white/60 backdrop-blur p-5 shadow-lg hover:shadow-2xl transition hover:bg-white/75">
 
 
         <Link href={`/profiles/${profile.id}`} className="block">
@@ -85,7 +85,7 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
               </div>
             </div>
 
-            <span className="shrink-0 rounded-full bg-(--primary)]/10 px-3 py-1 text-xs font-medium text-(--primary)]">
+            <span className="shrink-0 rounded-full bg-(--primary) text-white px-3 py-1 text-xs font-medium">
               {roleLabel}
             </span>
           </div>
@@ -100,7 +100,7 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
 
         <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <button
-            className="btn-primary w-full rounded-full px-6 py-3 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            className="bg-(--primary) text-white w-full cursor-pointer hover:bg-(--primary-hover) rounded-full px-6 py-3 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
             disabled={disabled || isDisabledByStatus}
             onClick={(e) => {
               e.preventDefault()
