@@ -23,57 +23,63 @@ type ContactsContentProps = {
 
 export const ContactsContent = ({ contacts }: ContactsContentProps) => {
     if (contacts.length === 0) {
-        return (
+      return (
+          <div className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4">
             <div className="rounded-2xl border-(--border) bg-(--bg-card)/70 p-6 text-center shadow-sm backdrop-blur">
-                <h2 className="text-lg font-semibold text-(--text-main)">
-                    Aucun contact pour le moment
-                </h2>
-                <p className="mt-1 text-sm text-(--text-muted)">
-                    Accepte une demande ou lance un matching pour commencer une discussion.
-                </p>
-
-                <Link
-                    href="/matching"
-                    className="mt-4 inline-flex items-center justify-center rounded-xl bg-(--primary) px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-(--primary-hover)"
-                >
-                    Trouver des personnes
-                </Link>
+              <h2 className="text-lg font-semibold text-(--text-main)">
+                Aucun contact pour le moment
+              </h2>
+              <p className="mt-1 text-sm text-(--text-muted)">
+                Accepte une demande ou lance un matching pour commencer une discussion.
+              </p>
+    
+              <Link
+                href="/matching"
+                className="mt-4 inline-flex items-center justify-center rounded-full bg-(--primary) px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-(--primary-hover)"
+              >
+                Trouver des personnes
+              </Link>
             </div>
-        )
+          </div>
+      )
     }
 
     return (
-        <ul className="space-y-5">
-          <div className="space-y-1">
-            <div className="flex items-center justify-between gap-3">
-                <h1 className="text-2xl font-semibold">Mon profil</h1>
-
-                <Link
-                href="/requests"
-                className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white"
-                >
-                Mes demandes
-                </Link>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              Vos contacts :
-            </p>
+      <div className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4">
+        <div className="space-y-4">
+          <div className="flex items-center justify-between gap-3">
+            <h1 className="text-2xl font-semibold">Contacts</h1>
+  
+            <Link
+              href="/requests"
+              className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white hover:bg-(--primary-hover)"
+            >
+              Demandes
+            </Link>
           </div>
+  
+          <p className="text-sm text-muted-foreground">
+            Vos contacts ({contacts.length})
+          </p>
+        </div>
+  
+        <ul className="mt-10 space-y-10">
           {contacts.map(({ requestId, profile }) => (
             <li
               key={requestId}
-              className="relative hover:translate-y-1 flex items-center justify-between gap-4 rounded-2xl border-(--border) bg-(--bg-card)/70 px-5 py-5
-              shadow-sm backdrop-blur transition-colors hover:bg-(--bg-card) has-[details[open]]:z-20"
+              className="relative z-0  flex items-center justify-between gap-4 rounded-2xl bg-white/70 px-4 py-4 shadow-sm ring-1 ring-black/5 backdrop-blur transition hover:bg-white/90 hover:shadow-md
+              has-[details[open]]:z-30"
             >
-              {/* ZONE CLIQUABLE PROFIL */}
               <Link
                 href={`/profiles/${profile.id}`}
                 className="min-w-0 flex items-center gap-4 flex-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-(--primary)/50"
               >
-                <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl} />
-      
+                <div className="shrink-0">
+                  <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl} />
+                </div>
+  
                 <div className="min-w-0">
-                  <p className="truncate text-base font-semibold text-(--text-main) hover:underline">
+                  <p className="truncate text-base font-semibold text-(--text-main) group-hover:underline">
                     {profile.namePublic}
                   </p>
                   <p className="truncate text-sm text-(--text-muted)">
@@ -81,38 +87,33 @@ export const ContactsContent = ({ contacts }: ContactsContentProps) => {
                   </p>
                 </div>
               </Link>
-      
-              {/* ACTIONS (PAS CLIQUABLES POUR LE PROFIL) */}
+  
               <div className="flex items-center gap-2 shrink-0">
-                {/* <Link
-                  href={`/messages/new?userId=${profile.userId}`}
-                  className="focus:outline-none focus:ring-2 focus:ring-(--primary)/50 shrink-0 rounded-xl border-(--primary) bg-white/70 px-4 py-3 text-sm font-medium text-(--text-main) transition-colors hover:bg-(--primary-soft) hover:text-white"
-                >
-                  Message
-                </Link> */}
-                <form action={openOrCreateConversationAndRedirect} className="shrink-0">
+                <form action={openOrCreateConversationAndRedirect}>
                   <input type="hidden" name="toUserId" value={profile.userId} />
-                  <button type="submit" className="inline-flex cursor-pointer w-full px-6 py-3 rounded-full text-sm justify-center font-semibold text-white btn-primary">
+                  <button
+                    type="submit"
+                    className="inline-flex cursor-pointer rounded-full px-5 py-2.5 text-sm font-semibold text-white btn-primary"
+                  >
                     Message
                   </button>
                 </form>
-
-                <details className="relative group">
+  
+                <details className="relative">
                   <summary
-                    className="list-none cursor-pointer rounded-xl border-(--border) bg-white/60 px-3 py-3
-                    text-(--text-main) hover:bg-(--bg-card) transition-colors"
+                    className="list-none font-bold cursor-pointer rounded-full  bg-white/60 px-3 py-2.5 text-(--text-main) hover:border hover:border-gray-500"
                     aria-label="Options"
                   >
                     ⋮
                   </summary>
-      
-                  <div className="absolute right-0 z-20 mt-2 w-48 overflow-hidden rounded-xl border-(--border) bg-(--bg-card) shadow-sm">
+  
+                  <div className="absolute right-0 z-20 mt-2 w-45 overflow-hidden rounded-xl  bg-white shadow-xl ring-1 ring-black/5">
                     <form action={removeContactFormAction}>
                       <input type="hidden" name="requestId" value={requestId} />
                       <input type="hidden" name="profileId" value={profile.id} />
                       <button
                         type="submit"
-                        className="w-full cursor-pointer bg-red-600 text-white px-4 py-3 text-left text-sm hover:bg-red-800 transition-colors"
+                        className="w-full cursor-pointer px-4 py-3 text-left text-sm font-medium text-red-600 hover:bg-red-600 hover:text-white transition"
                       >
                         Supprimer le contact
                       </button>
@@ -123,5 +124,6 @@ export const ContactsContent = ({ contacts }: ContactsContentProps) => {
             </li>
           ))}
         </ul>
-      )
+      </div>
+    )
 }
