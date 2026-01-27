@@ -11,6 +11,14 @@ export default async function MessagesPage() {
     redirect("/auth/sign-in")
   }
 
+const max100carac = (text: string, max = 100)=>{
+  if(text.length <= max){ 
+    return text
+  }
+  return text.slice(0, max) + "..."
+}
+
+
   const inbox = await getInbox(session.user.id)
   if(inbox.length === 0){
     return (
@@ -19,7 +27,6 @@ export default async function MessagesPage() {
         <div className="space-y-1">
                 <div className="flex items-center justify-between gap-3">
                     <h1 className="text-2xl font-semibold">Messages</h1>
-
                     <Link
                     href="/contacts"
                     className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white hover:bg-(--primary-hover)"
@@ -61,25 +68,22 @@ export default async function MessagesPage() {
               className="group flex items-center gap-4 rounded-2xl  bg-white px-4 py-3 shadow-md ring-1 ring-black/5 transition
                  hover:bg-white/90 hover:shadow-2xl active:scale-[0.98]"
             >
-              <div className="shrink-0">
-                <div className="h-12 w-12">
-                  <Avatar
-                    name={conv.otherProfile.namePublic ?? "?"}
-                    avatarUrl={conv.otherProfile.avatarUrl ?? null}
-                  />
-                </div>
-
-                <div className="min-w-0 flex-1">
-                  <p className="truncate font-medium">{conv.otherProfile.namePublic}</p>
-                  <p className="truncate text-sm text-muted-foreground ">
-                    {conv.lastMessage.content}
-                  </p>
-                </div>
+              <div className="shrink-0 h-12 w-12">
+                <Avatar
+                  name={conv.otherProfile.namePublic ?? "?"}
+                  avatarUrl={conv.otherProfile.avatarUrl ?? null}
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-medium">{conv.otherProfile.namePublic}</p>
+                <p className="text-sm text-muted-foreground">
+                  {max100carac(conv.lastMessage.content, 15)}
+                </p>
+              </div>
                 <div className="shrink-0 text-xs text-muted-foreground">
                     {new Date(conv.lastMessage.createdAt).toLocaleDateString("fr-FR", {
                       hour:"2-digit", minute:"2-digit"
                     })}
-                </div>
               </div>
             </Link>
           </li>

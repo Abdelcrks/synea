@@ -49,7 +49,7 @@ export function PublicProfileView({ profile, relationStatus, requestId }: Public
                     </Link> */}
                     <form action={openOrCreateConversationAndRedirect} className="w-full">
                       <input type="hidden" name="toUserId" value={profile.userId} />
-                      <button type="submit" className="inline-flex cursor-pointer w-full px-6 py-3 rounded-full text-sm justify-center font-semibold text-white btn-primary">Envoyer un message</button>
+                      <button type="submit" className="inline-flex cursor-pointer w-full px-6 py-3 rounded-full text-sm justify-center font-semibold text-white bg-(--primary) hover:bg-(--primary-hover)">Envoyer un message</button>
                     </form>
                     {requestId ? (
                         <form action={removeContactFormAction} className="w-full">
@@ -81,7 +81,7 @@ export function PublicProfileView({ profile, relationStatus, requestId }: Public
           
                     <button
                       type="submit"
-                      className="inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold bg-[#9F86C0]/15 text-[#6D647A]"
+                      className="inline-flex w-full cursor-pointer items-center justify-center rounded-full px-6 py-3 text-sm font-semibold bg-[#9F86C0]/15 text-[#6D647A] hover:bg-(--primary) hover:text-white"
                     >
                       Annuler la demande
                     </button>
@@ -108,7 +108,7 @@ export function PublicProfileView({ profile, relationStatus, requestId }: Public
                   <input type="hidden" name="profileId" value={profile.id} />
                   <button
                     type="submit"
-                    className="inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white btn-primary"
+                    className="inline-flex w-full cursor-pointer items-center bg-(--primary) hover:bg-(--primary-hover) justify-center rounded-full px-6 py-3 text-sm font-semibold text-white"
                   >
                     Accepter
                   </button>
@@ -119,7 +119,7 @@ export function PublicProfileView({ profile, relationStatus, requestId }: Public
                   <input type="hidden" name="profileId" value={profile.id} />
                   <button
                     type="submit"
-                    className="inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold bg-[#9F86C0]/15 text-[#6D647A]"
+                    className="inline-flex w-full items-center cursor-pointer justify-center rounded-full px-6 py-3 text-sm font-semibold bg-[#9F86C0]/15 text-[#6D647A] hover:bg-red-600 hover:text-white"
                   >
                     Refuser
                   </button>
@@ -146,7 +146,7 @@ export function PublicProfileView({ profile, relationStatus, requestId }: Public
       
             <button
               type="submit"
-              className="inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white btn-primary"
+              className="inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white bg-(--primary) hover:bg-(--primary-hover)"
             >
               Envoyer une demande
             </button>

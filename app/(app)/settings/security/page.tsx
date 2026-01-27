@@ -48,13 +48,13 @@ export default function EditSettingsForm() {
 
                     <form ref={emailFormRef} action={emailFormAction} className="mt-6 space-y-6">
                         {emailState?.ok && (
-                            <p className="text-sm text-green-600">
+                            <p className="text-sm text-green-600!">
                                 Lien de confirmation généré (dev : voir le terminal).
                             </p>
                         )}
 
                         {!emailState?.ok && emailState?.message && !emailState.field && (
-                            <p className="text-sm text-red-600">{emailState.message}</p>
+                            <p className="text-sm text-red-600!">{emailState.message}</p>
                         )}
 
                         <div className="text-left">
@@ -68,7 +68,7 @@ export default function EditSettingsForm() {
                                 className="mt-1 w-full rounded-xl border px-4 py-2 outline-none focus:ring-2 focus:ring-[#9F86C0]/40"
                             />
                             {!emailState?.ok && emailState?.field === "newEmail" && (
-                                <p className="mt-1 text-sm text-red-600">{emailState.message}</p>
+                                <p className="mt-1 text-sm text-red-600!">{emailState.message}</p>
                             )}
                         </div>
 
@@ -95,7 +95,7 @@ export default function EditSettingsForm() {
                         className="mt-6 space-y-6"
                     >
                         {passwordState?.ok && (
-                            <p className="text-sm text-green-600">Mot de passe modifié</p>
+                            <p className="text-sm text-green-600!">Mot de passe modifié</p>
                         )}
 
                         <div className="space-y-4 text-left">
@@ -110,7 +110,7 @@ export default function EditSettingsForm() {
                                     className="mt-1 w-full rounded-xl border px-4 py-2 outline-none focus:ring-2 focus:ring-[#9F86C0]/40"
                                 />
                                 {!passwordState?.ok && passwordState?.field === "currentPassword" && (
-                                    <p className="mt-1 text-sm text-red-600">{passwordState.message}</p>
+                                    <p className="mt-1 text-sm text-red-600!">{passwordState.message}</p>
                                 )}
                             </div>
 
@@ -125,7 +125,7 @@ export default function EditSettingsForm() {
                                     className="mt-1 w-full rounded-xl border px-4 py-2 outline-none focus:ring-2 focus:ring-[#9F86C0]/40"
                                 />
                                 {!passwordState?.ok && passwordState?.field === "newPassword" && (
-                                    <p className="mt-1 text-sm text-red-600">{passwordState.message}</p>
+                                    <p className="mt-1 text-sm text-red-600!">{passwordState.message}</p>
                                 )}
                             </div>
                         </div>

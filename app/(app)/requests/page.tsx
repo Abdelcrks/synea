@@ -73,23 +73,23 @@ export default async function RequestPage() {
                     <h1 className="text-2xl font-semibold">Mes demandes</h1>
                     <Link
                     href="/contacts"
-                    className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white"
+                    className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) hover:bg-(--primary-hover) text-white"
                     >
                     Mes contacts
                     </Link>
                 </div>
             </div>
-                <h1 className="font-semibold text-lg mb-5">Demande reçues</h1>
+                <h1 className="font-semibold text-lg mb-5">Demande reçues ({receivedClean.length})</h1>
                 {receivedClean.length === 0 ? (
-                    <p className="text-sm">Aucune demande pour le moment </p>
+                    <p className="text-sm">Aucune demande reçue pour le moment</p>
                 ): (
                     receivedClean.map(({request, profile}) => (
                         <RequestCard key={request.id} profile={profile} requestId={request.id} type="received"/>
                     ))
                 )}
             </section>
-            <section className="mt-10">
-                <h1>Demande envoyées</h1>
+            <section className="mt-10 font-semibold text-lg">
+                <h2>Demande envoyées ({sentClean.length})</h2>
                 {sentClean.length === 0 ? (
                     <p>aucune demande envoyée</p>
                 ):(

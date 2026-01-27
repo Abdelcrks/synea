@@ -42,7 +42,7 @@ type PageProps = {
 
 
     return (
-        <main className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4 overflow-hidden">
+        <main className="fixed left-1/2 top-0 md:top-16 w-full h-100dvh max-w-3xl -translate-x-1/2 px-4 pb-20 pt-4 overflow-hidden">
             <div className="mb-4 space-y-2">
                 <h1 className="text-xl font-semibold">Conversation</h1>
 
@@ -50,17 +50,17 @@ type PageProps = {
                 ← Retour
                 </Link>
             </div>
-            <section className="flex h-[calc(100dvh-180px)] min-h-0 flex-col rounded-2xl bg-white/60 backdrop-blur ring-1 ring-black/5">
+            <section className="flex h-[calc(100dvh-185px)] min-h-0 flex-col rounded-2xl bg-white/60 backdrop-blur ring-1 ring-black/5">
                 <div className="shrink-0 border-b border-gray-200 px-4 py-3">
                     <p className="text-xs text-muted-foreground">Historique des messages</p>
                 </div>
                 <div className="flex-1 overflow-y-auto  overscroll-contain px-4 py-4 min-h-0">
                     <MessageList messages={messages} currentUserId={session.user.id} />
-                <div className="h-2" />
+                <div className="h-2"/>
                 </div>
-                <div className="shrink-0 border-t px-4 py-3 bg-white/70 backdrop-blur">
+                <div className="shrink-0 border-t  border-gray-200 px-4 py-3 bg-white/70 backdrop-blur">
                 {canSend ? (
-                    <SendMessageForm conversationId={conversationId} />
+                    <SendMessageForm conversationId={conversationId}/>
                 ) : (
                     <div className="rounded-2xl bg-[#9F86C0]/10 px-4 py-3 text-sm text-gray-800 ring-1 ring-black/5">
                     Vous n’êtes plus en contact.  

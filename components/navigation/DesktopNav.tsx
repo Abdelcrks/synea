@@ -8,7 +8,7 @@ export function DesktopNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="hidden md:flex h-16 items-center justify-center gap-8 border-b bg-background/80 backdrop-blur">
+    <nav className="hidden md:flex h-16 items-center justify-center gap-8 border-b border-b-gray-200 bg-background/8 shadow-xs  backdrop-blur">
       {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
         const isActive = pathname === href;
 
@@ -19,7 +19,7 @@ export function DesktopNav() {
             className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-colors
               ${
                 isActive
-                  ? "bg-[#9F86C0]/15 text-[#9F86C0] font-medium"
+                  ? "bg-[#9F86C0]/70 text-white font-medium"
                   : "text-muted-foreground hover:text-foreground"
               }
             `}

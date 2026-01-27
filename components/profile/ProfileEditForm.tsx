@@ -35,7 +35,7 @@ export default function ProfileEditForm  ({profile}:ProfileEditFormProps)  {
                     className="mt-1 w-full rounded-xl border px-4 py-2"
                     />
                     {state?.ok === false && state.field ==="namePublic" && (
-                        <p className="text-red-600 text-sm">{state.message}</p>
+                        <p className="text-red-600 text-sm!">{state.message}</p>
                     )}
                 </div>
                 <div>
@@ -44,7 +44,7 @@ export default function ProfileEditForm  ({profile}:ProfileEditFormProps)  {
                         className="mt-1 w-full rounded-xl border px-4 py-2">    
                     </textarea>
                     {state?.ok === false && state.field === "bio" && (
-                        <p className="text-sm text-red-600">{state.message}</p>
+                        <p className="text-sm text-red-600!">{state.message}</p>
                     )}
                 </div>
                 <div>
@@ -79,7 +79,7 @@ export default function ProfileEditForm  ({profile}:ProfileEditFormProps)  {
                     </select>
                 </div>
                 <div>
-                    <button  type="submit" className="btn-primary inline-flex w-full items-center justify-center cursor-pointer rounded-full border  px-6 py-3 text-sm font-semibold text-white"
+                    <button  type="submit" className="bg-(--primary) hover:bg-(--primary-hover) inline-flex w-full items-center justify-center cursor-pointer rounded-full border  px-6 py-3 text-sm font-semibold text-white"
                     >
                     Enregistrer
                     </button>

@@ -62,9 +62,7 @@ export default async function ContactsPage() {
   })
 
   return (
-    <main>
       <ContactsContent contacts={contacts} />
-    </main>
   )
 }
 

@@ -55,7 +55,7 @@ export const RequestCard = ({ profile, type, requestId }: RequestCardProps) => {
 
     return (
         <div className="mx-auto max-w-xl px-4 py-4">
-            <div className="rounded-2xl border border-(--primary)]/40 bg-white/70 backdrop-blur p-5 shadow-sm">
+            <div className="rounded-2xl  bg-white/70 backdrop-blur p-5 shadow-sm hover:shadow-2xl">
                 <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
                         <p className="text-sm text-black/60">
