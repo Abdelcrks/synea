@@ -69,7 +69,7 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
           <div className="flex items-start justify-between gap-4 cursor-pointer">
             <div className="min-w-0 flex items-start gap-3">
               <div className="shrink-0">
-                <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl} />
+                <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl} sizeClassName="h-24 w-24" />
               </div>
 
               <div className="min-w-0">

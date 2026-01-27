@@ -75,7 +75,7 @@ export const ContactsContent = ({ contacts }: ContactsContentProps) => {
                 className="min-w-0 flex items-center gap-4 flex-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-(--primary)/50"
               >
                 <div className="shrink-0">
-                  <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl} />
+                  <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl} sizeClassName="h-24 w-24"/>
                 </div>
   
                 <div className="min-w-0">

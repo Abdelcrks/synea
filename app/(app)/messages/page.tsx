@@ -68,12 +68,12 @@ const max100carac = (text: string, max = 100)=>{
               className="group flex items-center gap-4 rounded-2xl  bg-white px-4 py-3 shadow-md ring-1 ring-black/5 transition
                  hover:bg-white/90 hover:shadow-2xl active:scale-[0.98]"
             >
-              <div className="shrink-0 h-12 w-12">
                 <Avatar
                   name={conv.otherProfile.namePublic ?? "?"}
                   avatarUrl={conv.otherProfile.avatarUrl ?? null}
+                  sizeClassName="h-24 w-24"
+                  
                 />
-              </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate font-medium">{conv.otherProfile.namePublic}</p>
                 <p className="text-sm text-muted-foreground">
