@@ -68,8 +68,18 @@ export default async function MatchingPage ()  {
 
 
     return(
-        <main>
-            <h1 className="text-2xl text-center p-5 ">Découvrir</h1>
+        <main className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4">
+            <div className="flex items-center justify-between gap">
+                <h1 className="text-2xl font-semibold">Découvrir</h1>
+                <Link
+                        href="/requests"
+                        className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white hover:bg-(--primary-hover)"
+                        >
+                        Mes demandes
+                </Link>
+            </div>
+
+
             {profileWithStatus.map(({profile, requestStatus, requestFromMe}) => (
                 <ProfileCard key={profile.userId} profile={profile} requestStatus={requestStatus} requestFromMe={requestFromMe} />
             ))}
