@@ -13,7 +13,7 @@ export const SubmitButton = ({disabled = false, label, pendingLabel = "chargemen
     return (
         <button type="submit" disabled={disabled || pending}
         className={`rounded-full py-3 px-4 text-white ${
-            disabled || pending ? "bg-black/40 cursor-not-allowed" : "btn-primary cursor-pointer "
+            disabled || pending ? "bg-black/40 cursor-not-allowed" : "bg-(--primary) hover:bg-(--primary-hover) cursor-pointer "
         }`}>
             {pending ? pendingLabel : label}
         </button>

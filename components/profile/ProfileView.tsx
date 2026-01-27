@@ -51,7 +51,7 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
 
                     <Link
                     href="/contacts"
-                    className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white"
+                    className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) hover:bg-(--primary-hover) text-white"
                     >
                     Mes contacts
                     </Link>
@@ -71,11 +71,11 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                         <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl}></Avatar>
                     )}
                 </div>
-                <h1 className="font-semibold">{profile.namePublic}</h1>
+                <h1 className="font-semibold text-3xl">{profile.namePublic}</h1>
                 <span className="text-sm px-3 py-1 rounded-full bg-[#9F86C0]/30 text-[#6D647A] font-semibold">{ROLE_LABELS[profile.role]}</span>
                 <p className="">{profile.locationRegion ?? "Région non renseignée"}</p>
                 
-                <Link href={`/profile/edit`} className="inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white btn-primary">Modifier mon profil</Link>
+                <Link href={`/profile/edit`} className="inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white bg-(--primary) hover:bg-(--primary-hover)">Modifier mon profil</Link>
             </div>
             <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
                 <h2 className="font-semibold">À propos</h2>
@@ -91,13 +91,13 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                 <div className="flex items-center justify-between">
                     <p className="">Email : {email}</p>
                     <Link href={"/settings/security#email"} 
-                    className="text-sm font-medium text-[#9F86C0]">
+                    className="text-sm font-medium text-[#9F86C0] hover:text-(--primary-hover)">
                     Gérer
                     </Link>
                 </div>
                 <div className="flex justify-between items-center">
                     <p className="">Mot de passe : ••••••••</p>
-                    <Link className="text-sm text-[#9F86C0] font-medium "
+                    <Link className="text-sm text-[#9F86C0] font-medium hover:text-(--primary-hover) "
                      href={"/settings/security#password"}>
                     Gérer
                     </Link>
@@ -105,7 +105,7 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                 <p className="">Membre depuis : {memberSince}</p>
                 <div className="text-xs  italic">Vos informations ne sont jamais partagées à des fins commerciales.</div>
                 <form action={signOutAction} className="pt-2">
-                    <button className="w-full cursor-pointer rounded-full border text-white btn-primary px-6 py-3 text-sm font-semibold">Se déconnecter</button>
+                    <button className="w-full cursor-pointer rounded-full border text-white px-6 py-3 bg-(--primary) text-sm font-semibold hover:bg-(--primary-hover)">Se déconnecter</button>
                 </form>
             </div>
             <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
@@ -116,7 +116,7 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
             <div className="rounded-2xl shadow-xl flex flex-col   bg-white p-4 space-y-2">
                 <h2 className=" font-semibold">Zone sensible</h2>
                 <p className="text-red-900 text-center">La suppression de votre compte est définitive. Toutes vos données , messages et relations seront supprimés de façon irreversible.</p>
-                <button type="button" className="bg-red-600 w-full rounded-full px-6 py-3 text-sm font-semibold text-white">Supprimer mon compte</button>
+                <button type="button" className="bg-red-600 w-full rounded-full px-6 py-3 text-sm font-semibold text-white hover:bg-red-800 cursor-pointer">Supprimer mon compte</button>
             </div>
 
         {/* </div> */}
