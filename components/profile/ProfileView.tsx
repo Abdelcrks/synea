@@ -4,7 +4,8 @@ import Link from "next/link"
 import { CANCER_LABELS } from "@/lib/constants/cancer"
 import { ROLE_LABELS } from "@/lib/constants/roles"
 import { signOutAction } from "@/lib/actions/auth/signOutAction"
-import { Avatar } from "./Avatar"
+import { AvatarEdit } from "./AvatarEdit"
+import { Camera } from "lucide-react"
 
 type ProfileViewProps = {
     profile: Profile | null,
@@ -61,16 +62,8 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                 </p>
             </div>
             <div className="rounded-2xl  bg-white p-4 space-y-3 flex flex-col items-center justify-center shadow-xl">
-                <div className="h-12 w-12 relative object-cover rounded-full flex items-center justify-center overflow-hidden border border-[#9F86C0]">
-                    {profile.avatarUrl ? (
-                        <Image alt={`Avatar de ${profile.namePublic}`} fill src={profile.avatarUrl}/>
-                    ):(
-                        // <div id="avatar-fallback" className="">
-                        //     {createInitiale(profile.namePublic)}
-                        // </div>
-                        <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl}></Avatar>
-                    )}
-                </div>
+                <AvatarEdit name={profile.namePublic} avatarUrl={profile.avatarUrl}></AvatarEdit>
+
                 <h1 className="font-semibold text-3xl">{profile.namePublic}</h1>
                 <span className="text-sm px-3 py-1 rounded-full bg-[#9F86C0]/30 text-[#6D647A] font-semibold">{ROLE_LABELS[profile.role]}</span>
                 <p className="">{profile.locationRegion ?? "Région non renseignée"}</p>
