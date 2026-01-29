@@ -45,8 +45,8 @@ export default function OnboardingPanel({
                 <Image
                     src="/onboarding/logo-synea.svg"
                     alt="SYNEA"
-                    width={60}
-                    height={60}
+                    width={80}
+                    height={80}
                     priority
                     className="select-none"
                 />
