@@ -40,7 +40,7 @@ export default function OnboardingPanel({
 
     return (
         <div className="flex-1 px-6 pb-8 lg:relative flex flex-col">
-            {/* Header desktop */}
+            {/* Headder desktop */}
             <div className="hidden lg:flex items-center justify-between">
                 <Image
                     src="/onboarding/logo-synea.svg"
@@ -61,7 +61,7 @@ export default function OnboardingPanel({
                 </button>
             </div>
 
-            {/* Desktop content */}
+            {/* Desktop  */}
             <div className="hidden lg:flex h-full items-center justify-center">
                 <div className="w-full max-w-xl rounded-3xl p-10 backdrop-blur ring-1 ring-white/10">
                     <h1 className="mt-4 font-serif whitespace-pre-line text-4xl leading-tight ">
@@ -127,7 +127,7 @@ export default function OnboardingPanel({
                 </div>
             </div>
 
-            {/* Mobile content */}
+            {/* Mob */}
             <div key={currentSlide.id} className="lg:hidden transition-all duration-300 ease-out">
             <h1 className="mt-2 text-2xl font-semibold text-center leading-tight ">
                 {currentSlide.title}
