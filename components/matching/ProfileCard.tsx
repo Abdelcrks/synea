@@ -62,7 +62,7 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
 
   return (
     <div className="mx-auto max-w-xl px-4 py-4 md:py-6">
-      <div className="rounded-2xl  bg-white/60 backdrop-blur p-5 shadow-lg hover:shadow-2xl transition hover:bg-white/75">
+      <div className="card">
 
 
         <Link href={`/profiles/${profile.id}`} className="block">
@@ -100,7 +100,7 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
 
         <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <button
-            className="bg-(--primary) text-white w-full cursor-pointer hover:bg-(--primary-hover) rounded-full px-6 py-3 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            className="btn btn--primary w-full sm:w-auto"
             disabled={disabled || isDisabledByStatus}
             onClick={(e) => {
               e.preventDefault()
@@ -114,7 +114,7 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
           {feedback && (
             <p
               className={[
-                "text-sm ",
+                "text-sm",
                 feedbackType === "success" ? "text-green-600!" : "",
                 feedbackType === "warning" ? "text-red-600!" : "",
                 feedbackType === "error" ? "text-red-600!" : "",
