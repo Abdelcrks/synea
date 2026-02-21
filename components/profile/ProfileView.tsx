@@ -34,13 +34,13 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
             </div>
             <div className="grid lg:grid-cols-3 gap-12">
                 <div className="lg:col-span-2 space-y-6">
-                    <div className="card flex flex-col  text-center items-center">
+                    <div className="card flex flex-col  text-center items-center gap-2">
                         <AvatarEdit name={profile.namePublic} avatarUrl={profile.avatarUrl}></AvatarEdit>
                         <h1 className="font-semibold text-3xl mt-4">{profile.namePublic}</h1>
-                        <span className="text-sm px-3 py-1 rounded-full bg-(--primary-soft) text-(--text-muted) font-semibold">
+                        <span className="text-sm px-3 py-1 rounded-full bg-(--primary-soft) text-(--text-main) ">
                             {ROLE_LABELS[profile.role]}
                         </span>
-                        <p className="mt-2">{profile.locationRegion ?? "Région non renseignée"}</p>
+                        <p className="mt-2">Région : <span className="font-semibold ">{profile.locationRegion ?? "Région non renseignée"}</span></p>
                         <Link href={`/profile/edit`} className="btn btn--primary w-full mt-4">
                             Modifier mon profil
                         </Link>
@@ -51,26 +51,26 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                     </div>
                     <div className="card card--outline">
                         <h2 className="font-semibold">Informations (optionnel)</h2>
-                        <p className="mt-2">Type de cancer (optionnel) : {profile.cancerType ? CANCER_LABELS[profile.cancerType] : "Non renseigné"}</p>
+                        <p className="mt-2">Type de cancer (optionnel) : <span className="font-semibold">{profile.cancerType ? CANCER_LABELS[profile.cancerType] : "Non renseigné"} </span></p>
                         <p className="text-xs italic mt-2">Ces informations sont facultatives. Vous choisissez ce que vous partagez.</p>
                     </div>
                 </div>
                 <div className="lg:col-span-1 space-y-6">
                     <div className="card">
-                        <h2 className="font-semibold">Compte</h2>
+                        <h2 className="font-bold">Compte</h2>
                         <div className="flex items-center justify-between mt-4">
-                            <p>Email : {email}</p>
+                            <p>Email : <span className="font-semibold">{email}</span></p>
                             <Link href={"/settings/security#email"} className="link">
                                 Gérer
                             </Link>
                         </div>
                         <div className="flex items-center justify-between mt-4">
-                            <p>Mot de passe : ••••••••</p>
+                            <p>Mot de passe : <span className="font-semibold">••••••••</span></p>
                             <Link href={"/settings/security#password"} className="link">
                                 Gérer
                             </Link>
                         </div>
-                        <p className="mt-4">Membre depuis : {memberSince}</p>
+                        <p className="mt-4">Membre depuis : <span className="font-semibold">{memberSince}</span></p>
                         <p className="text-xs italic mt-2">Vos informations ne sont jamais partagées à des fins commerciales.</p>
                         <form action={signOutAction} className="pt-4">
                             <button className="btn btn--primary w-full">Se déconnecter</button>
