@@ -127,7 +127,7 @@ export const SignUpForm = ({ defaultRole, cancerTypes }: { defaultRole: RoleOrEm
                 <p className="error">{state.message}</p>
               )}
               <p className="help">
-                Astuce : utilise au moins 8 caractères.
+                Le mot de passe doit contenir au moins 8 caractères.
               </p>
             </div>
 

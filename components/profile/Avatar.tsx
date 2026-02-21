@@ -24,6 +24,7 @@ export function Avatar({name, avatarUrl, sizeClassName= "h-12 w-12"}: AvatarProp
           alt={`Avatar de ${name}`}
           fill
           className="object-cover"
+          sizes="(max-width:640px) 96px, 160px"
         />
       ) : (
         <span className="select-none">{getInitials(name)}</span>

@@ -21,7 +21,7 @@ export default async function AppLayout({
     <div className="min-h-screen w-full">
       <DesktopNav />
 
-      <main className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4">
+      <main className="w-full px-4 pb-20 pt-4 md:px-6">
         {children}
       </main>
 
