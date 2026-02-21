@@ -12,40 +12,15 @@ type ProfileViewProps = {
     email: string 
 }
 
-// export const ROLE_LABELS = {
-//         hero:"Héros",
-//         peer_hero: "Pair-héros",
-//         admin: "Administrateur",
-// } as const 
-
-// export type Role = keyof typeof ROLE_LABELS
-
-
 export const ProfileView = ({profile,email}: ProfileViewProps) => {
-
-    // const createInitiale = (name:string ) => {
-    //    if(!name) return ""
-    //    const words = name.trim().split(" ")
-    //     if (words.length >= 2){
-    //         return (words[0][0] + words[1][0]).toUpperCase()
-    //     } else{
-    //             return words[0].slice(0,2).toUpperCase()
-    //     }
-    // }
-    // console.log(createInitiale("Abdel berkat"))
-    // console.log(createInitiale("ab"))
-    // console.log(createInitiale("a"))
-    // console.log(createInitiale("       abdel  "))
 
     if (!profile) {
         return <p>Profil introuvable</p>
       }
 
- 
     const memberSince = new Date(profile.createdAt).toLocaleDateString("fr-FR")
     return(
         <section className="mx-auto max-w-xl p-4 md:p-8 space-y-6 ">
-        {/* <div className="p-6 shadow-sm"> */}
             <div className="space-y-1">
                 <div className="flex items-center justify-between gap-3">
                     <h1 className="text-2xl font-semibold">Mon profil</h1>
@@ -61,20 +36,20 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                     Complétez votre profil pour mieux échanger avec la communauté
                 </p>
             </div>
-            <div className="rounded-2xl  bg-white p-4 space-y-3 flex flex-col items-center justify-center shadow-xl">
+            <div className="card">
                 <AvatarEdit name={profile.namePublic} avatarUrl={profile.avatarUrl}></AvatarEdit>
 
                 <h1 className="font-semibold text-3xl">{profile.namePublic}</h1>
                 <span className="text-sm px-3 py-1 rounded-full bg-[#9F86C0]/30 text-[#6D647A] font-semibold">{ROLE_LABELS[profile.role]}</span>
                 <p className="">{profile.locationRegion ?? "Région non renseignée"}</p>
                 
-                <Link href={`/profile/edit`} className="inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white bg-(--primary) hover:bg-(--primary-hover)">Modifier mon profil</Link>
+                <Link href={`/profile/edit`} className="btn btn--primary w-full">Modifier mon profil</Link>
             </div>
-            <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
+            <div className="card card--outline">
                 <h2 className="font-semibold">À propos</h2>
                 <p>{profile.bio ?? "Aucune bio.."}</p>
             </div>
-            <div className="rounded-2xl shadow-xl bg-white p-4 space-y-2">
+            <div className="card card--outline">
                 <h2 className=" font-semibold">Informations (optionnel) </h2>
                 <p className="">Type de cancer (optionnel) : {profile.cancerType ? CANCER_LABELS[profile.cancerType] : "Non renseigné"}</p>
                 <p className="text-xs  italic">Ces informations sont facultatives. Vous choisissez ce que vous partagez.</p>
@@ -111,8 +86,6 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                 <p className="text-red-900 text-center">La suppression de votre compte est définitive. Toutes vos données , messages et relations seront supprimés de façon irreversible.</p>
                 <button type="button" className="bg-red-600 w-full rounded-full px-6 py-3 text-sm font-semibold text-white hover:bg-red-800 cursor-pointer">Supprimer mon compte</button>
             </div>
-
-        {/* </div> */}
         </section>
     )
 }
