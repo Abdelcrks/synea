@@ -83,8 +83,8 @@ export default function OnboardingCarousel({
             key={i}
             onClick={() => goToSlide(i)}
             aria-label={`Aller au slide ${i + 1}`}
-            className={`btn h-2.5 w-2.5 rounded-full ${
-              i === activeIndex ? "btn--primary" : "bg-white"
+            className={`p-2 rounded-full ${
+              i === activeIndex ? "bg-(--primary-hover)" : "bg-(--primary-soft)"
             }`}
           />
         ))}

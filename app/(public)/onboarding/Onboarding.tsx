@@ -51,10 +51,6 @@ export default function Onboarding() {
   const currentSlide = slides[activeIndex] ?? slides[0]
   const isLastSlide = activeIndex === slides.length - 1
 
-  // const goToLastSlide = () => {
-  //   requestGoToSlide(slides.length -1)
-  // }
-
   const goToSignUp = () => {
     router.push("/auth/sign-up")
   }
@@ -81,14 +77,14 @@ export default function Onboarding() {
         <img
           src="/onboarding/logo-synea.svg"
           alt="SYNEA"
-          width={50}
-          height={50}
+          width={70}
+          height={70}
           className="select-none"
         />
         <button
           type="button"
           onClick={goToSignUp}
-          className="text-sm font-sans text-black/70 hover:text-black focus:outline-none focus:ring-2 focus:ring-black/20 rounded-full px-3"
+          className="text-sm font-bold --text-main focus:ring-2 focus:ring-black/20 rounded-full px-3"
           aria-label="Passer l'onboarding"
         >
           Passer
@@ -121,7 +117,7 @@ export default function Onboarding() {
             key={i}
             onClick={() => requestGoToSlide(i)}
             className={`h-2.5 w-2.5 rounded-full ${
-              i === activeIndex ? "btn-primary" : "bg-white"
+              i === activeIndex ? "btn--primary" : "btn--secondary"
             }`}
             aria-label={`Aller au slide ${i + 1}`}
           />
