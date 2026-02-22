@@ -77,12 +77,10 @@ export default async function PublicProfilPage ({params}: PageProps) {
     }
 
     return (
-        <main className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4">
         <PublicProfileView
           profile={profile}
           relationStatus={relationStatus}
           requestId={requestId}
         />
-      </main>
     )
 }
