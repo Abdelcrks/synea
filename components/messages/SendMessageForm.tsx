@@ -3,47 +3,45 @@ import { sendMessage } from "@/lib/actions/messages/SendMessage"
 import { useState } from "react"
 
 type SendMessageFormsProps = {
-    conversationId: number
+  conversationId: number
 }
 
+export const SendMessageForm = ({ conversationId }: SendMessageFormsProps) => {
+  const [error, setError] = useState<string | null>(null)
 
-
-export const SendMessageForm = ({conversationId}:SendMessageFormsProps ) => {
-    const [error, setError] = useState<string | null> (null)
-
-    const action = async (formData:FormData) => {
-        const response = await sendMessage(formData)
-        if(!response.ok){
-            setError(response.message ?? "une erreur est survenue")
-            return
-        }
-            setError(null)
-            const inputReset = document.querySelector<HTMLInputElement>(`input[name="content"]`)
-            if(inputReset){ 
-                inputReset && (inputReset.value == "")
-                inputReset?.focus()
-            }
-
-        
+  const action = async (formData: FormData) => {
+    const response = await sendMessage(formData)
+    if (!response.ok) {
+      setError(response.message ?? "une erreur est survenue")
+      return
     }
 
+    setError(null)
+    const inputReset = document.querySelector<HTMLInputElement>(`input[name="content"]`)
+    if (inputReset) {
+      inputReset.value = ""
+      inputReset.focus()
+    }
+  }
 
-    return(
-        <div>
-            {error && (
-                <p className="mb-2 text-sm text-red-600!">{error}</p>
-            )}
-            <form action={action} className="flex gap-2 min-w-0">
-                <input type="hidden"  name="conversationId" value={String(conversationId)}/>
+  return (
+    <div className="space-y-2">
+      {error && <p className="error">{error}</p>}
 
-                <input type="text" placeholder="Écrire un message.." name="content"
-                className="flex-1 min-w-0  rounded-full border border-gray-300  bg-white px-4 py-3 text-sm outline-none focus:ring-2"
-                />
+      <form action={action} className="flex min-w-0 gap-2">
+        <input type="hidden" name="conversationId" value={String(conversationId)} />
 
-                <button type="submit" className="shrink-0 cursor-pointer rounded-xl px-5 py-3 text-sm font-semibold text-white btn-primary hover:bg-[#6f5493]">
-                    Envoyer
-                </button>
-            </form>
-        </div>
-    )
+        <input
+          type="text"
+          name="content"
+          placeholder="Écrire un message…"
+          className="input flex-1 min-w-0 rounded-full"
+        />
+
+        <button type="submit" className="btn btn--primary shrink-0 rounded-full px-5">
+          Envoyer
+        </button>
+      </form>
+    </div>
+  )
 }

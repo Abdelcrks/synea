@@ -20,71 +20,76 @@ const max100carac = (text: string, max = 100)=>{
 
 
   const inbox = await getInbox(session.user.id)
-  if(inbox.length === 0){
+  if (inbox.length === 0) {
     return (
-      <main className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4">
-    
-        <div className="space-y-1">
-                <div className="flex items-center justify-between gap-3">
-                    <h1 className="text-2xl font-semibold">Messages</h1>
-                    <Link
-                    href="/contacts"
-                    className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white hover:bg-(--primary-hover)"
-                    >
-                    Mes contacts
-                    </Link>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                    aucun message pour le moment
-                </p>
+      <main className="container-page section">
+        <header className="space-y-2">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-2xl font-semibold md:text-3xl">Messages</h1>
+              <p className="mt-1 text-sm muted">Aucun message pour le moment.</p>
             </div>
+  
+            <Link href="/contacts" className="btn btn--secondary w-full sm:w-auto">
+              Mes contacts
+            </Link>
+          </div>
+        </header>
+  
+        <div className="card card--outline mt-8 text-center">
+          <p className="text-sm muted">
+            Commencez une discussion depuis vos contacts.
+          </p>
+          <Link href="/matching" className="btn btn--primary mt-4 w-full sm:w-auto">
+            Trouver des personnes
+          </Link>
+        </div>
       </main>
     )
   }
   return (
-    <main className="mx-auto w-full max-w-3xl px-4 pb-20 pt-4">
-      <div className="space-y-1 mb-3">
-          <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-semibold">Messages</h1>
-
-              <Link
-              href="/contacts"
-              className="items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) text-white hover:bg-(--primary-hover)"
-              >
-              Mes contacts
-              </Link>
+    <main className="container-page section">
+      <header className="space-y-2">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold md:text-3xl">Messages</h1>
+            <p className="mt-1 text-sm muted">Vos dernières conversations</p>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Vos dernières conversations :
-          </p>
+  
+          <Link href="/contacts" className="btn btn--secondary w-full sm:w-auto">
+            Mes contacts
+          </Link>
         </div>
-      {/* <h1 className="text-xl font-semibold">Messages</h1> */}
-
-      <ul className="mt-6 space-y-5">
+      </header>
+  
+      <ul className="mt-8 grid gap-4 md:grid-cols-2">
         {inbox.map((conv) => (
           <li key={conv.conversationId}>
             <Link
               href={`/messages/${conv.conversationId}`}
-              className="group flex items-center gap-4 rounded-2xl  bg-white px-4 py-3 shadow-md ring-1 ring-black/5 transition
-                 hover:bg-white/90 hover:shadow-2xl active:scale-[0.98]"
+              className="card card--outline block transition hover:shadow-md active:scale-[0.99]"
             >
-                <Avatar
-                  name={conv.otherProfile.namePublic ?? "?"}
-                  avatarUrl={conv.otherProfile.avatarUrl ?? null}
-                  sizeClassName="h-24 w-24"
-                  
-                />
+            <div className="flex min-w-0 items-center gap-3">
+              <Avatar
+                name={conv.otherProfile.namePublic ?? "?"}
+                avatarUrl={conv.otherProfile.avatarUrl ?? null}
+                sizeClassName="h-12 w-12 sm:h-14 sm:w-14"
+              />
+
               <div className="min-w-0 flex-1">
-                <p className="truncate font-medium">{conv.otherProfile.namePublic}</p>
-                <p className="text-sm text-muted-foreground">
-                  {max100carac(conv.lastMessage.content, 15)}
+                <p className="truncate font-semibold">{conv.otherProfile.namePublic}</p>
+                <p className="mt-1 truncate text-sm muted">
+                  {max100carac(conv.lastMessage.content, 20)}
                 </p>
               </div>
-                <div className="shrink-0 text-xs text-muted-foreground">
-                    {new Date(conv.lastMessage.createdAt).toLocaleDateString("fr-FR", {
-                      hour:"2-digit", minute:"2-digit"
-                    })}
+
+              <div className="shrink-0 whitespace-nowrap text-xs muted">
+                {new Date(conv.lastMessage.createdAt).toLocaleTimeString("fr-FR", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
               </div>
+            </div>
             </Link>
           </li>
         ))}
