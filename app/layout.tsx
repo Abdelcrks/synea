@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${inter.variable} ${dmSans.variable} antialiased`}>
       <body
-        className="min-h-dvh"
+      
       >
         {children}
       </body>

@@ -2,7 +2,6 @@
 
 import { sendContactRequest } from "@/lib/actions/contact-requests/sendContactRequest"
 import type { Profile } from "@/lib/db/queries/profile"
-import Image from "next/image"
 import { useState } from "react"
 import { CANCER_LABELS } from "@/lib/constants/cancer"
 import { Avatar } from "../profile/Avatar"
@@ -61,72 +60,72 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
   const roleLabel = profile.role === "hero" ? "Héros" : profile.role === "peer_hero" ? "Pair-héros" : profile.role
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-4 md:py-6">
-      <div className="card">
-
-
-        <Link href={`/profiles/${profile.id}`} className="block">
-          <div className="flex items-start justify-between gap-4 cursor-pointer">
-            <div className="min-w-0 flex items-start gap-3">
-              <div className="shrink-0">
-                <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl} sizeClassName="h-24 w-24" />
-              </div>
-
-              <div className="min-w-0">
-                <p className="truncate text-lg font-semibold md:text-xl hover:underline">
-                  {profile.namePublic}
-                </p>
-
-                {profile.cancerType && (
-                  <p className="mt-1 text-sm text-black/60">
-                    {CANCER_LABELS[profile.cancerType]}
-                  </p>
-                )}
-              </div>
+    <div className="card">
+      <Link href={`/profiles/${profile.id}`} className="block">
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0 flex items-start gap-3">
+            <div className="shrink-0">
+              <Avatar
+                name={profile.namePublic}
+                avatarUrl={profile.avatarUrl}
+                sizeClassName="h-16 w-16 md:h-20 md:w-20"
+              />
             </div>
-
-            <span className="shrink-0 rounded-full bg-(--primary) text-white px-3 py-1 text-xs font-medium">
-              {roleLabel}
-            </span>
+  
+            <div className="min-w-0">
+              <p className="truncate text-lg font-semibold md:text-xl hover:underline">
+                {profile.namePublic}
+              </p>
+  
+              {profile.cancerType && (
+                <p className="mt-1 text-sm muted">
+                  {CANCER_LABELS[profile.cancerType]}
+                </p>
+              )}
+            </div>
           </div>
-
-          {profile.bio && (
-            <p className="mt-4 line-clamp-4 text-sm text-black/75 italic">
-              « {profile.bio} »
-            </p>
-          )}
-        </Link>
-
-
-        <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <button
-            className="btn btn--primary w-full sm:w-auto"
-            disabled={disabled || isDisabledByStatus}
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              sendContact()
-            }}
+  
+          <span
+            className="shrink-0 rounded-full px-3 py-1 text-xs font-semibold"
+            style={{ background: "var(--primary-soft)", color: "var(--text-main)" }}
           >
-            {label}
-          </button>
-
-          {feedback && (
-            <p
-              className={[
-                "text-sm",
-                feedbackType === "success" ? "text-green-600!" : "",
-                feedbackType === "warning" ? "text-red-600!" : "",
-                feedbackType === "error" ? "text-red-600!" : "",
-              ].join(" ")}
-            >
-              {feedback}
-            </p>
-          )}
-
+            {roleLabel}
+          </span>
         </div>
+  
+        {profile.bio && (
+          <p className="mt-4 line-clamp-4 text-sm italic text-black/75">
+            « {profile.bio} »
+          </p>
+        )}
+      </Link>
+  
+      <div className="mt-5 flex flex-col gap-2  sm:items-center sm:justify-between">
+        <button
+          className="btn btn--primary w-full "
+          disabled={disabled || isDisabledByStatus}
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            sendContact()
+          }}
+        >
+          {label}
+        </button>
+  
+        {feedback && (
+          <p 
+            className={[
+              "text-sm",
+              feedbackType === "success" ? "text-green-600" : "",
+              feedbackType === "warning" ? "text-red-600" : "",
+              feedbackType === "error" ? "text-red-600" : "",
+            ].join(" ")}
+          >
+            {feedback}
+          </p>
+        )}
       </div>
-
     </div>
   )
 }

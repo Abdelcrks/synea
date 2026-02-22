@@ -48,56 +48,79 @@ export default async function RequestPage() {
         return {request, profile} 
     }))
 
-    // const receivedClean = receivedWithProfiles.filter(Boolean) 
-    // const sentClean = sentWithProfiles.filter(Boolean)
-
     const receivedClean = receivedWithProfiles.filter((item) => item !== undefined)
 
     const sentClean = sentWithProfiles.filter((item) =>  item !== undefined)
 
 
-    return(
-        <main className="mx-auto max-w-xl p-4 md:p-8 space-y-6">
-            {/* <div>
-                <h1>demande reçues</h1>
-                <pre>{JSON.stringify(requestReceived, null, 2)}</pre>
+    return (
+        <main className="container-page section space-y-10">
+          <header className="space-y-2">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h1 className="text-2xl font-semibold md:text-3xl">Mes demandes</h1>
+                <p className="mt-1 text-sm muted">
+                  Gérez vos demandes reçues et envoyées.
+                </p>
+              </div>
+      
+              <Link href="/contacts" className="btn btn--secondary w-full sm:w-auto">
+                Mes contacts
+              </Link>
             </div>
-
-            <div>
-                <h1>Demande envoyées</h1>
-                <pre>{JSON.stringify(requestSent, null, 2)}</pre>
-            </div> */}
-            <section>
-            <div className="space-y-1">
-                <div className="flex items-center justify-between gap-3 mb-10">
-                    <h1 className="text-2xl font-semibold">Mes demandes</h1>
-                    <Link
-                    href="/contacts"
-                    className="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold bg-(--primary) hover:bg-(--primary-hover) text-white"
-                    >
-                    Mes contacts
-                    </Link>
+          </header>
+      
+          <div className="grid gap-8 lg:grid-cols-12">
+            <section className="lg:col-span-6 space-y-4">
+              <div className="flex items-baseline justify-between">
+                <h2 className="text-lg font-semibold">
+                  Demandes reçues <span className="muted">({receivedClean.length})</span>
+                </h2>
+              </div>
+      
+              {receivedClean.length === 0 ? (
+                <div className="card card--outline">
+                  <p className="text-sm muted">Aucune demande reçue pour le moment.</p>
                 </div>
-            </div>
-                <h1 className="font-semibold text-lg mb-5">Demande reçues ({receivedClean.length})</h1>
-                {receivedClean.length === 0 ? (
-                    <p className="text-sm">Aucune demande reçue pour le moment</p>
-                ): (
-                    receivedClean.map(({request, profile}) => (
-                        <RequestCard key={request.id} profile={profile} requestId={request.id} type="received"/>
-                    ))
-                )}
+              ) : (
+                <div className="space-y-4">
+                  {receivedClean.map(({ request, profile }) => (
+                    <RequestCard
+                      key={request.id}
+                      profile={profile}
+                      requestId={request.id}
+                      type="received"
+                    />
+                  ))}
+                </div>
+              )}
             </section>
-            <section className="mt-10 font-semibold text-lg">
-                <h2>Demande envoyées ({sentClean.length})</h2>
-                {sentClean.length === 0 ? (
-                    <p>aucune demande envoyée</p>
-                ):(
-                    sentClean.map(({request, profile}) => (
-                        <RequestCard key={request.id} profile={profile} requestId={request.id} type="sent"></RequestCard>
-                    ))
-                )}
+      
+            <section className="lg:col-span-6 space-y-4">
+              <div className="flex items-baseline justify-between">
+                <h2 className="text-lg font-semibold">
+                  Demandes envoyées <span className="muted">({sentClean.length})</span>
+                </h2>
+              </div>
+      
+              {sentClean.length === 0 ? (
+                <div className="card card--outline">
+                  <p className="text-sm muted">Aucune demande envoyée pour le moment.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {sentClean.map(({ request, profile }) => (
+                    <RequestCard
+                      key={request.id}
+                      profile={profile}
+                      requestId={request.id}
+                      type="sent"
+                    />
+                  ))}
+                </div>
+              )}
             </section>
+          </div>
         </main>
-    )
+      )
 }

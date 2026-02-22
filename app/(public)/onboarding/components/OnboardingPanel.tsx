@@ -45,16 +45,17 @@ export default function OnboardingPanel({
                 <Image
                     src="/onboarding/logo-synea.svg"
                     alt="SYNEA"
-                    width={80}
-                    height={80}
+                    width={90}
+                    height={90}
                     priority
                     className="select-none"
                 />
                 <button
                     type="button"
                     onClick={onSkip}
-                    className="text-sm font-sans cursor-pointer text-white  bg-(--primary) hover:bg-(--primary-hover)
-                    rounded-full px-3 py-2"
+                    // className="text-sm font-sans cursor-pointer text-white  bg-(--primary) hover:bg-(--primary-hover)
+                    // rounded-full px-3 py-2"
+                    className="btn--primary px-3 py-2 rounded-full cursor-pointer font-semibold"
                     aria-label="Passer l'onboarding"
                 >
                     Passer
@@ -64,20 +65,21 @@ export default function OnboardingPanel({
             {/* Desktop  */}
             <div className="hidden lg:flex h-full items-center justify-center">
                 <div className="w-full max-w-xl rounded-3xl p-10 backdrop-blur ring-1 ring-white/10">
-                    <h1 className="mt-4 font-serif whitespace-pre-line text-4xl leading-tight ">
+                    <h1 className="mt-4 font-serif whitespace-pre-line text-4xl leading-tight text-(--text-main)">
                         {currentSlide.title}
                     </h1>
 
-                    <p className="mt-4 text-base font-sans leading-relaxed ">
+                    <p className="mt-4  font-sans leading-relaxed text-(--text-main)">
                         {currentSlide.description}
                     </p>
 
                     {isLastSlide ? (
                         <form onSubmit={handleSubmitRole} className="mt-8 space-y-4">
-                            <label className="flex items-center gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer">
+                            <label className="flex gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer border border-(--primary) shadow-xs hover:shadow-lg hover:bg-(--primary) hover:text-white">
                                 <input
                                     type="radio"
                                     name="role"
+                                    id="name"
                                     value="hero"
                                     checked={role === "hero"}
                                     onChange={() => setRole("hero")}
@@ -85,7 +87,7 @@ export default function OnboardingPanel({
                                 <span className="font-medium font-sans ">Je suis un héros</span>
                             </label>
 
-                            <label className="flex items-center font-sans gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer">
+                            <label className="flex gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer border border-(--primary) shadow-xs hover:shadow-lg hover:bg-(--primary) hover:text-white">
                                 <input
                                     type="radio"
                                     name="role"
@@ -94,13 +96,14 @@ export default function OnboardingPanel({
                                     onChange={() => setRole("peer_hero")}
                                 />
                                 <span className="font-medium">Je suis un pair-héros</span>
-                            </label>
+                            </label> 
+
 
                             <button
                                 type="submit"
                                 disabled={!isChoiceValid}
-                                className={`w-full font-sans cursor-pointer rounded-full px-6 py-3 text-sm font-semibold  hover:text-white/20
-        ${isChoiceValid ? "btn-primary" : "bg-black/20 cursor-not-allowed"}`}
+                                className={`btn--primary px-6 py-3  cursor-pointer w-full font-sans  rounded-full font-semibold  
+                                ${isChoiceValid ? "btn-primary" : "bg-black/20 cursor-not-allowed"}`}
                             >
                                 Suivant
                             </button>
@@ -114,11 +117,11 @@ export default function OnboardingPanel({
                         </button>
                     )}
                     <div className="mt-6 text-center">
-                        <p className="text-sm ">
+                        <p className="text-sm text-(--text-main)">
                             Déjà un compte ?{" "}
                             <Link
                             href="/auth/sign-in"
-                            className="font-semibold text-[#9F86C0] hover:underline"
+                            className="font-semibold text-(--primary) hover:underline"
                             >
                             Se connecter
                             </Link>
@@ -129,17 +132,17 @@ export default function OnboardingPanel({
 
             {/* Mob */}
             <div key={currentSlide.id} className="lg:hidden transition-all duration-300 ease-out">
-            <h1 className="mt-2 text-2xl font-semibold text-center leading-tight ">
+            <h1 className="mt-2 text-2xl font-semibold text-center leading-tight text-(--text-main)">
                 {currentSlide.title}
             </h1>
 
-            <p className="mt-3 text-sm leading-relaxed text-center ">
+            <p className="mt-3 text-sm leading-relaxed text-center text-(--text-main) ">
                 {currentSlide.description}
             </p>
 
             {isLastSlide ? (
                 <form onSubmit={handleSubmitRole} className="mt-6 space-y-3">
-                <label className="flex items-center gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer">
+                <label className="flex gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer border border-(--primary) shadow-xs hover:shadow-lg hover:bg-(--primary) hover:text-white">
                     <input
                     type="radio"
                     name="role"
@@ -147,10 +150,10 @@ export default function OnboardingPanel({
                     checked={role === "hero"}
                     onChange={() => setRole("hero")}
                     />
-                    <span className="font-medium text-[#483C5C]">Je suis un héros</span>
+                    <span className="font-medium text-(--text-main)">Je suis un héros</span>
                 </label>
 
-                <label className="flex items-center gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer">
+                <label className="flex gap-3 rounded-2xl bg-white/70 px-4 py-3 cursor-pointer border border-(--primary) shadow-xs hover:shadow-lg hover:bg-(--primary) hover:text-white">
                     <input
                     type="radio"
                     name="role"
@@ -158,13 +161,13 @@ export default function OnboardingPanel({
                     checked={role === "peer_hero"}
                     onChange={() => setRole("peer_hero")}
                     />
-                    <span className="font-medium text-[#483C5C]">Je suis un pair-héros</span>
+                    <span className="font-medium text-(--text-main)">Je suis un pair-héros</span>
                 </label>
 
                 <button
                     type="submit"
                     disabled={!isChoiceValid}
-                    className={`w-full rounded-full px-6 py-4 text-sm font-semibold text-white
+                    className={`btn--primary px-6 py-3  cursor-pointer w-full font-sans  rounded-full font-semibold 
                     ${isChoiceValid ? "btn-primary" : "bg-black/20 cursor-not-allowed"}`}
                 >
                     Suivant
@@ -173,7 +176,7 @@ export default function OnboardingPanel({
             ) : (
                 <div className="mt-4">
                 <button
-                    className="w-full rounded-full btn-primary px-6 py-4 text-sm font-semibold text-white hover:opacity-95"
+                    className="mt-8 w-full   font-sans rounded-full bg-(--primary) hover:bg-(--primary-hover) px-6 py-3 text-sm font-semibold text-white cursor-pointer"
                     onClick={onNext}
                 >
                     Continuer

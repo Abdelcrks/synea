@@ -92,7 +92,7 @@ export const AvatarEdit = ({name, avatarUrl}: AvatarEditProps) => {
     return(
         <div className="flex flex-col items-center gap-3">
             <div className="relative inline-flex items-center justify-center">
-                <Avatar name={name} avatarUrl={previewUrl ?? avatarUrl} sizeClassName="h-24 w-24"></Avatar>
+                <Avatar name={name} avatarUrl={previewUrl ?? avatarUrl} sizeClassName="h-24 w-24 lg:h-40 lg:w-40"></Avatar>
 
                 <input type="file" 
                 ref={inputRef}
