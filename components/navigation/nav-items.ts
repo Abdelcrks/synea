@@ -1,4 +1,4 @@
-import { CircleUser, Inbox, MessagesSquare, Sparkles, User, UserPlus, UserRound, Users } from "lucide-react";
+import { CircleUser, MessagesSquare, Sparkles} from "lucide-react";
 
 export const NAV_ITEMS = [
   { href: "/matching", label: "Découvrir", icon: Sparkles },
