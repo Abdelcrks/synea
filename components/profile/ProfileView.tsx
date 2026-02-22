@@ -22,7 +22,7 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
             <div className="space-y-4">
                 <div className="flex items-center justify-between gap-4">
                     <h1 className="text-3xl font-bold">Mon profil</h1>
-                    <Link href="/contacts" className="btn btn--primary">
+                    <Link href="/contacts" className="btn btn--secondary  sm:w-auto">
                         Mes contacts
                     </Link>
                 </div>
