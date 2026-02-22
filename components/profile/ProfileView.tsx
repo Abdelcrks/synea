@@ -1,11 +1,9 @@
 import { Profile } from "@/lib/db/queries/profile"
-import Image from "next/image"
 import Link from "next/link"
 import { CANCER_LABELS } from "@/lib/constants/cancer"
 import { ROLE_LABELS } from "@/lib/constants/roles"
 import { signOutAction } from "@/lib/actions/auth/signOutAction"
 import { AvatarEdit } from "./AvatarEdit"
-import { Camera } from "lucide-react"
 
 type ProfileViewProps = {
     profile: Profile | null,

@@ -21,14 +21,6 @@ export default async function Profile ()  {
     
     return(
         <main>
-            {/* <h1>Mon profil</h1>
-            {profile ? (
-                <div>
-                    <p>{profile.namePublic}</p>
-                </div>
-            ): (
-                <p>profile introuvable</p>
-            )} */}
             <ProfileView profile={profile} email={session.user.email}></ProfileView>
         </main>
     )
