@@ -8,11 +8,6 @@ import Link from "next/link"
 import { areUsersContacts } from "@/lib/db/queries/contacts"
 
 
-
-
-
-
-
 type PageProps = {
     params: Promise<{ id: string }>
   }

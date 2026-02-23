@@ -1,4 +1,3 @@
-import { relations } from "drizzle-orm";
 import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
 
 export const users = pgTable("user", {
@@ -12,7 +11,18 @@ export const users = pgTable("user", {
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
-});
+
+
+  // rgpd
+  disabledAt: timestamp("disabled_at"), // user desactivé
+  deletionRequestedAt: timestamp("deletion_requested_at"), // par ex 30jours cmpte a rebours
+  deletedAt: timestamp("deleted_at"), // suppression logique effective puis j'anonymise + coupe acces definitivement & timestamp pour la tracabilité sur toutes ces actions
+  }, (table) => ({
+  deletedAtIdx: index("user_deleted_at_idx").on(table.deletedAt),
+  disabledAtIdx: index("user_disabled_at_idx").on(table.disabledAt),
+  deletionRequestedAtIdx: index("user_deletion_requested_at_idx").on(table.deletionRequestedAt),
+}));
+
 
 export const sessions = pgTable(
   "session",
@@ -73,21 +83,3 @@ export const verifications = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
-// export const userRelations = relations(users, ({ many }) => ({
-//   sessions: many(sessions),
-//   accounts: many(accounts),
-// }));
-
-// export const sessionRelations = relations(sessions, ({ one }) => ({
-//   user: one(users, {
-//     fields: [sessions.userId],
-//     references: [users.id],
-//   }),
-// }));
-
-// export const accountRelations = relations(accounts, ({ one }) => ({
-//   user: one(users, {
-//     fields: [accounts.userId],
-//     references: [users.id],
-//   }),
-// }));

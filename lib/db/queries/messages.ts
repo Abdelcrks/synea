@@ -1,4 +1,4 @@
-import { and, asc, eq, ne } from "drizzle-orm";
+import { and, asc, eq, ne, sql } from "drizzle-orm";
 import { db } from "../drizzle";
 import { conversationParticipants, messages, profiles } from "../schema";
 
@@ -22,26 +22,31 @@ export async function getMessagesByConversationId(conversationId: number){
         senderId:messages.senderId,
         createdAt: messages.createdAt,
 
-        senderNamePublic : profiles.namePublic,
-        senderAvatarUrl : profiles.avatarUrl,
-        senderProfileId: profiles.id,
-    }).from(messages)
-    .leftJoin(profiles,eq(messages.senderId, profiles.userId))
+      // ✅ fallback RGPD
+      senderNamePublic: sql<string | null>`COALESCE(${profiles.namePublic}, ${messages.senderNameSnapshot})`,
+      senderAvatarUrl: sql<string | null>`COALESCE(${profiles.avatarUrl}, ${messages.senderAvatarSnapshot})`,
+      senderProfileId: profiles.id,
+    })
+    .from(messages)
+    .leftJoin(profiles, eq(messages.senderId, profiles.userId))
     .where(eq(messages.conversationId, conversationId))
-    .orderBy(asc(messages.createdAt))
+    .orderBy(asc(messages.createdAt));
 }
 
 
 
-export async function getOtherUserId (conversationId:number, myUserId:string){
 
-    const [otherParticipant] = await db.select({userId : conversationParticipants.userId}).from(conversationParticipants) // je veux l'id de l'autre prsn
+export async function getOtherUserId(conversationId: number, myUserId: string) {
+  const [other] = await db
+    .select({ userId: conversationParticipants.userId })
+    .from(conversationParticipants)
     .where(
-        and(
-            eq(conversationParticipants.conversationId, conversationId), // mm conv
-            ne(conversationParticipants.userId, myUserId) // pas moi
-        )
-    ).limit(1) // 1 pers
+      and(
+        eq(conversationParticipants.conversationId, conversationId),
+        ne(conversationParticipants.userKey, myUserId) // ✅ compare sur userKey
+      )
+    )
+    .limit(1)
 
-    return otherParticipant?.userId ?? null // si aucune pers = null
+  return other?.userId ?? null
 }
