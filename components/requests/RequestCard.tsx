@@ -6,11 +6,20 @@ import { rejectContactRequest } from "@/lib/actions/contact-requests/rejectConta
 import type { Profile } from "@/lib/db/queries/profile"
 import { useState } from "react"
 
-type RequestCardProps = {
-    profile: Profile
+type ProfileSummary = {
+    id: string
+    userId: string
+    namePublic: string
+    avatarUrl: string | null
+    role: "hero" | "peer_hero" | "admin"
+    locationRegion: string | null
+  }
+  
+  type RequestCardProps = {
+    profile: ProfileSummary
     type: "received" | "sent"
     requestId: number
-}
+  }
 
 
 
@@ -30,7 +39,6 @@ export const RequestCard = ({ profile, type, requestId }: RequestCardProps) => {
             setLoading(false)
         }
     }
-
 
     const onReject = async () => {
         setLoadingReject(true)
@@ -71,7 +79,7 @@ export const RequestCard = ({ profile, type, requestId }: RequestCardProps) => {
                         </p>
                     </div>
 
-                    <span className="shrink-0 rounded-full bg-(--primary)]/10 px-3 py-1 text-xs font-medium text-(--primary)]">
+                    <span className="shrink-0 rounded-full bg-(--primary)/10 px-3 py-1 text-xs font-medium text-(--primary)">
                         {type === "received" ? "Reçue" : "Envoyée"}
                     </span>
                 </div>

@@ -1,5 +1,6 @@
 "use server"
 
+import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession";
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
 import { redirect } from "next/navigation";
@@ -12,10 +13,8 @@ export type UpdateSettingsActionState =
 
 export const updateEmailAction = async (_prevState: UpdateSettingsActionState | null , formData: FormData):Promise<UpdateSettingsActionState>=>{
 
-    const session = await auth.api.getSession({headers: await headers()})
-    if(!session?.user){
-       return {ok:false, message: "non autorisé"}
-    }
+    const session = await requireActiveSession()
+
 
     const email = formData.get("newEmail")?.toString().trim()
     if(!email || !email?.includes("@") || !email?.includes(".")){
@@ -52,10 +51,8 @@ export const updateEmailAction = async (_prevState: UpdateSettingsActionState | 
 
 export const updatePasswordAction = async (_prevState: UpdateSettingsActionState | null , formData: FormData): Promise<UpdateSettingsActionState>=>{
 
-    const session = await auth.api.getSession({headers: await headers()})
-    if(!session?.user){
-       return {ok:false, message: "non autorisé"}
-    } 
+    const session = await requireActiveSession()
+
     const currentPassword = formData.get("currentPassword")?.toString()
     const password = formData.get("newPassword")?.toString()
 

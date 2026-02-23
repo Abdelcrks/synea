@@ -1,7 +1,10 @@
 "use client"
 import { useActionState, useEffect, useRef } from "react"
 import { updateEmailAction, updatePasswordAction } from "./SettingsAction"
+import { disableAccountAction } from "@/lib/actions/account/disableAccountAction"
+import { Modal } from "@/components/widgets/Modal"
 import Link from "next/link"
+import { deleteAccountNowAction } from "@/lib/actions/account/deleteAccountNowAction"
 
 export default function EditSettingsForm() {
     const [emailState, emailFormAction, emailPending] = useActionState(updateEmailAction, null)
@@ -125,6 +128,36 @@ export default function EditSettingsForm() {
                         </button>
                     </form>
                 </section>
+                <section className="card flex flex-col gap-5">
+                    <h2 className="font-semibold">Compte</h2>
+
+                    <div className="stack">
+                        <Modal
+                        triggerText="Désactiver mon compte"
+                        title="Désactiver votre compte ?"
+                        description="Vous serez déconnecté immédiatement. Vous pourrez le réactiver plus tard."
+                        confirmText="Oui, désactiver"
+                        triggerClassName="btn btn--secondary"
+                        confirmClassName="btn btn--primary"
+                        action={async () => {
+                            await disableAccountAction()
+                        }}
+                        />
+
+                        <Modal
+                        triggerText="Supprimer mon compte"
+                        title="Supprimer définitivement votre compte ?"
+                        description="Votre compte sera d’abord désactivé puis supprimé automatiquement après 30 jours. Vous pouvez annuler pendant ce délai."
+                        confirmText="Oui, demander la suppression"
+                        triggerClassName="btn btn--secondary"
+                        confirmClassName="btn btn--primary"
+                        action={async () => {
+                            await deleteAccountNowAction()
+                        }}
+                        />
+                    </div>
+                    </section>
+                
             </div>
         </main>
     )

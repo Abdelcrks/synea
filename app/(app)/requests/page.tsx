@@ -1,25 +1,17 @@
 import { RequestCard } from "@/components/requests/RequestCard";
-import { auth } from "@/lib/auth";
+import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession";
+import { users } from "@/lib/db/auth-schema";
 import { db } from "@/lib/db/drizzle";
 import { contactRequests, profiles} from "@/lib/db/schema";
-import { and, eq } from "drizzle-orm";
-import { headers } from "next/headers";
+import { and, eq, isNull } from "drizzle-orm";
 import Link from "next/link";
 
 
 
 export default async function RequestPage() {
-    const session = await auth.api.getSession({headers: await headers()})
-    if(!session){
-        return(
-            <div>
-                <h1>Tu n'es pas connecté</h1>
-                <Link href={"/auth/sign-in"}></Link>
-            </div>
-        )
-    }
-
+    const session = await requireActiveSession()
     const myUserId = session.user.id
+
     const requestReceived = await db.select().from(contactRequests).where(
       (and(
         eq(contactRequests.toUserId, myUserId),
@@ -34,23 +26,58 @@ export default async function RequestPage() {
         ))
     )
 
-    const receivedWithProfiles = await Promise.all(requestReceived.map(async (request) => { // pr chaque demande va chercher le profil att que tlm est répondu , et donne moi un tableau final avec les données
-        const [profile] = await db.select().from(profiles)
-        .where(eq(profiles.userId, request.fromUserId)).limit(1)
 
-        return {request, profile} 
-    }))
-
-    const sentWithProfiles = await Promise.all(requestSent.map (async (request) => { // map async = Promise all sinon tableau de chaque promesse donc impsosible a exploiter
-        const [profile] = await db.select().from(profiles)          // Promise All = att plusieurs opérations async donc obligatoire avec le map (async)
-        .where(eq(profiles.userId, request.toUserId)).limit(1)
-
-        return {request, profile} 
-    }))
-
-    const receivedClean = receivedWithProfiles.filter((item) => item !== undefined)
-
-    const sentClean = sentWithProfiles.filter((item) =>  item !== undefined)
+    const selectProfileSummary = {
+      id: profiles.id,
+      userId: profiles.userId,
+      namePublic: profiles.namePublic,
+      avatarUrl: profiles.avatarUrl,
+      role: profiles.role,
+      locationRegion: profiles.locationRegion,
+    } as const
+    
+    const receivedWithProfiles = await Promise.all(
+      requestReceived.map(async (request) => {
+        const [profile] = await db
+          .select(selectProfileSummary)
+          .from(profiles)
+          .innerJoin(users, eq(users.id, profiles.userId))
+          .where(and(
+            eq(profiles.userId, request.fromUserId),
+            eq(profiles.isVisible, true),
+            isNull(users.disabledAt),
+            isNull(users.deletionRequestedAt),
+            isNull(users.deletedAt),
+          ))
+          .limit(1)
+    
+        if (!profile) return null
+        return { request, profile }
+      })
+    )
+    
+    const sentWithProfiles = await Promise.all(
+      requestSent.map(async (request) => {
+        const [profile] = await db
+          .select(selectProfileSummary)
+          .from(profiles)
+          .innerJoin(users, eq(users.id, profiles.userId))
+          .where(and(
+            eq(profiles.userId, request.toUserId),
+            eq(profiles.isVisible, true),
+            isNull(users.disabledAt),
+            isNull(users.deletionRequestedAt),
+            isNull(users.deletedAt),
+          ))
+          .limit(1)
+    
+        if (!profile) return null
+        return { request, profile }
+      })
+    )
+    
+    const receivedClean = receivedWithProfiles.filter((x) => x !== null)
+    const sentClean = sentWithProfiles.filter((x) => x !== null)
 
 
     return (

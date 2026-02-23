@@ -297,7 +297,6 @@
     box-shadow: var(--shadow);
   }
 
-  /* Form helpers */
   .label {
     display: block;
     font-size: 0.875rem;
@@ -318,7 +317,6 @@
     margin-top: 0.25rem;
   }
 
-  /* Links */
 
 
 

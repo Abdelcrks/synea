@@ -1,17 +1,17 @@
 "use server"
 
 import { ProfileCard } from "@/components/matching/ProfileCard"
-import { auth } from "@/lib/auth"
+import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession"
+import { users } from "@/lib/db/auth-schema"
 import { db } from "@/lib/db/drizzle"
 import { getMyProfile } from "@/lib/db/queries/profile"
 import { contactRequests, profiles } from "@/lib/db/schema"
-import { and, desc, eq, ne, or } from "drizzle-orm"
-import { headers } from "next/headers"
+import { and, desc, eq, isNull, ne, or } from "drizzle-orm"
 import Link from "next/link"
 
 
 export default async function MatchingPage ()  {
-    const session = await auth.api.getSession({headers: await headers()})
+    const session = await requireActiveSession()
     if(!session){
         return(
             <div>
@@ -37,30 +37,37 @@ export default async function MatchingPage ()  {
     }
 
 
-    const profileToShow = await db.select().from(profiles)
+    const profileToShow = await db
+    .select({profile: profiles})
+    .from(profiles)
+    .innerJoin(users, eq(users.id, profiles.userId))
     .where(and(
         eq(profiles.role, targetRole),
         eq(profiles.isVisible, true),
-        ne(profiles.userId, session.user.id) // non equal
+        ne(profiles.userId, session.user.id), // non equal
+        // user actif
+        isNull(users.disabledAt),
+        isNull(users.deletionRequestedAt),
+        isNull(users.deletedAt),
     ))
 
 
-    const profileWithStatus = await Promise.all(profileToShow.map(async (p) => {
+    const profileWithStatus = await Promise.all(profileToShow.map(async ({profile}) => {
         const [request] = await db.select().from(contactRequests).where(
             or(
                 and(
                     eq(contactRequests.fromUserId, userId),
-                    eq(contactRequests.toUserId, p.userId)
+                    eq(contactRequests.toUserId, profile.userId)
                 ),
                 and(
-                    eq(contactRequests.fromUserId, p.userId),
+                    eq(contactRequests.fromUserId, profile.userId),
                     eq(contactRequests.toUserId, userId)
                 )
             )
         ).orderBy(desc(contactRequests.createdAt)).limit(1)
 
         return {
-            profile: p,
+            profile,
             requestStatus : request?.status ?? null,
             requestFromMe : request ? request.fromUserId === userId : false,
         }

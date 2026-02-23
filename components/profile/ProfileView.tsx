@@ -79,7 +79,7 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                         <p className="mt-2">Permettre aux Pair-héros de me contacter</p>
                         <p className="mt-2">Afficher ma localisation aux autres</p>
                     </div>
-                    <div className="card">
+                    {/* <div className="card">
                         <h2 className="font-semibold">Zone sensible</h2>
                         <p className="text-(--destructive) text-center mt-4">
                             La suppression de votre compte est définitive. Toutes vos données, messages et relations seront supprimés de façon irréversible.
@@ -87,7 +87,7 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                         <button type="button" className="btn btn--destructive w-full mt-4">
                             Supprimer mon compte
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

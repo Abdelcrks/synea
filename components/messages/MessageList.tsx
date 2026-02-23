@@ -3,7 +3,7 @@ import Link from "next/link"
 type Message = {
   id: number
   content: string
-  senderId: string
+  senderId: string | null 
   createdAt: Date | null
   senderNamePublic: string | null
   senderAvatarUrl: string | null

@@ -3,10 +3,11 @@
 import { auth } from "@/lib/auth"
 import { users } from "@/lib/db/auth-schema"
 import { db } from "@/lib/db/drizzle"
-import { and, desc, eq, or } from "drizzle-orm"
+import { and, desc, eq, isNull, or } from "drizzle-orm"
 import { headers } from "next/headers"
 import { contactRequests, profiles } from "@/lib/db/schema"
 import { revalidatePath } from "next/cache"
+import { requireActiveSession } from "../auth/requireActiveSession"
 
 
 export type SendContactRequestResult = 
@@ -16,10 +17,8 @@ export type SendContactRequestResult =
 
 
 export  async function sendContactRequest (toUserId:string): Promise<SendContactRequestResult>{  // j'ai le droit d'envoyer une deamnde de mise en relation à cette personne ? si oui = demande crée si non pourquoi via le field msg" 
-    const session = await auth.api.getSession({headers: await headers()})
-    if(!session){
-        return {ok:false, field:"unauthenticated", message:"Pas connecté"}
-    }
+    const session = await requireActiveSession()
+
 
     if(toUserId.trim().length === 0){
         return {ok:false, field:"not_found", message:"n'existe pas "}
@@ -30,9 +29,19 @@ export  async function sendContactRequest (toUserId:string): Promise<SendContact
     }
 
 
-    const [targetUser] = await db.select().from(users).where(eq(users.id, toUserId)).limit(1) // verif que l'user existe que l'id correspond à un compte et qu'il est visible ((true))
-    if(!targetUser){
-        return {ok:false, field:"not_found", message:"user introuvable"}
+    const [targetUser] = await db
+        .select({ id: users.id })
+        .from(users)
+        .where(and(
+        eq(users.id, toUserId),
+        isNull(users.disabledAt),
+        isNull(users.deletionRequestedAt),
+        isNull(users.deletedAt),
+        ))
+        .limit(1)
+    
+    if (!targetUser) {
+        return { ok: false, field: "not_found", message: "Utilisateur introuvable ou indisponible" }
     }
 
     
@@ -43,7 +52,14 @@ export  async function sendContactRequest (toUserId:string): Promise<SendContact
         return {ok:false, field:"forbidden", message:"Profil introuvable"}
     }
 
-    const [targetProfile] = await db.select().from(profiles).where(and(eq(profiles.userId,toUserId), eq(profiles.isVisible, true))).limit(1) // verifie que le profil ciblé a complete son profil donc pas de profil = pas de matching
+    const [targetProfile] = await db
+        .select()
+        .from(profiles)
+        .where
+            (and(
+                eq(profiles.userId,toUserId),
+                eq(profiles.isVisible, true)
+            )).limit(1) // verifie que le profil ciblé a complete son profil donc pas de profil = pas de matching
 
     if(!targetProfile){
         return {ok:false, field:"not_found" , message: "Utilisateur introuvable ou indisponible"}

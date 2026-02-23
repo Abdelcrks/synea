@@ -1,7 +1,7 @@
 
 
 import { users } from "./auth-schema"
-import { pgEnum, pgTable, text, timestamp,serial, integer, uniqueIndex, boolean} from "drizzle-orm/pg-core"
+import { pgEnum, pgTable, text, timestamp,serial, integer, uniqueIndex, boolean, index} from "drizzle-orm/pg-core"
 
 
 export const roleEnum = pgEnum("role", ["hero","peer_hero", "admin"])
@@ -109,8 +109,7 @@ export const conversations = pgTable("conversations", {
     participantDuoId : text("participant_duo_id").notNull().unique(),
 
     createdByUserId: text("created_by_user_id")
-    .notNull()
-    .references(() => users.id, {onDelete: "cascade"}),
+    .references(() => users.id, {onDelete: "set null"}), // rgpd
 
     createdAt: timestamp("created_at", {withTimezone:true})
     .defaultNow()
@@ -121,23 +120,31 @@ export const conversations = pgTable("conversations", {
 export const conversationParticipants = pgTable("conversation_participants" , {
     id:serial("id").primaryKey(),
 
+    userKey : text("user_key").notNull(),
+
     conversationId: integer("conversation_id")
     .notNull()
     .references(() => conversations.id, {onDelete: "cascade"}),
 
     userId: text("user_id")
-    .notNull()
-    .references(() => users.id, {onDelete: "cascade"}),
+    .references(() => users.id, {onDelete: "set null"}), // rgpd
+
+
+    userNameSnapshot: text("user_name_snapshot"),
 
     createdAt: timestamp("created_at", {withTimezone: true})
     .defaultNow()
     .notNull(),
 },
 (table) => ({
+    conversationIdx : index("conversation_participants_conversation_id_idx").on(
+        table.conversationId
+    ),
     uniqConversationUser : uniqueIndex("conversation_participants_unique").on(
         table.conversationId,
-        table.userId
-    )
+        table.userKey
+    ),
+
 })
 )
 
@@ -151,13 +158,21 @@ export const messages = pgTable("messages", {
     .references(() => conversations.id, {onDelete: "cascade"}),
 
     senderId: text("sender_id")
-    .notNull()
-    .references(() => users.id, {onDelete: "cascade"}),
+    .references(() => users.id, {onDelete: "set null"}), //rgpd
+    senderNameSnapshot: text("sender_name_snapshot"),
+    senderAvatarSnapshot: text("sender_avatar_snapshot"),   
 
     content: text("content").notNull(),
 
     createdAt: timestamp("created_at", {withTimezone: true})
     .notNull()
     .defaultNow(),
-})
+},
+(table) => ({
+    convoCreatedIdx: index("messages_conversation_created_idx").on(
+        table.conversationId,
+        table.createdAt
+    )
+}),
+)
 
