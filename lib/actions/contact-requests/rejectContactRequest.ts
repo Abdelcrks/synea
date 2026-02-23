@@ -6,6 +6,7 @@ import { contactRequests } from "@/lib/db/schema"
 import { and, eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 import { headers } from "next/headers"
+import { requireActiveSession } from "../auth/requireActiveSession"
 
 
 export type RejectContactRequestResult = 
@@ -13,10 +14,7 @@ export type RejectContactRequestResult =
     | {ok: false, message:string}
 
 export async function rejectContactRequest (requestId:number):Promise<RejectContactRequestResult>{
-    const session = await auth.api.getSession({headers: await headers()})
-    if(!session){
-        return {ok:false, message:"tu n'es pas connecté"}
-    }
+    const session = await requireActiveSession()
 
     const updated = await db.update(contactRequests).set({
         status:"rejected",

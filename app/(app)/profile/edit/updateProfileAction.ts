@@ -8,6 +8,7 @@ import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { CANCER_TYPES, type CancerType } from "@/lib/db/schema"
 import { ROLES, type Role } from "@/lib/db/schema"
+import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession"
 
  
 
@@ -19,17 +20,14 @@ export type UpdateProfileState =
 export const updateProfileAction =  async (_prevState:UpdateProfileState| null, formData: FormData):Promise<UpdateProfileState>=> {
 
     
-    const session = await auth.api.getSession({headers: await headers()})
-    if(!session?.user){
-       return {ok:false, message: "non autorisé"}
-    }
+    const session = await requireActiveSession()
 
     const namePublic = formData.get("namePublic")?.toString().trim()
     const bio = formData.get("bio")?.toString() ?? null
     const locationRegion = formData.get("locationRegion")?.toString() ?? null
     const cancerTypeBrut = formData.get("cancerType")?.toString() || ""
         let cancerType:CancerType|null = null
-    if(cancerType !== ""){
+    if(cancerTypeBrut !== ""){
         if (!CANCER_TYPES.includes(cancerTypeBrut as CancerType)){
             return {ok:false, field:"cancerType", message:"Type de cancer invalide"}
         }

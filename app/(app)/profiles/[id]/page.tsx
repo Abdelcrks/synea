@@ -1,4 +1,5 @@
 import { PublicProfileView } from "@/components/profile/PublicProfilView"
+import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession"
 import { auth } from "@/lib/auth"
 import { db } from "@/lib/db/drizzle"
 import { getPublicProfileById } from "@/lib/db/queries/profile"
@@ -21,10 +22,8 @@ export type RelationStatus =
     | "pending_outgoing"
 
 export default async function PublicProfilPage ({params}: PageProps) {
-    const session = await auth.api.getSession({headers: await headers()})
-    if(!session){
-        redirect("/auth/sign-in")
-    }
+    const session = await requireActiveSession()
+
 
     const {id} =  await params
     const profile = await getPublicProfileById(id)

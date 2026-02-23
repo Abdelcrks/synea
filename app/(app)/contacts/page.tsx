@@ -1,13 +1,15 @@
 import { ContactsContent } from "@/components/contacts/ContactsContent";
+import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession";
 import { auth } from "@/lib/auth";
+import { users } from "@/lib/db/auth-schema";
 import { db } from "@/lib/db/drizzle";
 import { contactRequests, profiles } from "@/lib/db/schema";
-import { and, eq, inArray, or } from "drizzle-orm";
+import { and, eq, inArray, isNull, or } from "drizzle-orm";
 import { headers } from "next/headers";
 import Link from "next/link";
 
 export default async function ContactsPage() {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await requireActiveSession()
   if (!session) {
     return (
       <div>
@@ -43,8 +45,20 @@ export default async function ContactsPage() {
             id: profiles.id
           })
           .from(profiles)
-          .where(inArray(profiles.userId, otherUserIds)) // recupere tt les profils que j'ai en contact
-        : [];
+          .innerJoin(users,eq(users.id, profiles.userId))
+          .where(and(
+            inArray(profiles.userId, otherUserIds),
+    
+            //  profil visible
+            eq(profiles.isVisible, true),
+    
+            //  user actif
+            isNull(users.disabledAt),
+            isNull(users.deletionRequestedAt),
+            isNull(users.deletedAt),
+          ))
+      : []
+
 
 
             // crée un dictionnaire a partir de userId pr recuperer le profil

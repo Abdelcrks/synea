@@ -1,4 +1,5 @@
 import { Avatar } from "@/components/profile/Avatar"
+import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession"
 import { auth } from "@/lib/auth"
 import { getInbox } from "@/lib/db/queries/inbox"
 import { headers } from "next/headers"
@@ -6,10 +7,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 
 export default async function MessagesPage() {
-  const session = await auth.api.getSession({headers: await headers()})
-  if(!session){
-    redirect("/auth/sign-in")
-  }
+  const session = await requireActiveSession()
 
 const max100carac = (text: string, max = 100)=>{
   if(text.length <= max){ 

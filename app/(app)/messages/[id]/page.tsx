@@ -5,7 +5,8 @@ import { getMessagesByConversationId, getOtherUserId, isUserConversationParticip
 import { MessageList } from "@/components/messages/MessageList"
 import { SendMessageForm } from "@/components/messages/SendMessageForm"
 import Link from "next/link"
-import { areUsersContacts } from "@/lib/db/queries/contacts"
+import { areUsersContacts, isUserActive } from "@/lib/db/queries/contacts"
+import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession"
 
 
 type PageProps = {
@@ -13,10 +14,7 @@ type PageProps = {
   }
   
   export default async function MessageDetailPage({ params }: PageProps) {
-    const session = await auth.api.getSession({headers: await headers()})
-    if(!session){
-        redirect("/auth/sign-in")
-    }
+    const session = await requireActiveSession()
 
     const {id} = await params
 
@@ -33,7 +31,7 @@ type PageProps = {
     const messages = await getMessagesByConversationId(conversationId)
 
     const otherUserId = await getOtherUserId(conversationId, session.user.id)
-    const canSend = otherUserId !== null && (await areUsersContacts(session.user.id, otherUserId))
+    const canSend = otherUserId !== null && (await areUsersContacts(session.user.id, otherUserId)) && (await isUserActive(otherUserId))
 
 
     return (

@@ -1,6 +1,7 @@
 import { profiles } from "../schema"
 import { db } from "../drizzle"
-import { eq, InferSelectModel } from "drizzle-orm"
+import { and, eq, InferSelectModel, isNull } from "drizzle-orm"
+import { users } from "../auth-schema"
 
 // inferselectmodel sync ts => db
 export type Profile = InferSelectModel<typeof profiles> // type est directement synchro avec la db  ex le type Profile = a une ligne de la table profiles
@@ -22,8 +23,9 @@ export const getMyProfile = async (userId:string) : Promise<Profile | null >=> {
 
 
 
-export const getPublicProfileById = async (profileId:string):Promise<PublicProfile | null> => {
-    const result = await db.select({
+export const getPublicProfileById = async (profileId: string): Promise<PublicProfile | null> => {
+    const result = await db
+      .select({
         id: profiles.id,
         namePublic: profiles.namePublic,
         avatarUrl: profiles.avatarUrl,
@@ -32,8 +34,19 @@ export const getPublicProfileById = async (profileId:string):Promise<PublicProfi
         locationRegion: profiles.locationRegion,
         role: profiles.role,
         userId: profiles.userId,
-
-    }).from(profiles).where(eq(profiles.id, profileId))
-
+      })
+      .from(profiles)
+      .innerJoin(users, eq(users.id, profiles.userId))
+      .where(and(
+        eq(profiles.id, profileId),
+        eq(profiles.isVisible, true),
+  
+        //  user actif
+        isNull(users.disabledAt),
+        isNull(users.deletionRequestedAt),
+        isNull(users.deletedAt),
+      ))
+      .limit(1)
+  
     return result[0] ?? null
-}
+  }

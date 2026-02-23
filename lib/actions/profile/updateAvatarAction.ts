@@ -6,6 +6,7 @@ import { profiles } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
+import { requireActiveSession } from "../auth/requireActiveSession";
 
 
 type UpdateAvatarResult = 
@@ -13,10 +14,7 @@ type UpdateAvatarResult =
 
 
 export async function updateAvatarAction (avatarUrl:string):Promise<UpdateAvatarResult> {
-    const session = await auth.api.getSession({headers: await headers()})
-    if(!session){
-        return {ok:false, message:"non connecté"}
-    }
+    const session = await requireActiveSession()
     if(!avatarUrl || !avatarUrl.startsWith("https://")){
         return {ok:false, message:"url avatar incorrect"}
     }

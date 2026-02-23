@@ -22,7 +22,7 @@ export async function getMessagesByConversationId(conversationId: number){
         senderId:messages.senderId,
         createdAt: messages.createdAt,
 
-      // ✅ fallback RGPD
+      //  fallback RGPD
       senderNamePublic: sql<string | null>`COALESCE(${profiles.namePublic}, ${messages.senderNameSnapshot})`,
       senderAvatarUrl: sql<string | null>`COALESCE(${profiles.avatarUrl}, ${messages.senderAvatarSnapshot})`,
       senderProfileId: profiles.id,

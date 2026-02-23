@@ -7,15 +7,13 @@ import { getOtherUserId, isUserConversationParticipant } from "@/lib/db/queries/
 import { messages } from "@/lib/db/schema"
 import { revalidatePath } from "next/cache"
 import { headers } from "next/headers"
+import { requireActiveSession } from "../auth/requireActiveSession"
 
 
 
 export async function sendMessage(formData: FormData){
 
-    const session = await auth.api.getSession({headers: await headers()})
-    if(!session){
-        return { ok: false, message: "Non connecté." }
-    }
+    const session = await requireActiveSession()
 
     const conversationIdBrut = formData.get("conversationId")
     const contentBrut = formData.get("content")

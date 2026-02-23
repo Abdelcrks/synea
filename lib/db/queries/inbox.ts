@@ -1,67 +1,98 @@
-import { db } from "@/lib/db/drizzle"
-import { conversationParticipants, messages, profiles } from "@/lib/db/schema"
-import { and, desc, eq, ne } from "drizzle-orm"
+import { eq, desc, and, ne } from "drizzle-orm"
+import { conversationParticipants, messages, profiles } from "../schema"
+import { users } from "../auth-schema"
+import { db } from "../drizzle"
 
 export async function getInbox(userId: string) {
+  //  userkey stable psk userId nullable au final
   const myConvs = await db
     .select({ conversationId: conversationParticipants.conversationId })
     .from(conversationParticipants)
-    .where(eq(conversationParticipants.userId, userId)) // recup tt les conv ou je suis dedans
+    .where(eq(conversationParticipants.userKey, userId))
 
-  const conversationIds = myConvs.map((r) => r.conversationId) // transforme en tableau
-  if (conversationIds.length === 0){
-    return []
-  }
+  const conversationIds = myConvs.map((r) => r.conversationId)
+  if (conversationIds.length === 0) return []
 
-  const inbox = [] // la ou les cards de conv seront stockés
+  const inbox: Array<{
+    conversationId: number
+    otherProfile: { namePublic: string; avatarUrl: string | null }
+    lastMessage: { content: string; createdAt: Date }
+  }> = []
 
-  for (const conversationId of conversationIds) { // une conv à la fois
-    const [last] = await db     // recup le premier élement du tableau msg le plus recent
+  for (const conversationId of conversationIds) {
+    const [last] = await db
       .select({ content: messages.content, createdAt: messages.createdAt })
       .from(messages)
       .where(eq(messages.conversationId, conversationId))
       .orderBy(desc(messages.createdAt))
       .limit(1)
 
-    if (!last){
-        continue // pas de msg jpasse 
-    }
+    if (!last) continue
 
-    // autre participant ps moi
     const [other] = await db
-      .select({ otherUserId: conversationParticipants.userId })
+      .select({
+        otherUserId: conversationParticipants.userId, // string | null
+        otherUserKey: conversationParticipants.userKey, // string (not null)
+      })
       .from(conversationParticipants)
       .where(
         and(
           eq(conversationParticipants.conversationId, conversationId),
-          ne(conversationParticipants.userId, userId) // != moi
+          ne(conversationParticipants.userKey, userId) // ✅ compare sur userKey
         )
       )
       .limit(1)
 
-    if (!other){
-        continue // si pas d'autre utilisateur je next
-    } 
+    if (!other) continue
 
-    const [otherProfile] = await db  // recup le profil de l'autre user userId = otheruserId
-      .select({ namePublic: profiles.namePublic, avatarUrl: profiles.avatarUrl })
+    //  autre user supprimé => userId NULL => placeholder direct
+    if (!other.otherUserId) {
+      inbox.push({
+        conversationId,
+        otherProfile: { namePublic: "Utilisateur", avatarUrl: null },
+        lastMessage: last,
+      })
+      continue
+    }
+
+    //  sinon other.otherUserId est string ici
+    const [otherProfileRow] = await db
+      .select({
+        namePublic: profiles.namePublic,
+        avatarUrl: profiles.avatarUrl,
+        disabledAt: users.disabledAt,
+        deletionRequestedAt: users.deletionRequestedAt,
+        deletedAt: users.deletedAt,
+      })
       .from(profiles)
+      .leftJoin(users, eq(users.id, profiles.userId))
       .where(eq(profiles.userId, other.otherUserId))
       .limit(1)
 
-    if (!otherProfile){
-        continue // si pas de profil on nxt
-    } 
+    const otherProfile = (() => {
+      if (!otherProfileRow) return { namePublic: "Utilisateur", avatarUrl: null }
 
-    inbox.push({ // ajoute une card à inbox 
-      conversationId, // lien msg/id
-      otherProfile, // avatar + prenom
-      lastMessage: last, // dernier msg
-    })
-  } 
+      const inactive =
+        otherProfileRow.disabledAt !== null ||
+        otherProfileRow.deletionRequestedAt !== null ||
+        otherProfileRow.deletedAt !== null
 
-  // trier du plus récent au plus ancien .sort (timeztamp)
-  inbox.sort((a, b) => new Date(b.lastMessage.createdAt).getTime() -new Date(a.lastMessage.createdAt).getTime())
+      if (inactive) return { namePublic: "Utilisateur", avatarUrl: null }
+
+      return {
+        namePublic: otherProfileRow.namePublic ?? "Utilisateur",
+        avatarUrl: otherProfileRow.avatarUrl ?? null,
+      }
+    })()
+
+    inbox.push({ conversationId, otherProfile, lastMessage: last })
+  }
+
+  inbox.sort(
+    (a, b) =>
+      new Date(b.lastMessage.createdAt).getTime() -
+      new Date(a.lastMessage.createdAt).getTime()
+  )
 
   return inbox
 }

@@ -6,16 +6,15 @@ import { contactRequests } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
+import { requireActiveSession } from "../auth/requireActiveSession";
 
 export type CancelContactRequest = 
 | {ok:true}
 | {ok:false; message:string}
 
 export async function cancelContactRequest (requestId: number): Promise<CancelContactRequest>{
-    const session = await auth.api.getSession({headers: await headers()})
-        if(!session){
-            return {ok:false, message:"Pas connecté"}
-        }
+    const session = await requireActiveSession()
+
 
         const updated = await db.update(contactRequests).set({
             status: "canceled",
