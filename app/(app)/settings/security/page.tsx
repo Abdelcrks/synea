@@ -147,7 +147,7 @@ export default function EditSettingsForm() {
                         <Modal
                         triggerText="Supprimer mon compte"
                         title="Supprimer définitivement votre compte ?"
-                        description="Votre compte sera d’abord désactivé puis supprimé automatiquement après 30 jours. Vous pouvez annuler pendant ce délai."
+                        description="Cette action sera irréversible"
                         confirmText="Oui, demander la suppression"
                         triggerClassName="btn btn--secondary"
                         confirmClassName="btn btn--primary"
