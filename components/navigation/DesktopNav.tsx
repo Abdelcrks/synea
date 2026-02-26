@@ -18,8 +18,8 @@ export function DesktopNav() {
             href={href}
             className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm transition-all duration-200 ${
               isActive
-                ? "bg-(--primary-soft) text-(--primary) font-semibold"
-                : "text-(--text-muted) hover:text-(--text-main)"
+                ? "bg-(--primary-soft) text-(--text-main) font-semibold"
+                : "text-(--text-main) hover:text-(--text-main)"
             }`}
           >
             <Icon className="h-4 w-4" />

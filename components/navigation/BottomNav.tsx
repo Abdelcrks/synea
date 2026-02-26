@@ -19,15 +19,15 @@ export function BottomNav() {
             href={href}
             className={`flex flex-1 flex-col items-center justify-center gap-1 text-xs transition-all duration-200 ${
               isActive
-                ? "text-(--primary)"
-                : "text-(--text-muted)"
+                ? "text-(--text-main)"
+                : "text-(--text-main)"
             }`}
           >
             <div
               className={`flex items-center justify-center rounded-full p-2 transition ${
                 isActive
                   ? "bg-(--primary-soft)"
-                  : ""
+                  : "text-(--text-main)"
               }`}
             >
               <Icon className="h-5 w-5" />
