@@ -1,11 +1,9 @@
 "use server"
 
-import { auth } from "@/lib/auth";
 import { db } from "@/lib/db/drizzle";
 import { contactRequests } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
 import { requireActiveSession } from "../auth/requireActiveSession";
 
 export type CancelContactRequest = 
@@ -14,7 +12,6 @@ export type CancelContactRequest =
 
 export async function cancelContactRequest (requestId: number): Promise<CancelContactRequest>{
     const session = await requireActiveSession()
-
 
         const updated = await db.update(contactRequests).set({
             status: "canceled",
