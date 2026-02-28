@@ -1,13 +1,10 @@
 "use server"
 
-import { auth } from "@/lib/auth"
 import { db } from "@/lib/db/drizzle"
 import { contactRequests } from "@/lib/db/schema"
 import { and, eq } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
-import { headers } from "next/headers"
 import { requireActiveSession } from "../auth/requireActiveSession"
-
 
 export type RejectContactRequestResult = 
     | {ok:true}
@@ -28,7 +25,6 @@ export async function rejectContactRequest (requestId:number):Promise<RejectCont
     if(updated.length === 0){
         return {ok:false, message:"Impossible de refuser cette demande"}
     }
-
 
     revalidatePath("/requests")
     return {ok:true}
