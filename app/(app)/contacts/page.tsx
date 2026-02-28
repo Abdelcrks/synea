@@ -1,11 +1,9 @@
 import { ContactsContent } from "@/components/contacts/ContactsContent";
 import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession";
-import { auth } from "@/lib/auth";
 import { users } from "@/lib/db/auth-schema";
 import { db } from "@/lib/db/drizzle";
 import { contactRequests, profiles } from "@/lib/db/schema";
 import { and, eq, inArray, isNull, or } from "drizzle-orm";
-import { headers } from "next/headers";
 import Link from "next/link";
 
 export default async function ContactsPage() {

@@ -1,6 +1,4 @@
-import { auth } from "@/lib/auth"
 import { redirect } from "next/navigation"
-import { headers } from "next/headers"
 import { getMessagesByConversationId, getOtherUserId, isUserConversationParticipant } from "@/lib/db/queries/messages"
 import { MessageList } from "@/components/messages/MessageList"
 import { SendMessageForm } from "@/components/messages/SendMessageForm"
