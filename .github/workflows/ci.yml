@@ -8,6 +8,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - uses: actions/checkout@v4
@@ -22,4 +24,4 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install
-      - run: pnpm test
+      - run: pnpm test:run  # 👈 mode CI, pas watch
