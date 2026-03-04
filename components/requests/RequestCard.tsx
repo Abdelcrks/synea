@@ -120,6 +120,7 @@ export const RequestCard = ({ profile, type, requestId }: RequestCardProps) => {
                                 </button>
 
                                 <button
+                                    data-testid="accept-request" // e2e accept request test
                                     className="rounded-full border border-green-600  px-5 py-2 text-sm font-medium text-green-600 cursor-pointer hover:bg-green-50
                          hover:opacity-95 disabled:opacity-50"
                                     onClick={onAccept}
@@ -130,7 +131,8 @@ export const RequestCard = ({ profile, type, requestId }: RequestCardProps) => {
                             </div>
 
                             {feedback && (
-                                <p className="text-sm text-red-600">{feedback}</p>
+
+                                <p data-testid="request-feedback" className="text-sm text-red-600">{feedback}</p> // e2e feedback test
                             )}
                         </div>
                     )}

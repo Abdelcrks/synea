@@ -60,11 +60,12 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
   const roleLabel = profile.role === "hero" ? "Héros" : profile.role === "peer_hero" ? "Pair-héros" : profile.role
 
   return (
-    <div className="card">
+    //test e2e profilecard 
+    <div className="card" data-testid={`profile-card-${profile.userId}`}> 
       <Link href={`/profiles/${profile.id}`} className="block">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex items-start gap-3">
-            <div className="shrink-0">
+            <div className="shrink-0">  
               <Avatar
                 name={profile.namePublic}
                 avatarUrl={profile.avatarUrl}
@@ -104,6 +105,7 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
         <button
           className="btn btn--primary w-full "
           disabled={disabled || isDisabledByStatus}
+          data-testid="send-request" // e2e test
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -115,6 +117,7 @@ export function ProfileCard({ profile, requestFromMe, requestStatus }: ProfileCa
   
         {feedback && (
           <p 
+            data-testid="request-feedback" // e2e feedback test
             className={[
               "text-sm",
               feedbackType === "success" ? "text-green-600" : "",
