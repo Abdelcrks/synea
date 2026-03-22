@@ -46,7 +46,7 @@ export default function EditSettingsForm() {
                     <form ref={emailFormRef} action={emailFormAction} className="stack">
                         {emailState?.ok && (
                             <p className="text-sm muted">
-                                Lien de confirmation généré (dev : voir le terminal).
+                                Un lien de confirmation a été envoyé à votre nouvelle adresse email.
                             </p>
                         )}
 
