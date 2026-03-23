@@ -43,7 +43,6 @@ export const getPublicProfileById = async (profileId: string): Promise<PublicPro
   
         //  user actif
         isNull(users.disabledAt),
-        isNull(users.deletionRequestedAt),
         isNull(users.deletedAt),
       ))
       .limit(1)

@@ -11,7 +11,6 @@ export default async function AccountDisabledPage() {
   const [userStatus] = await db
     .select({
       disabledAt: users.disabledAt,
-      deletionRequestedAt: users.deletionRequestedAt,
       deletedAt: users.deletedAt,
     })
     .from(users)

@@ -18,7 +18,6 @@ export async function deleteAccountNowAction() {
   await db.update(users).set({
     deletedAt: now,
     disabledAt: now,
-    // deletionRequestedAt: now, // optionnel si tu gardes ce champ
     name: "Utilisateur supprimé",
     image: null,
     emailVerified: false,

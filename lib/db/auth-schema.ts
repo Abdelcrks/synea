@@ -15,12 +15,10 @@ export const users = pgTable("user", {
 
   // rgpd
   disabledAt: timestamp("disabled_at"), // user desactivé
-  deletionRequestedAt: timestamp("deletion_requested_at"), // par ex 30jours cmpte a rebours
   deletedAt: timestamp("deleted_at"), // suppression logique effective puis j'anonymise + coupe acces definitivement & timestamp pour la tracabilité sur toutes ces actions
   }, (table) => ({
   deletedAtIdx: index("user_deleted_at_idx").on(table.deletedAt),
   disabledAtIdx: index("user_disabled_at_idx").on(table.disabledAt),
-  deletionRequestedAtIdx: index("user_deletion_requested_at_idx").on(table.deletionRequestedAt),
 }));
 
 

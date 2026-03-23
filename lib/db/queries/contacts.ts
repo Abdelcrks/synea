@@ -29,7 +29,6 @@ export async function isUserActive(userId: string) {
       .where(and(
         eq(users.id, userId),
         isNull(users.disabledAt),
-        isNull(users.deletionRequestedAt),
         isNull(users.deletedAt),
       ))
       .limit(1)

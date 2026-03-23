@@ -46,7 +46,6 @@ export default async function RequestPage() {
             eq(profiles.userId, request.fromUserId),
             eq(profiles.isVisible, true),
             isNull(users.disabledAt),
-            isNull(users.deletionRequestedAt),
             isNull(users.deletedAt),
           ))
           .limit(1)
@@ -66,7 +65,6 @@ export default async function RequestPage() {
             eq(profiles.userId, request.toUserId),
             eq(profiles.isVisible, true),
             isNull(users.disabledAt),
-            isNull(users.deletionRequestedAt),
             isNull(users.deletedAt),
           ))
           .limit(1)

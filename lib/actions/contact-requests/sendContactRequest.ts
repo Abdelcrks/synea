@@ -36,7 +36,6 @@ export async function sendContactRequest(toUserId: string): Promise<SendContactR
       and(
         eq(users.id, targetId),
         isNull(users.disabledAt),
-        isNull(users.deletionRequestedAt),
         isNull(users.deletedAt),
       ),
     )

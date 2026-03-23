@@ -47,7 +47,6 @@ export default async function MatchingPage ()  {
         ne(profiles.userId, session.user.id), // non equal
         // user actif
         isNull(users.disabledAt),
-        isNull(users.deletionRequestedAt),
         isNull(users.deletedAt),
     ))
 

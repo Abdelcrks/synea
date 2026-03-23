@@ -13,7 +13,6 @@ export async function cancelDeletionAction() {
   await db.update(users)
     .set({
       disabledAt: null,
-      deletionRequestedAt: null,
       deletedAt: null,
     })
     .where(eq(users.id, session.user.id))

@@ -61,7 +61,6 @@ export async function getInbox(userId: string) {
         namePublic: profiles.namePublic,
         avatarUrl: profiles.avatarUrl,
         disabledAt: users.disabledAt,
-        deletionRequestedAt: users.deletionRequestedAt,
         deletedAt: users.deletedAt,
       })
       .from(profiles)
@@ -74,7 +73,6 @@ export async function getInbox(userId: string) {
 
       const inactive =
         otherProfileRow.disabledAt !== null ||
-        otherProfileRow.deletionRequestedAt !== null ||
         otherProfileRow.deletedAt !== null
 
       if (inactive) return { namePublic: "Utilisateur", avatarUrl: null }

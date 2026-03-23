@@ -11,7 +11,7 @@ export default async function ContactsPage() {
   if (!session) {
     return (
       <div>
-        <Link href={"/auth/sign-in"}>tu n'est pas connecté, connecte toi ici</Link>
+        <Link href={"/auth/sign-in"}>tu n&apos;est pas connecté, connecte toi ici</Link>
       </div>
     )
   }
@@ -52,7 +52,6 @@ export default async function ContactsPage() {
     
             //  user actif
             isNull(users.disabledAt),
-            isNull(users.deletionRequestedAt),
             isNull(users.deletedAt),
           ))
       : []
