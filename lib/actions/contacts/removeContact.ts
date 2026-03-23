@@ -1,11 +1,9 @@
 "use server"
 
-import { auth } from "@/lib/auth"
 import { db } from "@/lib/db/drizzle"
 import { contactRequests } from "@/lib/db/schema"
 import { and, eq, or } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
-import { headers } from "next/headers"
 import { requireActiveSession } from "../auth/requireActiveSession"
 
 

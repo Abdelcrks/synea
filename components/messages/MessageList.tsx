@@ -17,7 +17,7 @@ type MessageListProps = {
 
 export function MessageList({ messages, currentUserId }: MessageListProps) {
   if (messages.length === 0) {
-    return <p className="text-sm muted">Aucun message pour l'instant</p>
+    return <p className="text-sm muted">Aucun message pour l&apos;instant</p>
   }
 
   return (

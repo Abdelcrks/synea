@@ -4,12 +4,12 @@ import { describe, it, expect, vi } from "vitest";
 
 vi.mock("next/image", () => {
   return {
-    default: (props: any) => {
-      const { fill, ...rest } = props; // on enlève fill
-      return <img {...rest} />; // ✅ utiliser rest, pas props
+    default: ({ fill: _fill, ...rest }: { fill?: boolean; src: string; alt: string; width?: number; height?: number }) => {
+      return <img {...rest} />;
     },
   };
 });
+
 import { Avatar } from "../Avatar"; 
 
 describe("Avatar", () => {

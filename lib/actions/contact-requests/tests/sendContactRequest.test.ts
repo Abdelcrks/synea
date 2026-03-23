@@ -35,7 +35,7 @@ vi.mock("@/lib/db/drizzle", () => ({
 
 import { sendContactRequest } from "../sendContactRequest";
 
-function mockSelectLimit(rows: any[]) {
+function mockSelectLimit(rows: unknown[]) {
   const limit = vi.fn().mockResolvedValue(rows);
   const where = vi.fn(() => ({ limit }));
   const from = vi.fn(() => ({ where, limit }));
@@ -43,7 +43,7 @@ function mockSelectLimit(rows: any[]) {
   return { select };
 }
 
-function mockSelectOrderLimit(rows: any[]) {
+function mockSelectOrderLimit(rows: unknown[]) {
   const limit = vi.fn().mockResolvedValue(rows);
   const orderBy = vi.fn(() => ({ limit }));
   const where = vi.fn(() => ({ orderBy, limit }));

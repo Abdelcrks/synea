@@ -1,5 +1,5 @@
 import "./globals.css";
-import { Inter, Fraunces,DM_Sans} from "next/font/google";
+import { Inter,DM_Sans} from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],

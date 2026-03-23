@@ -7,8 +7,7 @@ export type SignInState =
     | {ok:true}
     | {ok:false; field?: "email" | "password"; message :string}
 
-export const signInAction = async (_prev:SignInState | null, formData: FormData): Promise <SignInState> => {
-    
+export const signInAction = async (_prev:SignInState | null, formData: FormData): Promise<SignInState> => {
 
     const email = (formData.get("email")?.toString() ?? "").trim().toLowerCase()
     const password = formData.get("password")?.toString() ?? ""
@@ -17,7 +16,7 @@ export const signInAction = async (_prev:SignInState | null, formData: FormData)
         return {ok: false, field:"email", message: "email invalide"}
     }
 
-    if(password.length<8){
+    if(password.length < 8){
         return {ok: false, field: "password", message: "mot de passe trop court 8 caractères minimum"}
     }
 
@@ -27,14 +26,15 @@ export const signInAction = async (_prev:SignInState | null, formData: FormData)
         })
 
         redirect("/profile")
-    } catch (error: any) {
+    } catch (error: unknown) {
         if(isRedirectError(error)) throw error
 
-        const msg = String(error?.message ?? "")
-        const statusCode = Number(error?.statusCode ?? 0)
+        const err = error as { message?: string; statusCode?: number }
+        const msg = String(err?.message ?? "")
+        const statusCode = Number(err?.statusCode ?? 0)
 
-        if (statusCode === 401 || msg.toLowerCase().includes("invalid")){
-            return {ok:false, message: "email ou mot de passe incorrect"}
+        if(statusCode === 401 || msg.toLowerCase().includes("invalid")){
+            return {ok: false, message: "email ou mot de passe incorrect"}
         }
     }
     return {ok: false, message: "erreur serveur lors de la connexion c'est pas ta faute"}

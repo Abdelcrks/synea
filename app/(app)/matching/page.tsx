@@ -15,8 +15,8 @@ export default async function MatchingPage ()  {
     if(!session){
         return(
             <div>
-            <h1>Vous n'êtes pas connecté </h1>
-            <Link href={"/auth/sign-in"}>m'authentifier</Link>
+            <h1>Vous n&apos;êtes pas connecté </h1>
+            <Link href={"/auth/sign-in"}>m&apos;authentifier</Link>
             </div>
             )
     }

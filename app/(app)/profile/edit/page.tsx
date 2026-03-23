@@ -1,8 +1,6 @@
 import ProfileEditForm from "@/components/profile/ProfileEditForm"
 import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession"
-import { auth } from "@/lib/auth"
 import { getMyProfile } from "@/lib/db/queries/profile"
-import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 
 

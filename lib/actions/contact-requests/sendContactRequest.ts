@@ -145,7 +145,7 @@ export async function sendContactRequest(toUserId: string): Promise<SendContactR
       toUserId: targetId,
       status: "pending",
     })
-  } catch (e) {
+  } catch  {
     // unique constraint => une demande directe existe déjà (ou insert concurrent)
     return { ok: false, field: "already_exists", message: "Une demande existe déjà entre vous" }
   }

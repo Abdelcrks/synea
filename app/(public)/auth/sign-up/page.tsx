@@ -1,8 +1,6 @@
 
-import { redirect } from "next/navigation";
 import { SignUpForm } from "./SignUpForm";
 import { cancerTypeEnum } from "@/lib/db/schema";
-import Link from "next/link";
 
 
 

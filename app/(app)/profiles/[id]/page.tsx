@@ -1,12 +1,10 @@
 import { PublicProfileView } from "@/components/profile/PublicProfilView"
 import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession"
-import { auth } from "@/lib/auth"
 import { db } from "@/lib/db/drizzle"
 import { getPublicProfileById } from "@/lib/db/queries/profile"
 import { contactRequests } from "@/lib/db/schema"
 import { and, desc, eq, or } from "drizzle-orm"
-import { headers } from "next/headers"
-import { notFound, redirect } from "next/navigation"
+import { notFound } from "next/navigation"
 
 
 

@@ -3,7 +3,6 @@
 import { requireActiveSession } from "@/lib/actions/auth/requireActiveSession";
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
-import { redirect } from "next/navigation";
 
 
 export type UpdateSettingsActionState = 
@@ -13,45 +12,36 @@ export type UpdateSettingsActionState =
 
 export const updateEmailAction = async (_prevState: UpdateSettingsActionState | null , formData: FormData):Promise<UpdateSettingsActionState>=>{
 
-    const session = await requireActiveSession()
-
+    await requireActiveSession()
 
     const email = formData.get("newEmail")?.toString().trim()
     if(!email || !email?.includes("@") || !email?.includes(".")){
         return {ok:false, field:"newEmail", message: "email non valide"}
     }
-    // if(process.env.NODE_ENV === "development"){
-    //     console.log("changeEmail", changeEmail)
-    // }
 
     try {
-        const changeEmail = await auth.api.changeEmail({headers: await headers(),
+        await auth.api.changeEmail({
+            headers: await headers(),
             body: {
-                 newEmail: email,
+                newEmail: email,
                 callbackURL: "/profile"
             }
-         })
-
+        })
         return {ok:true}
-        //  console.log("changeEmail ", changeEmail)
 
-    } catch (error) {
-        // console.log("statusCode", (error as any)?.statusCode)
-        // console.log("status", (error as any)?.status)
-        // console.log("body", (error as any)?.body)
-        const errorCode = (error as any)?.body?.code
+    } catch (error: unknown) {
+        const errorCode = (error as { body?: { code?: string } })?.body?.code
         if(errorCode === "USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL"){
-            return{ok:false, field:"newEmail", message:"Cet email est déjà utilisé"}
+            return {ok:false, field:"newEmail", message:"Cet email est déjà utilisé"}
         }
-        return{ ok: false, message:"Impossible de changer l'email"}
+        return {ok: false, message:"Impossible de changer l'email"}
     }
-    // redirect("/profile")
 }
 
 
 export const updatePasswordAction = async (_prevState: UpdateSettingsActionState | null , formData: FormData): Promise<UpdateSettingsActionState>=>{
 
-    const session = await requireActiveSession()
+    await requireActiveSession()
 
     const currentPassword = formData.get("currentPassword")?.toString()
     const password = formData.get("newPassword")?.toString()
@@ -68,27 +58,27 @@ export const updatePasswordAction = async (_prevState: UpdateSettingsActionState
         return {ok:false, field:"newPassword", message:"Mot de passe trop court minimum 8 caractères"}
     }
 
-    if(currentPassword=== password){
+    if(currentPassword === password){
         return {ok:false, field: "newPassword", message:"Le mot de passe doit être différent de l'ancien mot de passe"}
     }
 
     try {
-        const changePassword = await auth.api.changePassword({headers: await headers(),
+        await auth.api.changePassword({
+            headers: await headers(),
             body: {
                 newPassword: password,
                 currentPassword: currentPassword,
                 revokeOtherSessions: false
             }
         })
-        
         return {ok:true}
-    } catch (error) {
-        const errorCode = (error as any)?.body?.code //maping d'erreur betterauth
+
+    } catch (error: unknown) {
+        const errorCode = (error as { body?: { code?: string } })?.body?.code
         console.log("changepassword erreur : ", errorCode)
-        if(errorCode == "INVALID_PASSWORD"){
+        if(errorCode === "INVALID_PASSWORD"){
             return {ok:false, field:"currentPassword", message:"Mot de passe actuel incorrect"}
         }
         return {ok:false, message:"impossible de changer le mot de passe"}
-        
     }
 }

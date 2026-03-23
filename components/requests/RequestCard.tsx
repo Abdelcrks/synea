@@ -3,7 +3,6 @@
 import { acceptContactRequest } from "@/lib/actions/contact-requests/acceptContactRequest"
 import { cancelContactRequest } from "@/lib/actions/contact-requests/cancelContactRequest"
 import { rejectContactRequest } from "@/lib/actions/contact-requests/rejectContactRequest"
-import type { Profile } from "@/lib/db/queries/profile"
 import { useState } from "react"
 
 type ProfileSummary = {

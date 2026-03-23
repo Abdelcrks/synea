@@ -33,7 +33,7 @@ vi.mock("@/lib/db/drizzle", () => ({
 
 import { cancelContactRequest } from "../cancelContactRequest";
 
-function mockUpdateReturning(rows: any[]) {
+function mockUpdateReturning(rows: unknown[]) {
   const returning = vi.fn().mockResolvedValue(rows);
   const where = vi.fn(() => ({ returning }));
   const set = vi.fn(() => ({ where }));
