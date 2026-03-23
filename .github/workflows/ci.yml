@@ -24,4 +24,6 @@ jobs:
           cache: 'pnpm'
 
       - run: pnpm install
-      - run: pnpm test:run  # 👈 mode CI, pas watch
+      - run: pnpm lint
+      - run: pnpm tsc --noEmit
+      - run: pnpm test:run

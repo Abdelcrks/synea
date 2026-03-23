@@ -1,13 +1,12 @@
 "use server"
 
-import { auth } from "@/lib/auth"
-import { db } from "@/lib/db/drizzle"
+import { db, } from "@/lib/db/drizzle"
 import { areUsersContacts } from "@/lib/db/queries/contacts"
 import { getOtherUserId, isUserConversationParticipant } from "@/lib/db/queries/messages"
-import { messages } from "@/lib/db/schema"
+import { messages, profiles } from "@/lib/db/schema"
 import { revalidatePath } from "next/cache"
-import { headers } from "next/headers"
 import { requireActiveSession } from "../auth/requireActiveSession"
+import { eq } from "drizzle-orm"
 
 
 
@@ -52,11 +51,22 @@ export async function sendMessage(formData: FormData){
         return {ok: false, message:"Vous n'êtes plus en contact"}
     }
 
-    await db.insert(messages).values({
-        conversationId: conversationId,
-        senderId: session.user.id,
-        content : content,
-    })
+    const [senderProfile] = await db
+    .select({ namePublic: profiles.namePublic, avatarUrl: profiles.avatarUrl })
+    .from(profiles)
+    .where(eq(profiles.userId, session.user.id))
+    .limit(1)
+
+    console.log("senderProfile:", senderProfile)
+
+  
+  await db.insert(messages).values({
+    conversationId: conversationId,
+    senderId: session.user.id,
+    content: content,
+    senderNameSnapshot: senderProfile?.namePublic ?? "Utilisateur",
+    senderAvatarSnapshot: senderProfile?.avatarUrl ?? null,
+  })
 
     revalidatePath(`/messages/${conversationId}`)
     return {ok:true}
