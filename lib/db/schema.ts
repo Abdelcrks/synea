@@ -60,8 +60,6 @@ export const profiles = pgTable("profiles", {
 
     showRegionPublic: boolean("show_region_public").notNull().default(false),
 
-    profileCompletedAt: timestamp("profile_completed_at", {withTimezone:true}),
-
     isVisible : boolean("is_visible").notNull().default(true),
 
     acceptedTermsAt: timestamp("accepted_terms_at", {withTimezone:true}),

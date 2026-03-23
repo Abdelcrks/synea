@@ -1,0 +1,1 @@
+ALTER TABLE "profiles" DROP COLUMN "profile_completed_at";
