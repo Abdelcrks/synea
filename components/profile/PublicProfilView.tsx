@@ -134,13 +134,13 @@ export function PublicProfileView({ profile, relationStatus, requestId }: Public
       <div className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-4 space-y-6">
           <div className="card card--outline text-center">
-            <div className="flex justify-center">
-              {profile.avatarUrl ? (
-                <Image alt={`Avatar de ${profile.namePublic}`} fill src={profile.avatarUrl} />
-              ) : (
-                <Avatar name={profile.namePublic} avatarUrl={profile.avatarUrl} sizeClassName="h-24 w-24 lg:h-40 lg:w-40" />
-              )}
-            </div>
+          <div className="flex justify-center">
+            <Avatar
+              name={profile.namePublic}
+              avatarUrl={profile.avatarUrl}
+              sizeClassName="h-24 w-24 lg:h-40 lg:w-40"
+            />
+          </div>
 
             <h2 className="mt-4 text-xl font-semibold">{profile.namePublic}</h2>
 
