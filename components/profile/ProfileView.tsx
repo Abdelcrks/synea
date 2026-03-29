@@ -74,11 +74,11 @@ export const ProfileView = ({profile,email}: ProfileViewProps) => {
                             <button className="btn btn--primary w-full">Se déconnecter</button>
                         </form>
                     </div>
-                    <div className="card">
+                    {/* <div className="card">
                         <h2 className="font-semibold">Préférences</h2>
                         <p className="mt-2">Permettre aux Pair-héros de me contacter</p>
                         <p className="mt-2">Afficher ma localisation aux autres</p>
-                    </div>
+                    </div> */}
                     {/* <div className="card">
                         <h2 className="font-semibold">Zone sensible</h2>
                         <p className="text-(--destructive) text-center mt-4">
