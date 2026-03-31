@@ -5,6 +5,7 @@ import { describe, it, expect, vi } from "vitest";
 vi.mock("next/image", () => {
   return {
     default: ({ fill: _fill, ...rest }: { fill?: boolean; src: string; alt: string; width?: number; height?: number }) => {
+      // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
       return <img {...rest} />;
     },
   };
