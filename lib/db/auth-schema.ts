@@ -9,13 +9,13 @@ export const users = pgTable("user", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
-    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .$onUpdate(() =>  new Date())
     .notNull(),
 
 
-  // rgpd
-  disabledAt: timestamp("disabled_at"), // user desactivé
-  deletedAt: timestamp("deleted_at"), // suppression logique effective puis j'anonymise + coupe acces definitivement & timestamp pour la tracabilité sur toutes ces actions
+
+  disabledAt: timestamp("disabled_at"), 
+  deletedAt: timestamp("deleted_at"), 
   }, (table) => ({
   deletedAtIdx: index("user_deleted_at_idx").on(table.deletedAt),
   disabledAtIdx: index("user_disabled_at_idx").on(table.disabledAt),
@@ -30,7 +30,7 @@ export const sessions = pgTable(
     token: text("token").notNull().unique(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
-      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .$onUpdate(() =>  new Date())
       .notNull(),
     ipAddress: text("ip_address"),
     userAgent: text("user_agent"),
@@ -59,7 +59,7 @@ export const accounts = pgTable(
     password: text("password"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
-      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .$onUpdate(() => new Date())
       .notNull(),
   },
   (table) => [index("account_userId_idx").on(table.userId)],
@@ -75,7 +75,7 @@ export const verifications = pgTable(
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()
-      .$onUpdate(() => /* @__PURE__ */ new Date())
+      .$onUpdate(() =>  new Date())
       .notNull(),
   },
   (table) => [index("verification_identifier_idx").on(table.identifier)],
