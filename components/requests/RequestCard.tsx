@@ -84,9 +84,9 @@ export const RequestCard = ({ profile, type, requestId }: RequestCardProps) => {
                 </div>
 
                 {/* Debug  */}
-                <p className="mt-2 text-xs text-black/40">
+                {/* <p className="mt-2 text-xs text-black/40">
                     requestId: {requestId}
-                </p>
+                </p> */}
 
                 <div className="mt-5">
                     {type === "sent" && (
