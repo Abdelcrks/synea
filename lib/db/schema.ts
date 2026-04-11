@@ -69,9 +69,6 @@ export const profiles = pgTable("profiles", {
     .notNull(),
 
     updatedAt: timestamp("updated_at", {withTimezone:true}),
-    
-
-
 })
 
 export const contactRequests = pgTable("contact_requests", {
